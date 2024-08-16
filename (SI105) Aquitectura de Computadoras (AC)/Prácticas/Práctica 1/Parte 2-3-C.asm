@@ -9,3 +9,4 @@ END
 ;1) falta hlt
 ;2) Debo guardar en BX la dirección donde será almecnado el caracter
 ; ANTES de pasar por la instrucción INT 6
+;3) NO IMPRIME
