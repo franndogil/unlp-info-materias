@@ -1,5 +1,5 @@
           ORG 1000H  ;CORREGIDO, TA FUNCIONANDO BIEN (CORRECCIÓN EN LINEA 24, ME FALTABA INCREMENTAR BX LUEGO DE SUMAR)
-MENSAJE   DB  "aAsSaAAA"
+MENSAJE   DB  "Zz"
 CANT      DB  ?
           ORG 2000H
           MOV CANT, OFFSET CANT - OFFSET MENSAJE    ;cantidad de veces que se ejecutará el FOR
@@ -11,7 +11,7 @@ LOOP:     CMP AL, CANT  ;bucle FOR
           INC AL
 
           MOV CL, 65
-          MOV CH, 90
+          MOV CH, 91  ;si no pongo 91 me morfo la "z"
           CMP BYTE PTR [BX], CH  ;comparo si es o no MAYUS por codigo ASCII
           JNS NO    ;si no se activa el flag de signo salto a NO
           
