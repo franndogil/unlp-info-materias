@@ -10,25 +10,36 @@ type
 		sig:lista;
 	end;
 	
-procedure AgregarAdelante(var l:lista; s:integer);
+procedure InsertarOrdenado(var l:lista; num:integer);
 var
-	nue:lista;
+	nue, act, ant:lista;
 begin
 	new(nue);
-	nue^.dato:=s;
-	nue^.sig:=l;	
-	l:=nue;		//realizo el enlace
+	nue^.dato:=num;
+	act:=l;
+	ant:=l;
+	
+	while(act<>nil)and(num>act^.dato)do begin
+		ant:=act;
+		act:=act^.sig;
+	end;
+	
+	if(act=ant)then
+		l:=nue
+	else
+		ant^.sig:=nue;
+	nue^.sig:=act;
 end;
 	
-procedure CargarLista(var l:lista);
+procedure CargarListaOrdenada(var l:lista);
 var
 	num:integer;
 begin
 	randomize;
-	num:=0;
+	num:=random(b-a+1)+a;
 	while(num<>120)do begin
 		num:=random(b-a+1)+a;
-		AgregarAdelante(l, num);
+		InsertarOrdenado(l, num);
 	end;
 end;
 
@@ -59,7 +70,7 @@ var
 	val:boolean;
 begin
 	l:=nil;
-	CargarLista(l);
+	CargarListaOrdenada(l);
 	ImprimirLista(l);
 	writeln('Ingrese el valor a buscar: ');
 	readln(n);
