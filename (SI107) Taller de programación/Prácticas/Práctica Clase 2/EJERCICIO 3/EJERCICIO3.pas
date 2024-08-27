@@ -60,7 +60,7 @@ begin										//ejemplo de la primera vuelta
 	for i:=2 to dimLog do begin
 		actual:=v[i];						//actual toma la 2da pos del vector
 		j:=i-1;								//j=2-1=1 (uno)
-		while(j>0)and(v[j]>actual)do begin	//mientras j sea mayor a 0 (es uno 1) y el cod del anterior (pos 1) sea mayor al cod de
+		while((j>0)and(v[j]>actual))do begin	//mientras j sea mayor a 0 (es uno 1) y el cod del anterior (pos 1) sea mayor al cod de
 											//la pos 2 (actual)
 			v[j+1]:=v[j];					//el actual (pos 2) va a tomar la pos del anterior (pos 1)	
 			j:=j-1;							//disminuyo j (J=1-1=0)
@@ -69,10 +69,27 @@ begin										//ejemplo de la primera vuelta
 	end;
 end;
 
-procedure Busqueda_Dicotomica (v: vecint; ini,fin: indice; dato:integer; var pos: indice);
+procedure Busqueda_Dicotomica (v: vecint; ini:indice; fin: indice; dato:integer; var pos: indice);		//PUNTO C
 var
-	medio:indice;
+	i:indice;
 begin
+	i:=ini;
+	if(dato<v[11])then begin
+		for i:=1 to 10 do begin
+			if(dato=v[i])then
+				pos:=i
+		end;
+	end
+	else begin
+		if(dato>v[10])then begin
+			for i:=10 to fin do begin
+				if(dato=v[i])then
+					pos:=i;
+			end;
+		end
+		else
+			pos:=-1;
+	end;
 end;
 
 
@@ -92,9 +109,9 @@ begin
 	Ordenacion_por_insercion(v, dimL);		//PUNTO B
 	writeln('Impresion RECURSIVA del vector ORDENADO: ');
 	Imprimir_vector_recursivo(v, i);
-	dato:=1415;
+	dato:=897;
 	inicio:=1;
 	fin:=20;
 	Busqueda_Dicotomica(v, inicio, fin, dato, pos);		//PUNTO C
-	writeln('Dato: ', dato);
+	writeln('Dato: ', pos);
 end.
