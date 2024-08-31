@@ -69,7 +69,7 @@ begin										//ejemplo de la primera vuelta
 	end;
 end;
 
-procedure Busqueda_Dicotomica (v: vecint; ini:indice; fin: indice; dato:integer; var pos: indice);		//PUNTO C
+procedure Busqueda_Dicotomica(v: vecint; ini:indice; fin: indice; dato:integer; var pos: indice);		//PUNTO C
 var
 	i:indice;
 begin
@@ -99,6 +99,7 @@ var
 	dimL, dato:integer;
 	inicio, fin, pos:indice;
 begin
+	randomize;
 	dimL:=20;
 	i:=0;
 	Retornar_vector(v, i);					//PUNTO A
@@ -109,9 +110,10 @@ begin
 	Ordenacion_por_insercion(v, dimL);		//PUNTO B
 	writeln('Impresion RECURSIVA del vector ORDENADO: ');
 	Imprimir_vector_recursivo(v, i);
-	dato:=897;
 	inicio:=1;
 	fin:=20;
+	write('Ingrese el dato a buscar: ');
+	read(dato);
 	Busqueda_Dicotomica(v, inicio, fin, dato, pos);		//PUNTO C
 	writeln('Dato: ', pos);
 end.
