@@ -136,12 +136,15 @@ begin
 	max:=-1;
 	Cargar_ventas(a);	//PUNTO A
 	Imprimir_arbol(a);	//PUNTO B
+	
 	Men_cod_pro(a, mencod);	//PUNTO C
 	writeln('Menor codigo de producto vendido: ', mencod);
 	write('Ingrese un codigo de producto: ');
+	
 	read(codpro);
 	Cant_menores(a, codpro, cantcodpro);	//PUNTO D
 	writeln('Cantidad de codigos menores que el codigo ingresado: ', cantcodpro);
+	
 	writeln('Ingrese el codigo de producto minimo: ');		//PUNTO E
 	readln(min);												//PUNTO E
 	writeln('Ingrese el codigo de producto maximo: ');		//PUNTO E
