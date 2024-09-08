@@ -182,23 +182,26 @@ begin
 	end;
 end;
 
-procedure Busqueda_eficiente(a:arbol; par1:integer; par2:integer; var cant:integer);
+function Cant_soc_par(a:arbol; min:integer; max:integer):integer;
 begin
-	if(a<>nil)then begin
-		if(a^.dato.num>par1)then begin
-			if(a^.dato.num<par2)then
-				cant:=cant+1
+	if(a=nil)then
+		Cant_soc_par:=0
+	else begin
+		if(a^.dato.num>min)then begin
+			if(a^.dato.num<max)then begin
+				Cant_soc_par:=1+Cant_soc_par(a^.HI, min,max)+Cant_soc_par(a^.HD, min, max);
+			end
 			else
-				Busqueda_eficiente(a^.HI, par1, par2, cant);
+				Cant_soc_par(a^.HI, min, max);
 		end
 		else
-			Busqueda_eficiente(a^.HD, par1, par2, cant);
+			Cant_soc_par(a^.HD, min, max);
 	end;
 end;
 
 var
 	a:arbol;
-	nummay, aux, aux2, aux3, cantimpar, cantsoc, numsocmasg, numsocmasc, par1, par2, cantbe:integer;
+	nummay, aux, aux2, aux3, cantimpar, cantsoc, numsocmasg, numsocmasc, min, max:integer;
 	nombus:string;
 	ok, ok1:boolean;
 	prom:real;
@@ -213,9 +216,8 @@ begin
 	aux:=0;
 	aux2:=0;
 	aux3:=0;
-	par1:=0;
-	par2:=0;
-	cantbe:=0;
+	min:=0;
+	max:=0;
 	cantimpar:=0;
 	cantsoc:=0;
 	numsocmasg:=0;
@@ -269,10 +271,8 @@ begin
 		writeln('No existe un socio con ese valor');
 		
 		
-	writeln('Ingrese el primer parametro: ');	//PUNTO IV	(no funciona)
-	readln(par1);
-	writeln('Ingrese el segundo parametro: ');
-	readln(par2);
-	Busqueda_eficiente(a, par1, par2, cantbe);
-	writeln(cantbe);
+	min:=5;
+	max:=25;
+	
+	writeln('Cantidad de socios cuyos codigos se encuentran comprendidos entre los valores leidos: ', Cant_soc_par(a, min, max));
 end.

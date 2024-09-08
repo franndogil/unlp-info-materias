@@ -29,7 +29,7 @@ type
 	arbol=^nodo_arbol;
 	
 	nodo_arbol=record
-		dato:venta;
+		dato:producto;
 		HI:arbol;
 		HD:arbol;
 	end;
@@ -38,33 +38,43 @@ procedure Procesar_venta(var v:venta);
 begin
 	v.codv:=random(30)-1;
 	v.codpv:=random(100)+1;
-	v.cantuv:=random(15);
-	v.preu:=random(50);
+	v.cantuv:=random(15)+1;
+	v.preu:=random(50)+1;
 end;
 
-procedure Agregar(var a:arbol; v:venta);
+procedure Agregar(var a:arbol; p:producto);
 begin
 	if(a=nil)then begin
 		new(a);
-		a^.dato:=v;
+		a^.dato:=p;
 		a^.HI:=nil;
 		a^.HD:=nil;
 	end
 	else begin
-		if(v.codpv<=a^.dato.codpv)then
-			Agregar(a^.HI, v)
-		else
-			Agregar(a^.HD, v);
+		if(p.codp=a^.dato.codp)then begin
+			a^.dato.cantuv:=a^.dato.cantuv+p.cantuv;
+			a^.dato.montot:=a^.dato.montot+p.montot;
+		end
+		else begin
+			if(p.codp<a^.dato.codp)then
+				Agregar(a^.HI, p)
+			else
+				Agregar(a^.HD, p);
+		end;
 	end;
 end;
 
 procedure Generar_arbol(var a:arbol);		//PUNTO A
 var
 	v:venta;
+	p:producto;
 begin
 	Procesar_venta(v);
 	while(v.codv<>-1)do begin
-		Agregar(a, v);
+		p.codp:=v.codpv;
+		p.cantuv:=v.cantuv;
+		p.montot:=v.cantuv*v.preu;
+		Agregar(a, p);
 		Procesar_venta(v);
 	end;
 end;
@@ -74,10 +84,9 @@ begin
 	if (a<>nil)then begin
 		Imprimir_arbol(a^.HD);
 		writeln('------------------------------------');
-		writeln('Codigo de producto: ', a^.dato.codpv);
-		writeln('Codigo de venta: ', a^.dato.codv);
+		writeln('Codigo de producto: ', a^.dato.codp);
 		writeln('Cantidad de unidades vendidas: ', a^.dato.cantuv);
-		writeln('Precio Unitario: ', a^.dato.preu:2:2);
+		writeln('Monto total: ', a^.dato.montot:2:2);
 		Imprimir_arbol(a^.HI);
 	end;
 end;
@@ -87,7 +96,7 @@ begin
 	if(a<>nil)then begin
 		if(a^.dato.cantuv>=cant)then begin
 			cant:=a^.dato.cantuv;
-			cod:=a^.dato.codpv;
+			cod:=a^.dato.codp;
 		end;
 		Cod_may_uven(a^.HI, cod, cant);
 		Cod_may_uven(a^.HD, cod, cant);
@@ -97,7 +106,7 @@ end;
 procedure Cant_men_val(a:arbol; par:integer; var cant:integer);		//PUNTO D
 begin
 	if(a<>nil)then begin
-		if(a^.dato.codpv<par)then
+		if(a^.dato.codp<par)then
 			cant:=cant+1;
 		Cant_men_val(a^.HI, par, cant);
 		Cant_men_val(a^.HD, par, cant);
@@ -110,9 +119,9 @@ var
 begin
 	monto_act:=0;
 	if(a<>nil)then begin
-		if(a^.dato.codpv>min)then begin
-			if(a^.dato.codpv<max)then begin
-				monto_act:=a^.dato.preu*a^.dato.cantuv;
+		if(a^.dato.codp>min)then begin
+			if(a^.dato.codp<max)then begin
+				monto_act:=a^.dato.montot;
 				monto:=monto+monto_act;
 			end
 			else
@@ -124,17 +133,13 @@ begin
 end;
 
 function Monto_total(a:arbol; min:integer; max:integer):real;		//PUNTO E
-var
-	monto_act:real;
 begin
-	monto_act:=0;
 	if(a = nil)then
 		Monto_total:=0
 	else begin
-		if(a^.dato.codpv > min)then begin
-			if(a^.dato.codpv < max)then begin
-				monto_act:=a^.dato.cantuv*a^.dato.preu;
-				Monto_total:=monto_act + Monto_total(a^.HI, min, max) + Monto_total(a^.HD, min, max);
+		if(a^.dato.codp > min)then begin
+			if(a^.dato.codp < max)then begin
+				Monto_total:=a^.dato.montot + Monto_total(a^.HI, min, max) + Monto_total(a^.HD, min, max);
 			end
 			else
 				Monto_total:=Monto_total(a^.HI, min, max);
