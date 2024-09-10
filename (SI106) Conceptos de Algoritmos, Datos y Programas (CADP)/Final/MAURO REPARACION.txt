@@ -1,4 +1,0 @@
-Sol 1:
-para solucionarlo hice lo siguiente, fui a dispositivos, desinstalé el driver que aparece ahí, desinstalé el daemon y lo instalé nuevamente, luego reinstalé el controlador sin errores y funcionó perfectamente.
-
-Sol 2:
