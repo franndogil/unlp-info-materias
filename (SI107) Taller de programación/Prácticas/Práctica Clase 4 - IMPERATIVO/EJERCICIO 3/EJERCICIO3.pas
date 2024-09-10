@@ -129,17 +129,17 @@ begin
 		end
 		else
 			Mont_tot(a^.HD, min, max, monto);
-	end
+	end;
 end;
 
-function Monto_total(a:arbol; min:integer; max:integer):real;		//PUNTO E
+function Monto_total(a:arbol; min:integer; max:integer):real;		//PUNTO E BIEN RESUELTO
 begin
 	if(a = nil)then
 		Monto_total:=0
 	else begin
 		if(a^.dato.codp > min)then begin
 			if(a^.dato.codp < max)then begin
-				Monto_total:=a^.dato.montot + Monto_total(a^.HI, min, max) + Monto_total(a^.HD, min, max);
+				Monto_total:=a^.dato.montot + Monto_total(a^.HI, min, max) + Monto_total(a^.HD, min, max);		//
 			end
 			else
 				Monto_total:=Monto_total(a^.HI, min, max);
