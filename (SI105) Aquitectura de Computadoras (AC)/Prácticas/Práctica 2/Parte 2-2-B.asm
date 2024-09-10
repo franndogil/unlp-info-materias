@@ -1,0 +1,17 @@
+PA EQU 30H
+CA EQU 32H
+      ORG 1000H
+  NO  DB  "LIBRE"
+  SI  DB  ?
+      ORG 2000H
+      MOV AL,0FFH
+      OUT CA, AL
+POLL: IN AL, PA
+      AND AL, 1
+      JNZ POLL
+      MOV BX, OFFSET NO
+      MOV AL, OFFSET SI-OFFSET NO
+      INT 7
+      INT 0
+END
+    
