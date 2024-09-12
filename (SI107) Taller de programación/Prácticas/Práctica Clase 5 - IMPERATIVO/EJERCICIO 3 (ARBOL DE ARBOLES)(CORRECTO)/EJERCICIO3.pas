@@ -130,12 +130,50 @@ begin
 	end;
 end;
 
+procedure Recorrer_arbol_interno(a:arbol1; cod:integer; var ok:boolean);
+begin
+	if(a<>nil)then begin
+		if(cod=a^.dato.cod)then
+			ok:=true
+		else begin
+			if(cod<a^.dato.cod)then
+				Recorrer_arbol_interno(a^.HI, cod, ok)
+			else
+				Recorrer_arbol_interno(a^.HD, cod, ok)
+		end;
+	end;
+end;
+
+procedure Modulo_b(a:arbol2; rub:integer; cod:integer; var ok:boolean);
+begin
+	if(a<>nil)then begin
+		if(a^.dato.rub=rub)then
+			Recorrer_arbol_interno(a^.dato.productos, cod, ok)
+		else begin
+			if(rub<a^.dato.rub)then
+				Modulo_b(a^.HI, rub, cod, ok)
+			else
+				Modulo_b(a^.HD, rub, cod, ok);
+		end;
+	end;
+end;
+
 var
 	a:arbol2;
+	rub, cod:integer;
+	ok:boolean;
 begin
-	randomize;
 	a:=nil;
+	ok:=false;
+	
 	Modulo_a(a);				//PUNTO A
 	Imprimir_estructura(a);
 	
+	rub:=8;
+	cod:=12;
+	Modulo_b(a, rub, cod, ok);		//PUNTO B
+	if(ok=true)then
+		writeln('El codigo ', cod, ' existe en el rubro ', rub)
+	else
+		writeln('El codigo ', cod, ' no existe en el rubro ', rub);
 end.
