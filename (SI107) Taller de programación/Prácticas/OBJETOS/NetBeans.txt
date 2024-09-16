@@ -1,0 +1,5 @@
+NetBeans:
+https://www.apache.org/dyn/closer.lua/netbeans/netbeans-installers/22/Apache-NetBeans-22-bin-windows-x64.exe
+
+JDK:
+https://www.oracle.com/java/technologies/downloads/?er=221886#jdk22-windows
