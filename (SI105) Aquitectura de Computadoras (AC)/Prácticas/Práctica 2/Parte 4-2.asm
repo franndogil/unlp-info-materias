@@ -24,6 +24,12 @@ INI_PIO:MOV AL, 0FFH
         OUT CB, AL
         RET
 
+        ORG 3200H
+IMPR:   MOV BX, OFFSET MSJ
+        MOV AL, OFFSET FIN_MSJ-OFFSET MSJ
+        INT 7
+        RET
+
         ORG 3100H
 LEER:   IN AL, PA
         CMP AL, CL
@@ -31,12 +37,7 @@ LEER:   IN AL, PA
         AND AL, CL
         OUT PB, AL
         JMP LEER
-        RET
-
-        ORG 3200H
-WIN:    MOV BX, OFFSET MSJ
-        MOV AL, OFFSET FIN_MSJ-OFFSET MSJ
-        INT 7
+WIN:    CALL IMPR 
         RET
 
         ORG 2000H

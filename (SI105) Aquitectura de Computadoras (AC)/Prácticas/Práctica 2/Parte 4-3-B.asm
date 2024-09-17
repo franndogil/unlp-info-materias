@@ -14,13 +14,12 @@ MSJ DB "ACTIVADO"
 FIN_MSJ DB ?
 
       ORG 3000H
-ENVIO:PUSH AX
+IMPR: PUSH AX
       MOV BX, OFFSET MSJ
       MOV AL, OFFSET FIN_MSJ-OFFSET MSJ
       INT 7
       POP AX
       MOV CL, AL
-      
 LOOP2:IN AL, PA
       CMP AL, CL
       JZ LOOP2
@@ -29,8 +28,9 @@ LOOP2:IN AL, PA
       ORG 3100H
 POLL: IN AL, PA
       CMP AL, 081H
-      JZ ENVIO
-      RET
+      JNZ FIN
+      CALL IMPR
+FIN:  RET
 
          ORG 3200H
 INI_PIO: MOV AL, 0FFH
