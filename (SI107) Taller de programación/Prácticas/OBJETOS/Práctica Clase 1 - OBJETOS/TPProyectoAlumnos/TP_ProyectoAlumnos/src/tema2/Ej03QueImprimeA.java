@@ -12,5 +12,6 @@ public class Ej03QueImprimeA {
         System.out.println(saludo1 == saludo2);
         System.out.println(saludo1 != saludo2);
         System.out.println(saludo1.equals(saludo2));
+                
     } 
 }
