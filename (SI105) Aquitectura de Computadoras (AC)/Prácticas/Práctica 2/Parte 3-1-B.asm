@@ -1,0 +1,29 @@
+;PRACTICA 2 PARTE 3 B
+
+PA EQU 30H
+PB EQU 31H
+CA EQU 32H
+CB EQU 33H
+
+        ORG 3100H
+LISTO:  MOV AL, 0FFH
+        OUT PB, AL
+        RET
+
+        ORG 3000H
+INI_PIO:MOV AL, 0FFH
+        OUT CA, AL
+        MOV AL, 0
+        OUT CB, AL
+        RET
+
+      ORG 2000H
+      CALL INI_PIO
+      CALL LISTO
+LAZO: IN AL, PA
+      CMP AL, 30H
+      JZ FIN
+      CALL LISTO
+      JMP LAZO
+FIN:  INT 0
+END

@@ -1,0 +1,52 @@
+PA EQU 30H
+PB EQU 31H
+CA EQU 32H
+CB EQU 33H
+  
+        ORG 1000H
+MSJ1    DB "FIN DE PROGRAMA"
+MSJ2    DB "ARQUITECTURA DE COMPUTADORAS: ACTIVADA"
+FIN_MSJS DB ?
+        ORG 3000H
+INI_PIO:MOV AL, 0FFH
+        OUT CA, AL
+        MOV AL, 0
+        OUT CB, AL
+        RET
+
+         ORG 3300H
+SUBRUT_A:MOV BX, OFFSET MSJ1
+         MOV AL, OFFSET MSJ2-OFFSET MSJ1
+         INT 7
+         RET
+
+         ORG 3100H
+SUBRUT_B:PUSH AX
+         NOT AL
+         OUT PB, AL
+         POP AX
+         RET
+
+         ORG 3500H
+SUBRUT_C:PUSH AX
+         AND AL, 1
+         CMP AL, 1
+         JZ SI
+         JMP SALE
+SI:      MOV BX, OFFSET MSJ2
+         MOV AL, OFFSET FIN_MSJS-OFFSET MSJ2
+         INT 7
+SALE:    POP AX
+         RET
+
+      ORG 2000H
+      CALL INI_PIO
+LAZO: IN AL, PA
+      CMP AL, 0
+      JZ FIN
+      CALL SUBRUT_B
+      CALL SUBRUT_C
+      JMP LAZO
+FIN:  CALL SUBRUT_A
+      INT 0
+END
