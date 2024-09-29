@@ -15,46 +15,48 @@ import PaqueteLectura.GeneradorAleatorio;
 
 public class Ej04Casting {
     public static void main(String[] args) {
-         Persona [][] matrizCasting = new Persona [5][8];
+        Persona [][] matrizCasting = new Persona [5][8];
+        int []  vecCont = new int [5];
         
         String nombre = GeneradorAleatorio.generarString(3);
         int edad = GeneradorAleatorio.generarInt(100);
         int dni = GeneradorAleatorio.generarInt(100);
+        int dia = GeneradorAleatorio.generarInt(5);
         
-        int i=0, j=0, cupos=0;
+        int i=0, j=0 , cupos=0;
         
-        while ((cupos<40)&&(!nombre.equals("ZZZ"))){
-            matrizCasting [i][j]=new Persona(nombre, dni, edad);
-            
-            j++;
-            cupos++;
-            
-            if(j==8){  
-                j=0;
-                i++;
+        for (i=0; i<5; i++){
+            vecCont[i]=0;
+        }
+        
+        while ((cupos<40) && (!nombre.equals("ZZZ"))){
+            if(vecCont[dia] < 8){  //si la matriz (dia y posicion) es nula Y el cupo diario sea menor a 8 hacer
+                
+                matrizCasting [dia][vecCont[dia]] = new Persona(nombre, dni, edad);
+                vecCont[dia]++; //sumo 1 al contador de cupos por dia
+                cupos++;    //sumo 1 cupo al contador global
             }
+            else
+                System.out.println("No existe turno en este dia (dia: " + (dia+1) + ")");
             
             nombre = GeneradorAleatorio.generarString(3);
             edad = GeneradorAleatorio.generarInt(100);
             dni = GeneradorAleatorio.generarInt(100);
+            dia = GeneradorAleatorio.generarInt(5);
         }
         
-        int aux=0;
+        int aux;
         
         aux=cupos;
         cupos=0;
         i=0;
         j=0;
         
-        while(cupos<aux){
-            System.out.println("Dia: " + (i+1) + " Turno: "+ (j+1) +" Nombre: " + matrizCasting[i][j].getNombre());
+        for (i=0; i<5; i++){
+            System.out.println("Dia: " + (i+1) + " Cantidad de inscriptos al casting: "+ (vecCont[i]));
             
-            j++;
-            cupos++;
-            
-            if(j==8){
-                j=0;
-                i++;
+            for (j=0; j < (vecCont[i]); j++){
+                System.out.println("Nombre: " + matrizCasting[i][j].getNombre());
             }
         }
     }

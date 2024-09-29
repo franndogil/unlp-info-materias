@@ -51,7 +51,7 @@ public class Ej04Matrices {
         
         System.out.println("Cantidad de personas que concurrieron a cada oficina de cada piso: ");
         
-        System.out.print("      Oficina 1 ");
+        System.out.print("Oficina 1 ");
         System.out.print("Oficina 2 ");
         System.out.print("Oficina 3 ");
         System.out.print("Oficina 4 ");
