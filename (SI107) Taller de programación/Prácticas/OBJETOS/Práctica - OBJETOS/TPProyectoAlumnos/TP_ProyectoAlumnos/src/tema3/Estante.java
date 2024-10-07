@@ -31,7 +31,7 @@ public class Estante {
     public int getCantidadDeLibros(){
         return cantLibros;
     }
-    
+     
     public boolean getEstanteLleno(){
         if (cantLibros == 20){
             estado = true;
