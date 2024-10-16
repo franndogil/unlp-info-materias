@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>src/tema5/ej03.java</url>
+            <bookmark id="1">
+                <name/>
+                <line>7</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/G:/Otros%20ordenadores/Mi%20PC/UNLP/Materias/(SI107)%20Taller%20de%20programación/Prácticas/OBJETOS/Práctica%20-%20OBJETOS/TPProyectoAlumnos/TP_ProyectoAlumnos/src/tema4/PPM.java</file>
-            <file>file:/G:/Otros%20ordenadores/Mi%20PC/UNLP/Materias/(SI107)%20Taller%20de%20programación/Prácticas/OBJETOS/Práctica%20-%20OBJETOS/TPProyectoAlumnos/TP_ProyectoAlumnos/src/tema4/Dibujo.java</file>
-            <file>file:/G:/Otros%20ordenadores/Mi%20PC/UNLP/Materias/(SI107)%20Taller%20de%20programación/Prácticas/OBJETOS/Práctica%20-%20OBJETOS/TPProyectoAlumnos/TP_ProyectoAlumnos/src/tema4/Ej04.java</file>
-            <file>file:/G:/Otros%20ordenadores/Mi%20PC/UNLP/Materias/(SI107)%20Taller%20de%20programación/Prácticas/OBJETOS/Práctica%20-%20OBJETOS/TPProyectoAlumnos/TP_ProyectoAlumnos/src/tema4/Ej05.java</file>
-            <file>file:/G:/Otros%20ordenadores/Mi%20PC/UNLP/Materias/(SI107)%20Taller%20de%20programación/Prácticas/OBJETOS/Práctica%20-%20OBJETOS/TPProyectoAlumnos/TP_ProyectoAlumnos/src/tema4/PPA.java</file>
-            <file>file:/G:/Otros%20ordenadores/Mi%20PC/UNLP/Materias/(SI107)%20Taller%20de%20programación/Prácticas/OBJETOS/Práctica%20-%20OBJETOS/TPProyectoAlumnos/TP_ProyectoAlumnos/src/tema4/Estacion.java</file>
+            <file>file:/G:/.shortcut-targets-by-id/1-1jlB1Hx-LgnhDvOH5ehIEBGWdiQB5PH/UNLP/Materias/(SI107)%20Taller%20de%20programación/Prácticas/OBJETOS/Práctica%20-%20OBJETOS/TPProyectoAlumnos/TP_ProyectoAlumnos/src/tema5/Corista.java</file>
+            <file>file:/G:/.shortcut-targets-by-id/1-1jlB1Hx-LgnhDvOH5ehIEBGWdiQB5PH/UNLP/Materias/(SI107)%20Taller%20de%20programación/Prácticas/OBJETOS/Práctica%20-%20OBJETOS/TPProyectoAlumnos/TP_ProyectoAlumnos/src/tema5/ej04.java</file>
+            <file>file:/G:/.shortcut-targets-by-id/1-1jlB1Hx-LgnhDvOH5ehIEBGWdiQB5PH/UNLP/Materias/(SI107)%20Taller%20de%20programación/Prácticas/OBJETOS/Práctica%20-%20OBJETOS/TPProyectoAlumnos/TP_ProyectoAlumnos/src/tema5/Coro.java</file>
+            <file>file:/G:/.shortcut-targets-by-id/1-1jlB1Hx-LgnhDvOH5ehIEBGWdiQB5PH/UNLP/Materias/(SI107)%20Taller%20de%20programación/Prácticas/OBJETOS/Práctica%20-%20OBJETOS/TPProyectoAlumnos/TP_ProyectoAlumnos/src/tema5/Persona.java</file>
+            <file>file:/G:/.shortcut-targets-by-id/1-1jlB1Hx-LgnhDvOH5ehIEBGWdiQB5PH/UNLP/Materias/(SI107)%20Taller%20de%20programación/Prácticas/OBJETOS/Práctica%20-%20OBJETOS/TPProyectoAlumnos/TP_ProyectoAlumnos/src/tema5/Director.java</file>
         </group>
     </open-files>
 </project-private>
