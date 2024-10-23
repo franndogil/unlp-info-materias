@@ -12,7 +12,7 @@ clavei: .asciiz   "    "
 	ld $t0, CONTROL($zero)
 	ld $t1, DATA($zero)
 
-	daddi $t2, $zero, text1
+inicio:	daddi $t2, $zero, text1
 	sd $t2, 0($t1)
 
 	daddi $t2, $zero, 4
@@ -52,7 +52,7 @@ incorrecta: daddi $t2, $zero, text3
 
 	    daddi $t2, $zero, 4
 	    sd $t2, 0($t0)
-            j fin
+            j inicio
 
 sigue1:	    daddi $t3, $zero, 1
 	    daddi $t6, $zero, 8
