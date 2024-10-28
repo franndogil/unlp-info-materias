@@ -1,0 +1,60 @@
+programa ejemplo
+procesos
+  proceso juntar(ES flores:numero; ES esquinas:numero)
+  comenzar
+    si(HayFlorEnLaEsquina)
+      mientras(HayFlorEnLaEsquina)
+        tomarFlor
+        flores:=flores+1
+    sino
+      esquinas:=esquinas+1
+  fin
+  proceso recorrerAvenida(E numAv: numero; ES flores:numero; ES esquinas:numero)
+  comenzar
+    flores:=0
+    esquinas:=0
+    Pos(numAv, 1)
+    juntar(flores, esquinas)
+    repetir 99
+      mover
+      juntar(flores, esquinas)
+    Informar(flores)
+    Informar(esquinas)
+  fin
+areas
+  ciudad: AreaC (1,1,100,100)
+robots
+  robot robot1
+  variables
+    flores:numero
+    esquinas:numero
+  comenzar
+    recorrerAvenida(1, flores, esquinas)
+  fin
+  robot robot2
+  variables
+    flores:numero
+    esquinas:numero
+  comenzar
+    recorrerAvenida(3, flores, esquinas)
+  fin
+  robot robot3
+  variables
+    flores:numero
+    esquinas:numero
+  comenzar
+    recorrerAvenida(5, flores, esquinas)
+  fin
+variables
+  R_info: robot1
+  R_dos: robot2
+  R_tres: robot3
+comenzar
+  AsignarArea(R_info, ciudad)
+  AsignarArea(R_dos, ciudad)
+  AsignarArea(R_tres, ciudad)
+  Iniciar(R_info, 1,1)
+  Iniciar(R_dos, 3,1)
+  Iniciar(R_tres, 5,1)
+  
+fin
