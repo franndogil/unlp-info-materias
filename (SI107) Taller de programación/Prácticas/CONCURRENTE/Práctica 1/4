@@ -17,13 +17,9 @@ procesos
   fin
   proceso limpiar(E avMax:numero)
   comenzar
-    si(avMax=25)
+    si(avMax=25)|(avMax=75)
       limpiarFlores
-    si(avMax=50)
-      limpiarPapeles
-    si(avMax=75)
-      limpiarFlores
-    si(avMax=100)
+    si(avMax=50)|(avMax=100)
       limpiarPapeles
   fin
   proceso recorrerArea(E avAct:numero; E avMax:numero)
