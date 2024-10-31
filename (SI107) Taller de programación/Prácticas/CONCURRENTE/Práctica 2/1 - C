@@ -1,0 +1,90 @@
+{Bienvenidos al entorno CMRE.
+Lo siguiente es un código de ejemplo que implementa un
+proceso que recibe un número de avenida como parámetro,
+se posiciona en esa avenida y la recorre.}
+
+programa ejemplo
+procesos
+  proceso juntarFlores(ES cantFlores:numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      cantFlores:=cantFlores+1
+  fin
+  proceso recorrer(ES cantFlores:numero)
+  comenzar
+    repetir 9
+      juntarFlores(cantFlores)
+      mover
+  fin
+areas
+  area: AreaC (1,1,6,60)
+robots
+  robot robot1
+  variables
+    cantFlores:numero
+    cantFloresCont:numero
+    diferencia:numero
+    quiensoy:numero
+  comenzar
+    RecibirMensaje(quiensoy,fiscalizador)
+    cantFlores:=0
+    recorrer(cantFlores)
+    EnviarMensaje(quiensoy, fiscalizador)
+    EnviarMensaje(cantFlores, fiscalizador)
+  fin
+  robot robot3
+  variables
+    quienEs:numero
+    flores:numero
+    maxFlores:numero
+    diferencia:numero
+  comenzar
+    EnviarMensaje(1, robotin1)
+    EnviarMensaje(2, robotin2)
+    EnviarMensaje(3, robotin3)
+    EnviarMensaje(4, robotin4)
+    EnviarMensaje(5, robotin5)
+    EnviarMensaje(6, robotin6)
+    repetir 6
+      RecibirMensaje(quienEs, *)
+      si(quienEs=1)
+        RecibirMensaje(flores, robotin1)
+      si(quienEs=2)
+        RecibirMensaje(flores, robotin2)
+      si(quienEs=3)
+        RecibirMensaje(flores, robotin3)
+      si(quienEs=4)
+        RecibirMensaje(flores, robotin4)
+      si(quienEs=5)
+        RecibirMensaje(flores, robotin5)
+      si(quienEs=6)
+        RecibirMensaje(flores, robotin6)
+    si(flores>maxFlores)
+      maxFlores := flores
+    Informar (maxFlores)
+  fin
+variables
+  robotin1: robot1
+  robotin2: robot1
+  robotin3: robot1
+  robotin4: robot1
+  robotin5: robot1
+  robotin6: robot1
+  fiscalizador: robot3  
+comenzar
+  AsignarArea(robotin1, area)
+  AsignarArea(robotin2, area)
+  AsignarArea(robotin3, area)
+  AsignarArea(robotin4, area)
+  AsignarArea(robotin5, area)
+  AsignarArea(robotin6, area)
+  AsignarArea(fiscalizador, area)
+  Iniciar(robotin1, 1,1)
+  Iniciar(robotin2, 2,11)
+  Iniciar(robotin3, 3,21)
+  Iniciar(robotin4, 4,31)
+  Iniciar(robotin5, 5,41)
+  Iniciar(robotin6, 6,51)
+  Iniciar(fiscalizador, 2, 1)
+fin
