@@ -1,0 +1,96 @@
+{Bienvenidos al entorno CMRE.
+Lo siguiente es un código de ejemplo que implementa un
+proceso que recibe un número de avenida como parámetro,
+se posiciona en esa avenida y la recorre.}
+
+programa ejemplo
+procesos
+  proceso depositarFlores
+  comenzar
+    mientras(HayFlorEnLaBolsa)
+      depositarFlor
+  fin
+  proceso direccionar(E cantDer:numero)
+  comenzar
+    repetir cantDer
+      derecha
+  fin
+  proceso juntarFlores
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+  fin
+  proceso juntarPapeles
+  comenzar
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+  fin
+  proceso depositarPapeles
+  comenzar
+    mientras(HayPapelEnLaBolsa)
+      depositarPapel
+  fin
+  proceso recorrerF(E cantCalles:numero)
+  comenzar
+    repetir cantCalles-1
+      juntarFlores
+      mover
+    juntarFlores
+    depositarFlores
+  fin
+  proceso recorrerP(E cantCalles:numero; E avIni:numero; E calIni:numero)
+  comenzar
+    repetir cantCalles-1
+      juntarPapeles
+      mover
+    juntarPapeles
+    Pos(avIni, calIni)
+    depositarPapeles
+  fin
+areas
+  areaUno: AreaC (1,75,15,80)
+  areaDos: AreaC (75,80,80,100)
+  areaTres: AreaC (70,10,100,15)
+  areaCuatro: AreaC (10,1,15,10)
+robots
+  robot robot1
+  comenzar
+    direccionar(1)
+    recorrerF(15)
+    Pos(1, 75)
+    recorrerF(15)
+  fin
+  robot robot2
+  comenzar
+    recorrerP(21, 75, 80)
+    Pos(80, 80)
+    recorrerP(21, 80, 80)
+  fin
+  robot robot3
+  comenzar
+    direccionar(1)
+    recorrerF(31)
+    Pos(70, 10)
+    recorrerF(31)
+  fin
+  robot robot4
+  comenzar
+    recorrerP(10, 10, 1)
+    Pos(15, 1)
+    recorrerP(10, 15, 1)
+  fin
+variables
+  robotin1: robot1
+  robotin2: robot2
+  robotin3: robot3
+  robotin4: robot4
+comenzar
+  AsignarArea(robotin1, areaUno)
+  AsignarArea(robotin2, areaDos)
+  AsignarArea(robotin3, areaTres)
+  AsignarArea(robotin4, areaCuatro)
+  Iniciar(robotin1, 1,80)
+  Iniciar(robotin2, 75,80)
+  Iniciar(robotin3, 70,15)
+  Iniciar(robotin4, 10,1)
+fin
