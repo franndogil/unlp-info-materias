@@ -1,0 +1,88 @@
+{Bienvenidos al entorno CMRE.
+Lo siguiente es un código de ejemplo que implementa un
+proceso que recibe un número de avenida como parámetro,
+se posiciona en esa avenida y la recorre.}
+
+programa ejemplo
+procesos
+  proceso direccionar
+  comenzar
+    repetir 3
+      derecha
+  fin
+  proceso juntar(ES flores:numero; ES papeles:numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      flores:=flores+1
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+      papeles:=papeles+1
+  fin
+  proceso recorrer(ES cantidad:numero)
+  variables
+    flores:numero
+    papeles:numero
+    alto:numero
+  comenzar
+    flores:=0
+    papeles:=0
+    Random(alto, 1, 5)
+    repetir alto
+      juntar(flores, papeles)
+      mover
+    juntar(flores, papeles)
+    derecha
+    mover
+    si(flores>papeles)
+      cantidad:=cantidad+1
+  fin
+  proceso escalera(ES cantidad:numero)
+  comenzar
+    repetir 4
+      recorrer(cantidad)
+      direccionar
+  fin
+areas
+  ciudad: AreaC (1,1,100,100)
+robots
+  robot robot1
+  variables
+    quienSoy:numero
+    cantidad:numero
+  comenzar
+    cantidad:=0
+    RecibirMensaje(quienSoy, jefe)
+    escalera(cantidad)
+    EnviarMensaje(cantidad, jefe)
+  fin
+  robot robot2
+  variables
+    suma:numero
+    cant:numero
+  comenzar
+    suma:=0
+    EnviarMensaje(1, robotin1)
+    EnviarMensaje(2, robotin2)
+    EnviarMensaje(3, robotin3)
+    repetir 3
+      RecibirMensaje(cant, *)
+      suma:=suma+cant
+    Informar(suma)
+      
+  fin
+variables
+  robotin1: robot1
+  robotin2: robot1
+  robotin3: robot1
+  jefe: robot2
+comenzar
+  AsignarArea(robotin1, ciudad)
+  AsignarArea(robotin2, ciudad)
+  AsignarArea(robotin3, ciudad)
+  AsignarArea(jefe, ciudad)
+  Iniciar(robotin1, 2,1)
+  Iniciar(robotin2, 7,1)
+  Iniciar(robotin3, 12,1)
+  Iniciar(jefe, 1,1)
+fin
