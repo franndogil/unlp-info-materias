@@ -1,0 +1,91 @@
+{Bienvenidos al entorno CMRE.
+Lo siguiente es un código de ejemplo que implementa un
+proceso que recibe un número de avenida como parámetro,
+se posiciona en esa avenida y la recorre.}
+
+programa ejemplo
+procesos
+  proceso juntarPapeles(ES papeles:numero)
+  comenzar
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+      papeles:=papeles+1
+  fin
+  proceso juntarFlores(ES flores:numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso recorrerP(ES papeles:numero)
+  comenzar
+    repetir 9
+      juntarPapeles(papeles)
+      mover
+  fin
+  proceso recorrerF(ES flores:numero)
+  comenzar
+    repetir 9
+      juntarFlores(flores)
+      mover
+  fin
+areas
+  areaUno: AreaC (1,1,20,5)
+robots
+  robot robot1
+  variables
+    papeles:numero
+  comenzar
+    papeles:=0
+    derecha
+    recorrerP(papeles)
+    EnviarMensaje(papeles, A2)
+  fin
+  robot robot2
+  variables
+    papeles:numero
+    cantAct:numero
+  comenzar
+    papeles:=0
+    RecibirMensaje(cantAct, A1)
+    derecha
+    recorrerP(papeles)
+    cantAct:=cantAct+papeles
+    Informar (cantAct)
+  fin
+  robot robot3
+  variables
+    flores:numero
+  comenzar
+    flores:=0
+    derecha
+    recorrerF(flores)
+    EnviarMensaje(flores, B2)
+  fin
+  robot robot4
+  variables
+    flores:numero
+    cantAct:numero
+  comenzar
+    flores:=0
+    RecibirMensaje(cantAct, B1)
+    derecha
+    recorrerF(flores)
+    cantAct:=cantAct+flores
+    Informar (cantAct)
+  fin
+variables
+  A1: robot1
+  A2: robot2
+  B1: robot3
+  B2: robot4
+comenzar
+  AsignarArea(A1, areaUno)
+  AsignarArea(A2, areaUno)
+  AsignarArea(B1, areaUno)
+  AsignarArea(B2, areaUno)
+  Iniciar(A1, 1,1)
+  Iniciar(A2, 11,1)
+  Iniciar(B1, 1,5)
+  Iniciar(B2, 11,5)
+fin
