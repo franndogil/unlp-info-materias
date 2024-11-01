@@ -5,65 +5,81 @@ se posiciona en esa avenida y la recorre.}
 
 programa ejemplo
 procesos
-  proceso juntarPapeles(ES papeles:numero)
-  comenzar
-    mientras(HayPapelEnLaEsquina)
-      tomarPapel
-      papeles:=papeles+1
-  fin
-  proceso juntarFlores(ES flores:numero)
+  proceso limpiarFlores
   comenzar
     mientras(HayFlorEnLaEsquina)
       tomarFlor
-      flores:=flores+1
   fin
-  proceso recorrerP(ES papeles:numero)
+  proceso limpiarPapeles
   comenzar
-    repetir 9
-      juntarPapeles(papeles)
-      mover
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
   fin
-  proceso recorrerF(ES flores:numero)
+  proceso limpieza
   comenzar
-    repetir 9
-      juntarFlores(flores)
-      mover
+    limpiarFlores
+    limpiarPapeles
   fin
 areas
   areaStandBy: AreaC (1,1,40,1)
   areaTot: AreaC(25, 25, 75, 75)
-  areaUno: AreaPC()
 robots
   robot robot1
+  variables
+    ok:boolean
+    calleT:numero
+    calle:numero
+    avenidaT:numero
+    avenida:numero
+    quienSoy:numero
   comenzar
-    derecha
+    ok:=V
+    RecibirMensaje(quienSoy, fiscalizador)
+    mientras(ok=V)
+      RecibirMensaje(ok, fiscalizador)
+      avenida:=PosAv
+      calle:=PosCa
+      si(ok=V)  
+        Random(calleT, 25, 75)
+        Random(avenidaT, 25, 75)
+        Pos(avenidaT, calleT)
+        limpieza
+        Pos(avenida, calle)
+        EnviarMensaje(ok, fiscalizador)
   fin
   robot robot2
-  comenzar
-    derecha
-  fin
-  robot robot3
-  comenzar
-    derecha
-  fin
-  robot robot4
-  comenzar
-    derecha
-  fin
-  robot robot5
+  variables
+    robotAleatorio:numero
+    ok:boolean
   comenzar
     EnviarMensaje(1, robotin1)
     EnviarMensaje(2, robotin2)
     EnviarMensaje(3, robotin3)
     EnviarMensaje(4, robotin4)
-    
+    repetir 10
+      ok:= V
+      Random(robotAleatorio, 1, 4)
+      si(robotAleatorio=1)
+        EnviarMensaje(ok, robotin1)
+      si(robotAleatorio=2)
+        EnviarMensaje(ok, robotin2)
+      si(robotAleatorio=3)
+        EnviarMensaje(ok, robotin3)
+      si(robotAleatorio=4)
+        EnviarMensaje(ok, robotin4)
+      RecibirMensaje(ok, *)
+    ok:=F
+    EnviarMensaje(ok, robotin1)
+    EnviarMensaje(ok, robotin2)  
+    EnviarMensaje(ok, robotin3)  
+    EnviarMensaje(ok, robotin4)    
   fin
 variables
   robotin1: robot1
-  robotin2: robot2
-  robotin3: robot3
-  robotin4: robot4
-  fiscalizador: robot5
+  robotin2: robot1
+  robotin3: robot1
+  robotin4: robot1
+  fiscalizador: robot2
 comenzar
   AsignarArea(robotin1, areaStandBy)
   AsignarArea(robotin2, areaStandBy)

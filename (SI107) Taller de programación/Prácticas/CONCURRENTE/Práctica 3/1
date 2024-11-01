@@ -1,0 +1,123 @@
+{Bienvenidos al entorno CMRE.
+Lo siguiente es un código de ejemplo que implementa un
+proceso que recibe un número de avenida como parámetro,
+se posiciona en esa avenida y la recorre.}
+
+programa ejemplo
+procesos
+  proceso depositarFlores(E avElegida:numero; E calElegida:numero)
+  comenzar
+    Pos(avElegida,calElegida)
+    mientras(HayFlorEnLaBolsa)
+      depositarFlor
+  fin
+  proceso depositarPapeles(E avElegida:numero; E calElegida:numero)
+  comenzar
+    Pos(avElegida,calElegida)
+    mientras(HayPapelEnLaBolsa)
+      depositarPapel
+  fin
+  proceso juntarFlores
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+  fin
+  proceso juntarPapeles
+  comenzar
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+  fin
+  proceso generarEsquinaF(ES avElegida:numero; ES calElegida:numero)
+  variables
+    calle:numero
+    avenida:numero
+  comenzar
+    Random(avenida, 1, 5)
+    Random(calle, 1, 10)
+    avElegida:=avenida
+    calElegida:=calle
+  fin
+  proceso generarEsquinaP(ES avElegida:numero; ES calElegida:numero)
+  variables
+    calle:numero
+    avenida:numero
+  comenzar
+    Random(avenida, 6, 10)
+    Random(calle, 1, 9)
+    avElegida:=avenida
+    calElegida:=calle
+  fin
+  proceso recorrerF(E avElegida:numero; E calElegida:numero)
+  comenzar
+    Pos(avElegida, calElegida)
+    juntarFlores
+  fin
+  proceso recorrerP(E avElegida:numero; E calElegida:numero)
+  comenzar
+    Pos(avElegida, calElegida)
+    juntarPapeles
+  fin
+areas
+  areaFloreros: AreaC (1,1,5,10)
+  areaPapeleros: AreaC(6,1,10,9)
+  areaInicio: AreaC(6,10,10,10)
+robots
+  robot robot1
+  variables
+    calElegida:numero
+    avElegida:numero
+    calOrigen:numero
+    avOrigen:numero
+  comenzar
+    calOrigen:=PosCa
+    avOrigen:=PosAv
+    repetir 5
+      generarEsquinaF(avElegida, calElegida)
+      BloquearEsquina(avElegida, calElegida)
+      recorrerF(avElegida, calElegida)
+      Pos(avOrigen, calOrigen)
+      LiberarEsquina(avElegida, calElegida)
+    BloquearEsquina(10, 10)
+    depositarFlores(10, 10)
+    Pos(avOrigen, calOrigen)
+    LiberarEsquina(10, 10)
+  fin
+  robot robot2
+  variables
+    calElegida:numero
+    avElegida:numero
+    calOrigen:numero
+    avOrigen:numero
+  comenzar
+    calOrigen:=PosCa
+    avOrigen:=PosAv
+    repetir 3
+      generarEsquinaP(avElegida, calElegida)
+      BloquearEsquina(avElegida, calElegida)
+      recorrerP(avElegida, calElegida)
+      Pos(avOrigen, calOrigen)
+      LiberarEsquina(avElegida, calElegida)
+    BloquearEsquina(10, 10)
+    depositarPapeles(10, 10)
+    Pos(avOrigen, calOrigen)
+    LiberarEsquina(10, 10)
+  fin
+variables
+  florero1: robot1
+  florero2: robot1
+  papelero1: robot2
+  papelero2: robot2
+comenzar
+  AsignarArea(florero1, areaFloreros)
+  AsignarArea(florero2, areaFloreros)
+  AsignarArea(papelero1, areaPapeleros)
+  AsignarArea(papelero2, areaPapeleros)
+  AsignarArea(florero1, areaInicio)
+  AsignarArea(florero2, areaInicio)
+  AsignarArea(papelero1, areaInicio)
+  AsignarArea(papelero2, areaInicio)
+  Iniciar(florero1, 6,10)
+  Iniciar(florero2, 7,10)
+  Iniciar(papelero1, 8,10)
+  Iniciar(papelero2, 9,10)
+fin
