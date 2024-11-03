@@ -1,0 +1,117 @@
+{Bienvenidos al entorno CMRE.
+Lo siguiente es un código de ejemplo que implementa un
+proceso que recibe un número de avenida como parámetro,
+se posiciona en esa avenida y la recorre.}
+
+programa ejemplo
+procesos
+  proceso juntarFlor(ES flores:numero;ES ok:boolean)
+  comenzar
+    si(HayFlorEnLaEsquina)
+      tomarFlor
+      flores:=flores+1
+    sino
+      ok:=F
+  fin
+areas
+  areaUno: AreaC (2,2,10,10)
+  areaIni: AreaC(1,1,5,1)
+robots
+  robot robot1
+  variables
+    quienSoy:numero
+    AvIni:numero
+    CaIni:numero
+    AvNue:numero
+    CaNue:numero
+    condFlor:boolean
+    flores:numero
+  comenzar
+    RecibirMensaje(quienSoy, jefe)
+    RecibirMensaje(AvNue, jefe)
+    RecibirMensaje(CaNue, jefe)
+    condFlor:=V
+    flores:=0
+    AvIni:=PosAv
+    CaIni:=PosCa
+    mientras(condFlor=V)
+      BloquearEsquina(AvNue, CaNue)
+      Pos(AvNue, CaNue)
+      juntarFlor(flores, condFlor)
+      Pos(AvIni, CaIni)
+      LiberarEsquina(AvNue, CaNue)
+    EnviarMensaje(quienSoy, jefe)
+    EnviarMensaje(flores, jefe)
+  fin
+  robot robot2
+  variables
+    AvNue:numero
+    CaNue:numero
+    flores:numero
+    maxFlores:numero
+    robotG:numero
+    quienEs:numero
+  comenzar
+    maxFlores:=0
+    robotG:=0
+    EnviarMensaje(1, robotin1)
+    EnviarMensaje(2, robotin2)
+    EnviarMensaje(3, robotin3)
+    EnviarMensaje(4, robotin4)
+    Random(AvNue, 2, 10)
+    Random(CaNue, 2, 10)
+    EnviarMensaje(AvNue, robotin1)
+    EnviarMensaje(AvNue, robotin2)
+    EnviarMensaje(AvNue, robotin3)
+    EnviarMensaje(AvNue, robotin4)
+    EnviarMensaje(CaNue, robotin1)
+    EnviarMensaje(CaNue, robotin2)
+    EnviarMensaje(CaNue, robotin3)
+    EnviarMensaje(CaNue, robotin4)
+    repetir 4
+      RecibirMensaje(quienEs, *)
+      si(quienEs=1)
+        RecibirMensaje(flores, robotin1)
+        si(flores>maxFlores)
+          maxFlores:=flores
+          robotG:=1
+      si(quienEs=2)
+        RecibirMensaje(flores, robotin2)
+        si(flores>maxFlores)
+          maxFlores:=flores
+          robotG:=2
+      si(quienEs=3)
+        RecibirMensaje(flores, robotin3)
+        si(flores>maxFlores)
+          maxFlores:=flores
+          robotG:=3
+      si(quienEs=4)
+        RecibirMensaje(flores, robotin4)
+        si(flores>maxFlores)
+          maxFlores:=flores
+          robotG:=4
+    Informar("Robot Ganador ", robotG)
+    Informar("Flores recolectadas ", maxFlores)
+  fin
+variables
+  robotin1: robot1
+  robotin2: robot1
+  robotin3: robot1
+  robotin4: robot1
+  jefe: robot2
+comenzar
+  AsignarArea(robotin1, areaUno)
+  AsignarArea(robotin2, areaUno)
+  AsignarArea(robotin3, areaUno)
+  AsignarArea(robotin4, areaUno)
+  AsignarArea(jefe, areaIni)
+  AsignarArea(robotin1, areaIni)
+  AsignarArea(robotin2, areaIni)
+  AsignarArea(robotin3, areaIni)
+  AsignarArea(robotin4, areaIni)
+  Iniciar(jefe, 1,1)
+  Iniciar(robotin1, 2,1)
+  Iniciar(robotin2, 3,1)
+  Iniciar(robotin3, 4,1)
+  Iniciar(robotin4, 5,1)
+fin
