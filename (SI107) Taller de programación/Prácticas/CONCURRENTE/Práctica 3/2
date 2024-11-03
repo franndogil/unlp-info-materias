@@ -1,0 +1,124 @@
+{Bienvenidos al entorno CMRE.
+Lo siguiente es un código de ejemplo que implementa un
+proceso que recibe un número de avenida como parámetro,
+se posiciona en esa avenida y la recorre.}
+
+programa ejemplo
+procesos
+  proceso juntarFlores(ES flores:numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso juntarPapeles(ES papeles:numero)
+  comenzar
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+      papeles:=papeles+1
+  fin
+  proceso izquierda
+  comenzar
+    repetir 3
+      derecha
+  fin
+  proceso escalonDer(E pasos:numero; ES flores:numero)
+  comenzar
+    repetir pasos
+      mover
+    juntarFlores(flores)
+    derecha
+    repetir pasos
+      mover
+    repetir 3
+      derecha
+  fin
+  proceso escalonIzq(E pasos:numero; ES papeles:numero)
+  comenzar
+    repetir pasos
+      mover
+    juntarPapeles(papeles)
+    izquierda
+    repetir pasos
+      mover
+    derecha
+  fin
+areas
+  ciudad: AreaC (1,1,100,100)
+robots
+  robot robot1
+  variables
+    quienSoy:numero
+    cuadras:numero
+    flores:numero
+  comenzar
+    RecibirMensaje(quienSoy, jefe)
+    flores:=0
+    cuadras:=5
+    repetir 4
+      juntarFlores(flores)
+      escalonDer(cuadras, flores)
+      cuadras:=cuadras-1
+    BloquearEsquina(16, 16)
+    escalonDer(1, flores)
+    repetir 3
+      derecha
+    mover
+    LiberarEsquina(16, 16)
+    cuadras:=2
+    repetir 4
+      juntarFlores(flores)
+      escalonDer(cuadras, flores)
+      cuadras:=cuadras+1
+    Informar(flores)
+    EnviarMensaje(quienSoy, jefe)
+  fin
+  robot robot2
+  variables
+    quienSoy:numero
+    cuadras:numero
+    papeles:numero
+  comenzar
+    RecibirMensaje(quienSoy, jefe)
+    papeles:=0    
+    cuadras:=5
+    repetir 4
+      juntarPapeles(papeles)
+      escalonIzq(cuadras, papeles)
+      cuadras:=cuadras-1
+    BloquearEsquina(16, 16)
+    escalonIzq(1, papeles)
+    derecha
+    mover
+    LiberarEsquina(16,16)
+    cuadras:=2
+    repetir 4
+      juntarPapeles(papeles)
+      escalonIzq(cuadras, papeles)
+      cuadras:=cuadras+1
+    Informar(papeles)
+    EnviarMensaje(quienSoy, jefe)
+  fin
+  robot robot3
+  variables
+    primero:numero
+    segundo:numero
+  comenzar
+    EnviarMensaje(1, robotin1)
+    EnviarMensaje(2, robotin2)
+    RecibirMensaje(primero, *)
+    RecibirMensaje(segundo, *)
+    Informar(primero)
+  fin
+variables
+  robotin1: robot1
+  robotin2: robot2
+  jefe:  robot3
+comenzar
+  AsignarArea(robotin1, ciudad)
+  AsignarArea(robotin2, ciudad)
+  AsignarArea(jefe, ciudad)
+  Iniciar(robotin1, 1,1)
+  Iniciar(robotin2, 31,1)
+  Iniciar(jefe, 15,1)
+fin
