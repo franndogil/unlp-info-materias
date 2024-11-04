@@ -1,0 +1,95 @@
+programa ejemplo
+procesos
+  proceso juntarPapel(ES HayaPapelEnFuente:boolean)
+  comenzar
+    si(HayPapelEnLaEsquina)
+      tomarPapel
+      HayaPapelEnFuente:=V
+    sino
+      HayaPapelEnFuente:=F
+  fin
+  proceso recorrer(ES avenidaActual:numero; ES calleActual:numero; ES HayaPapelEnFuente:boolean; ES avenidaCompleta:boolean)
+  comenzar
+    si(calleActual<=100)
+      BloquearEsquina(11,11)
+      Pos(11,11)
+      juntarPapel(HayaPapelEnFuente)
+      Pos(avenidaActual, calleActual)
+      LiberarEsquina(11,11)
+      si(HayPapelEnLaBolsa)
+        depositarPapel
+        si(calleActual<100)
+          mover
+          calleActual:=calleActual+1
+    sino
+      avenidaCompleta:=V
+  fin
+areas
+  ciudad: AreaC (1,1,100,100)
+robots
+  robot robot1
+  variables
+    quienSoy:numero
+    calleActual:numero
+    avenidaActual:numero
+    HayaPapelEnFuente:boolean
+    avenidaCompleta:boolean
+  comenzar
+    RecibirMensaje(quienSoy, jefe)
+    calleActual:=PosCa
+    avenidaActual:=PosAv
+    HayaPapelEnFuente:=V
+    avenidaCompleta:=F
+    mientras(HayaPapelEnFuente=V)&(avenidaCompleta=F)
+      recorrer(avenidaActual, calleActual, HayaPapelEnFuente, avenidaCompleta)
+    EnviarMensaje(quienSoy, jefe)
+    EnviarMensaje(calleActual, jefe)
+  fin
+  robot robot2
+  variables
+    quienEs:numero
+    callesRecorridas:numero
+    maxCallesRecorridas:numero
+    ganador:numero
+  comenzar
+    EnviarMensaje(1, robotin1)
+    EnviarMensaje(2, robotin2)
+    EnviarMensaje(3, robotin3)
+    EnviarMensaje(4, robotin4)
+    callesRecorridas:=0
+    maxCallesRecorridas:=0
+    ganador:=0
+    repetir 4
+      RecibirMensaje(quienEs, *)
+      si(quienEs=1)
+        RecibirMensaje(callesRecorridas, robotin1)
+      si(quienEs=2)
+        RecibirMensaje(callesRecorridas, robotin2)
+      si(quienEs=3)
+        RecibirMensaje(callesRecorridas, robotin3)
+      si(quienEs=4)
+        RecibirMensaje(callesRecorridas, robotin4)
+      si(callesRecorridas>maxCallesRecorridas)
+        maxCallesRecorridas:=callesRecorridas
+        ganador:=quienEs
+    Informar("El ganador es el r ", ganador)
+    Informar("Recorrio ", maxCallesRecorridas)
+  fin
+variables
+  robotin1: robot1
+  robotin2: robot1
+  robotin3: robot1
+  robotin4: robot1
+  jefe:  robot2
+comenzar
+  AsignarArea(robotin1, ciudad)
+  AsignarArea(robotin2, ciudad)
+  AsignarArea(robotin3, ciudad)
+  AsignarArea(robotin4, ciudad)
+  AsignarArea(jefe, ciudad) 
+  Iniciar(robotin1, 4,1)
+  Iniciar(robotin2, 6,1)
+  Iniciar(robotin3, 8,1)
+  Iniciar(robotin4, 10,1)
+  Iniciar(jefe, 1,1)
+fin
