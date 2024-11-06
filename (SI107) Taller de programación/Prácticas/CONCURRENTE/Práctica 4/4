@@ -1,0 +1,93 @@
+programa ejemplo
+procesos
+  proceso RecogerFlores
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+  fin
+  proceso RecogerPapeles
+  comenzar
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+  fin
+  proceso VaciarBolsa
+  comenzar
+    mientras(HayFlorEnLaBolsa)
+      depositarFlor
+    mientras(HayPapelEnLaBolsa)
+      depositarPapel
+  fin
+areas
+  ciudad: AreaC (1,1,3,1)
+  areat: AreaPC(2,2,100,100)
+robots
+  robot robot1
+  variables
+    quienSoy:numero
+    numTarea:numero
+    avRe:numero
+    caRe:numero
+    ok:boolean
+    avIni:numero
+    caIni:numero
+  comenzar
+    ok:=V
+    avIni:=PosAv
+    caIni:=PosCa
+    RecibirMensaje(quienSoy,jefe)
+    RecibirMensaje(numTarea, jefe)
+    mientras(numTarea<>4)
+      RecibirMensaje(avRe, jefe)
+      RecibirMensaje(caRe, jefe)
+      BloquearEsquina(avRe,  caRe)
+      Pos(avRe, caRe)
+      si(numTarea=1)
+        RecogerFlores
+      si(numTarea=2)
+        RecogerPapeles
+      si(numTarea=3)
+        VaciarBolsa
+      Pos(avIni, caIni)
+      LiberarEsquina(avRe, caRe)
+      EnviarMensaje(ok, jefe)
+      RecibirMensaje(numTarea, jefe)
+  fin
+  robot robot2
+  variables
+    avAl:numero
+    caAl:numero
+    trAl:numero
+    numTarea:numero
+  comenzar
+    EnviarMensaje(1, robotin1)
+    EnviarMensaje(2, robotin2)
+    repetir 10
+      Random(numTarea, 1, 3)
+      Random(avAl, 2, 100)
+      Random(caAl, 2, 100)
+      Random(trAl, 1, 2)
+      si(trAl=1)
+        EnviarMensaje(numTarea, robotin1)
+        EnviarMensaje(avAl, robotin1)
+        EnviarMensaje(caAl, robotin1)
+      sino
+        EnviarMensaje(numTarea, robotin2)
+        EnviarMensaje(avAl, robotin2)
+        EnviarMensaje(caAl, robotin2)
+    EnviarMensaje(4, robotin1)
+    EnviarMensaje(4, robotin2)
+  fin
+variables
+  robotin1: robot1
+  robotin2: robot1
+  jefe: robot2
+comenzar
+  AsignarArea(robotin1, areat)
+  AsignarArea(robotin2, areat)
+  AsignarArea(robotin1, ciudad)
+  AsignarArea(robotin2, ciudad)
+  AsignarArea(jefe, ciudad)
+  Iniciar(robotin1, 2,1)
+  Iniciar(robotin2, 3,1)
+  Iniciar(jefe, 1,1)
+fin
