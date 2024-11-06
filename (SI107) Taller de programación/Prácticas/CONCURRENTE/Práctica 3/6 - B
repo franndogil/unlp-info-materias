@@ -1,0 +1,235 @@
+programa ejemplo
+procesos
+  proceso avanzarR1(E cuadras:numero)
+  comenzar
+    repetir cuadras
+      juntarFlores
+      mover
+    derecha
+  fin
+  proceso avanzarR3(E cuadras:numero)
+  comenzar
+    repetir cuadras
+      juntarPapeles
+      mover
+    derecha
+  fin
+  proceso juntarFlores
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+  fin
+  proceso juntarPapeles
+  comenzar
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+  fin
+  proceso avanzarComplicadoR1(E cuadras:numero; E avP:numero; E caP:numero; E avB:numero; E caB:numero)
+  variables
+    cuadrasRec:numero
+  comenzar
+    cuadrasRec:=0
+    mientras(cuadrasRec<cuadras)
+      si(PosAv=avP)&&(PosCa=caP)
+        BloquearEsquina(avB, caB)
+        mover
+        juntarFlores
+        mover
+        LiberarEsquina(avB, caB)
+        cuadrasRec:=cuadrasRec+2
+      sino
+        juntarFlores
+        mover
+        cuadrasRec:=cuadrasRec+1
+    derecha
+  fin
+  proceso avanzarComplicadoR2(E cuadras:numero; E avP:numero; E caP:numero; E avB:numero; E caB:numero)
+  variables
+    cuadrasRec:numero
+  comenzar
+    cuadrasRec:=0
+    mientras(cuadrasRec<cuadras)
+      si(PosAv=avP)&&(PosCa=caP)
+        BloquearEsquina(avB, caB)
+        mover
+        juntarPapeles
+        juntarFlores
+        mover
+        LiberarEsquina(avB, caB)
+        cuadrasRec:=cuadrasRec+2
+      sino
+        juntarPapeles
+        juntarFlores
+        mover
+        cuadrasRec:=cuadrasRec+1
+    derecha
+  fin
+  proceso avanzarComplicadoR3(E cuadras:numero; E avP:numero; E caP:numero; E avB:numero; E caB:numero)
+  variables
+    cuadrasRec:numero
+  comenzar
+    cuadrasRec:=0
+    mientras(cuadrasRec<cuadras)
+      si(PosAv=avP)&&(PosCa=caP)
+        BloquearEsquina(avB, caB)
+        mover
+        juntarPapeles
+        mover
+        LiberarEsquina(avB, caB)
+        cuadrasRec:=cuadrasRec+2
+      sino
+        juntarPapeles
+        mover
+        cuadrasRec:=cuadrasRec+1
+    derecha
+  fin
+  proceso inicio(E cuadras:numero)
+  comenzar
+    repetir 4
+      avanzar(cuadras)
+  fin
+  proceso inicioR1(E cuadras:numero)
+  comenzar
+    avanzarR1(cuadras)
+    avanzarComplicadoR1(cuadras, 4, 8, 5, 8)
+    avanzarComplicadoR1(cuadras, 8, 6, 8, 5)
+    avanzarR1(cuadras)
+  fin
+  proceso inicioR2(E cuadras:numero)
+  comenzar
+    avanzarComplicadoR2(cuadras, 5, 7, 5, 8)
+    avanzarComplicadoR2(cuadras, 8, 15, 9, 15)
+    avanzarComplicadoR2(cuadras, 15, 10, 15, 9)
+    avanzarComplicadoR2(cuadras, 9, 5, 8, 5)
+  fin
+  proceso inicioR3(E cuadras:numero)
+  comenzar
+    avanzarComplicadoR3(cuadras, 9, 14, 9, 15)
+    avanzarR3(cuadras)
+    avanzarR3(cuadras)
+    avanzarComplicadoR3(cuadras, 16, 10, 15, 9)
+  fin
+  proceso depositarR1(E calle:numero)
+  comenzar
+    Pos(1, calle)
+    derecha
+    mientras(HayFlorEnLaBolsa)&(PosAv<100)
+      depositarFlor
+      mover
+  fin
+  proceso depositarR2(E calle:numero)
+  comenzar
+    Pos(1, calle)
+    derecha
+    mientras(HayPapelEnLaBolsa)&(HayFlorEnLaBolsa)&(PosAv<100)
+      depositarFlor
+      depositarPapel
+      mover
+  fin
+  proceso depositarR3(E calle:numero)
+  comenzar
+    Pos(1, calle)
+    derecha
+    mientras(HayPapelEnLaBolsa)&(PosAv<100)
+      depositarPapel
+      mover
+  fin
+areas
+  ciudad: AreaC (1,1,100,100)
+robots
+  robot robot1
+  variables
+    cuadras:numero
+    quienSoy:numero
+    calle:numero
+    ok:boolean
+  comenzar
+    ok:=V
+    RecibirMensaje(quienSoy, jefe)
+    RecibirMensaje(cuadras, jefe)
+    inicioR1(cuadras)
+    EnviarMensaje(ok, jefe)
+    RecibirMensaje(ok, jefe)
+    EnviarMensaje(quienSoy, jefe)
+    RecibirMensaje(calle, jefe)
+    depositarR1(calle)
+  fin
+  robot robot2
+  variables
+    cuadras:numero
+    quienSoy:numero
+    calle:numero
+    ok:boolean
+  comenzar
+    ok:=V
+    RecibirMensaje(quienSoy, jefe)
+    RecibirMensaje(cuadras, jefe)
+    inicioR2(cuadras)
+    EnviarMensaje(ok, jefe)
+    RecibirMensaje(ok, jefe)
+    EnviarMensaje(quienSoy, jefe)
+    RecibirMensaje(calle, jefe)
+    depositarR2(calle)
+  fin
+  robot robot3
+  variables
+    cuadras:numero
+    quienSoy:numero
+    calle:numero
+    ok:boolean
+  comenzar
+    ok:=V
+    RecibirMensaje(quienSoy, jefe)
+    RecibirMensaje(cuadras, jefe)
+    inicioR3(cuadras)
+    EnviarMensaje(ok, jefe)
+    RecibirMensaje(ok, jefe)
+    EnviarMensaje(quienSoy, jefe)
+    RecibirMensaje(calle, jefe)
+    depositarR3(calle)
+  fin
+  robot robot4
+  variables
+    quienEs:numero
+    calle:numero
+    ok:boolean
+  comenzar
+    calle:=20
+    EnviarMensaje(1, robotin1)
+    EnviarMensaje(2, robotin2)
+    EnviarMensaje(3, robotin3)
+    EnviarMensaje(6,robotin1)
+    EnviarMensaje(10,robotin2)
+    EnviarMensaje(7,robotin3)
+    repetir 3
+      RecibirMensaje(ok, *)
+    EnviarMensaje(ok, robotin1)
+    EnviarMensaje(ok, robotin2)
+    EnviarMensaje(ok, robotin3)
+    repetir 3
+      RecibirMensaje(quienEs, *)
+      si(quienEs=1)
+        EnviarMensaje(calle, robotin1)
+        calle:=calle+1
+      si(quienEs=2)
+        EnviarMensaje(calle, robotin2)
+        calle:=calle+1
+      si(quienEs=3)
+        EnviarMensaje(calle, robotin3)
+        calle:=calle+1
+  fin
+variables
+  robotin1: robot1
+  robotin2: robot2
+  robotin3: robot3
+  jefe: robot4
+comenzar
+  AsignarArea(robotin1, ciudad)
+  AsignarArea(robotin2, ciudad)
+  AsignarArea(robotin3, ciudad)
+  AsignarArea(jefe, ciudad)
+  Iniciar(robotin1, 2,2)
+  Iniciar(robotin2, 5,5)
+  Iniciar(robotin3, 9,9)
+  Iniciar(jefe, 1,1)
+fin
