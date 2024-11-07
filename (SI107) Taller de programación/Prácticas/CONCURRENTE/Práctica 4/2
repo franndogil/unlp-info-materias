@@ -1,0 +1,105 @@
+programa ejemplo
+procesos
+  proceso irT(E avAct:numero; E caAct:numero; ES papelesAct:numero)
+  comenzar
+    BloquearEsquina(50, 50)
+    Pos(50, 50)
+    mientras(HayPapelEnLaBolsa)
+      depositarPapel
+    Pos(avAct, caAct)
+    LiberarEsquina(50, 50)
+    papelesAct:=0
+  fin
+  proceso irR(E avIni:numero; E caIni:numero; E cantSoli:numero; ES ok:boolean)
+  variables
+    cantAct:numero
+    cantSoltar:numero
+  comenzar
+    cantAct:=0
+    BloquearEsquina(50, 50)
+    Pos(50, 50)
+    mientras(HayPapelEnLaEsquina)&(cantAct<cantSoli)
+      tomarPapel
+      cantAct:=cantAct+1
+    si(cantAct=cantSoli) 
+      Pos(avIni, caIni)
+      LiberarEsquina(50, 50)
+      ok:=V
+    si(cantAct<cantSoli)
+      ok:=F
+      repetir cantAct
+        depositarPapel
+      Pos(avIni, caIni)
+      LiberarEsquina(50, 50)
+  fin
+areas
+  area1: AreaPC (5,1,10,100)
+  area2: AreaPC (11,1,12,1)
+  area3: AreaPC (50,50,50,50)
+robots
+  robot robot1
+  variables
+    papelesAct:numero
+    avAct:numero
+    caAct:numero
+    avIni:numero
+  comenzar
+    avIni:=PosAv
+    papelesAct:=0
+    mientras(PosCa<100)
+      mientras(HayPapelEnLaEsquina)&(papelesAct<5)
+        tomarPapel
+        papelesAct:=papelesAct+1
+        si(papelesAct=5)
+          avAct:=PosAv
+          caAct:=PosCa 
+          irT(avAct, caAct, papelesAct)
+      mover
+    mientras(HayPapelEnLaEsquina)
+      mientras(papelesAct<5)&(HayPapelEnLaEsquina)
+        tomarPapel
+        papelesAct:=papelesAct+1
+      avAct:=PosAv
+      caAct:=PosAv
+      irT(avAct, caAct, papelesAct)
+    Pos(avIni, 1)
+  fin
+  robot robot2
+  variables
+    avIni:numero
+    caIni:numero
+    cantPapeles:numero
+    intentos:numero
+    ok:boolean
+  comenzar
+    avIni:=PosAv
+    caIni:=PosCa
+    mientras(intentos<8)
+      Random(cantPapeles, 2, 5)
+      irR(avIni, caIni, cantPapeles, ok)
+      si(ok=V)
+        intentos:=0
+        mientras(HayPapelEnLaBolsa)
+          depositarPapel
+      sino
+        intentos:=intentos+1  
+  fin
+variables
+  productor1: robot1
+  productor2: robot1
+  consumidor1: robot2
+  consumidor2: robot2
+comenzar
+  AsignarArea(productor1, area1)
+  AsignarArea(productor2, area1)
+  AsignarArea(productor1, area3)
+  AsignarArea(productor2, area3)
+  AsignarArea(consumidor1, area2)
+  AsignarArea(consumidor2, area2)
+  AsignarArea(consumidor1, area3)
+  AsignarArea(consumidor2, area3)
+  Iniciar(productor1, 5,1)
+  Iniciar(productor2, 10,1)
+  Iniciar(consumidor1,11,1)
+  Iniciar(consumidor2, 12,1)
+fin
