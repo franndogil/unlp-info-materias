@@ -1,0 +1,1 @@
+#Se utilizan registros temporales los cuales pueden ser modificados por la subrutina, debemos utilizar los registros $s0..$s7
