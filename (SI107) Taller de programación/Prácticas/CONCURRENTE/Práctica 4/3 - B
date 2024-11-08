@@ -16,39 +16,50 @@ robots
   robot robot1
   variables
     quienSoy:numero
-    cont:numero
     ok:boolean
+    papReco:numero
+    papAct:numero
   comenzar
-    cont:=0
     ok:=V
     RecibirMensaje(quienSoy, coordinador)
     mientras(ok=V)
-      repetir 5
-        juntarPapeles
-        mover
-      cont:=cont+1
-      si(cont<19)
-        EnviarMensaje(ok, coordinador)
-      sino
-        ok:=F
-        EnviarMensaje(ok, coordinador)
+      Random(papReco, 1, 50)
+      papAct:=0
+      mientras(papAct<papReco)&(PosCa<100)
+        si(HayPapelEnLaEsquina)
+          tomarPapel
+          papAct:=papAct+1
+        si(PosCa=100)
+          mientras(HayPapelEnLaEsquina)
+            tomarPapel
+          ok:=F
+          EnviarMensaje(ok, coordinador)
+        sino
+          ok:=V
+          EnviarMensaje(ok, coordinador)
       RecibirMensaje(ok, coordinador)
-    repetir 4
-      juntarPapeles
-      mover
-    juntarPapeles
   fin
   robot robot2
   variables
     ok:boolean
+    contFin:numero
   comenzar
     ok:=V
+    contFin:=0
     EnviarMensaje(1, robotin1)
     EnviarMensaje(2, robotin2)
     EnviarMensaje(3, robotin3)
-    mientras(ok=V)
+    mientras(contFin<>3)
       repetir 3
         RecibirMensaje(ok, *)
+        si(ok=F)
+          contFin:=contFin+1
+        sino
+          EnviarMensaje(ok, robotin1)
+          EnviarMensaje(ok, robotin2)
+          EnviarMensaje(ok, robotin3)
+    ok:=F
+    repetir 3
       EnviarMensaje(ok, robotin1)
       EnviarMensaje(ok, robotin2)
       EnviarMensaje(ok, robotin3)
