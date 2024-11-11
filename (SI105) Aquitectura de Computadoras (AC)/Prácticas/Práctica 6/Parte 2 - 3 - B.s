@@ -1,6 +1,6 @@
 .data
 A: .word 1
-B: .word 1000
+B: .word 3
 C: .word 0
 .code
 ld $t1, A($0)
