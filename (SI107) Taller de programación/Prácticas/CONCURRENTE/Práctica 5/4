@@ -1,0 +1,96 @@
+{Bienvenidos al entorno CMRE.
+Lo siguiente es un código de ejemplo que implementa un
+proceso que recibe un número de avenida como parámetro,
+se posiciona en esa avenida y la recorre.}
+
+programa ejemplo
+procesos
+  proceso juntarFlores(ES cantFlores:numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      cantFlores:=cantFlores+1
+  fin
+areas
+  areaIni: AreaC (1,1,4,1)
+  areaTr: AreaPC(40,40,60,60)
+robots
+  robot robot1
+  variables
+    ok:boolean
+    avRan:numero
+    caRan:numero
+    avIni:numero
+    caIni:numero
+    cantFlores:numero
+  comenzar
+    ok:=V
+    mientras(ok=V)
+      RecibirMensaje(avRan, fiscal)
+      RecibirMensaje(caRan, fiscal)
+      cantFlores:=0
+      avIni:=PosAv
+      caIni:=PosCa
+      si(avRan<>0)&(caRan<>0)
+        BloquearEsquina(avRan, caRan)
+        Pos(avRan, caRan)
+        juntarFlores(cantFlores)
+        Pos(avIni, caIni)
+        LiberarEsquina(avRan, caRan)
+        EnviarMensaje(cantFlores, fiscal)
+      sino
+        ok:=F      
+  fin
+  robot robot2
+  variables
+    robotA:numero
+    avRan:numero
+    caRan:numero
+    cantFlores:numero
+    flores:numero
+  comenzar
+    cantFlores:=0
+    repetir 8
+      flores:=0
+      Random(robotA, 1, 3)
+      Random(avRan, 40, 60)
+      Random(caRan, 40, 60)
+      si(robotA=1)
+        EnviarMensaje(avRan, R1)
+        EnviarMensaje(caRan, R1)
+      si(robotA=2)
+        EnviarMensaje(avRan, R2)
+        EnviarMensaje(caRan, R2)
+      si(robotA=3)
+        EnviarMensaje(avRan, R3)
+        EnviarMensaje(caRan, R3)
+      RecibirMensaje(flores, *)
+      cantFlores:=cantFlores+flores
+    avRan:=0
+    caRan:=0
+    EnviarMensaje(avRan, R1)
+    EnviarMensaje(caRan, R1)
+    EnviarMensaje(avRan, R2)
+    EnviarMensaje(caRan, R2)
+    EnviarMensaje(avRan, R3)
+    EnviarMensaje(caRan, R3)
+    Informar(cantFlores)
+  fin
+variables
+  R1: robot1
+  R2: robot1
+  R3: robot1
+  fiscal: robot2
+comenzar
+  AsignarArea(R1, areaIni)
+  AsignarArea(R2, areaIni)
+  AsignarArea(R3, areaIni)
+  AsignarArea(R1, areaTr)
+  AsignarArea(R2, areaTr)
+  AsignarArea(R3, areaTr)
+  AsignarArea(fiscal, areaIni)
+  Iniciar(R1, 1,1)
+  Iniciar(R2, 2,1)
+  Iniciar(R3, 3,1)
+  Iniciar(fiscal, 4,1)
+fin
