@@ -1,0 +1,109 @@
+{Bienvenidos al entorno CMRE.
+Lo siguiente es un código de ejemplo que implementa un
+proceso que recibe un número de avenida como parámetro,
+se posiciona en esa avenida y la recorre.}
+
+programa ejemplo
+procesos
+  proceso vaciarBolsa
+  comenzar
+    mientras(HayFlorEnLaBolsa)
+      depositarFlor
+  fin
+  proceso juntarFlores
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+  fin
+  proceso juntarFloresFiscal(ES cantFlores:numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      cantFlores:=cantFlores+1
+  fin
+areas
+  areaComun: AreaPC (1,1,100,3)
+  areaDep:  AreaC (50,50,50,50)
+  areaFis: AreaP (1,4,1,4)
+robots
+  robot robot1
+  variables
+    quienSoy:numero
+    avAct:numero
+    caAct:numero
+    ok:boolean
+  comenzar
+    ok:=V
+    RecibirMensaje(quienSoy, fiscal)
+    derecha
+    mientras(ok=V)&(PosAv<100)
+      repetir 10
+        juntarFlores
+        si(PosAv<100)
+          mover
+      avAct:=PosAv
+      caAct:=PosCa
+      BloquearEsquina(50, 50)
+      Pos(50, 50)
+      vaciarBolsa
+      Pos(avAct, caAct)
+      LiberarEsquina(50, 50)
+      ok:=V
+      EnviarMensaje(ok, fiscal)
+      RecibirMensaje(ok, fiscal)
+    ok:=F
+    EnviarMensaje(ok, fiscal)
+  fin
+  robot robot2
+  variables
+    ok:boolean
+    cont:numero
+    cantFlores:numero
+  comenzar
+    ok:=V
+    cantFlores:=0
+    EnviarMensaje(1, R1)
+    EnviarMensaje(2, R2)
+    EnviarMensaje(3, R3)
+    mientras(ok=V)
+      cont:=0
+      repetir 3
+        RecibirMensaje(ok, *)
+        si(ok=V)
+          cont:=cont+1
+      si(cont=3)
+        ok:=V
+        EnviarMensaje(ok, R1)
+        EnviarMensaje(ok, R2)
+        EnviarMensaje(ok, R3)
+      sino
+        ok:=F
+        EnviarMensaje(ok, R1)
+        EnviarMensaje(ok, R2)
+        EnviarMensaje(ok, R3)
+    BloquearEsquina(50, 50)
+    Pos(50, 50)
+    juntarFloresFiscal(cantFlores)
+    Pos(1, 4)
+    LiberarEsquina(50, 50)
+    Informar(cantFlores)
+  fin
+variables
+  R1: robot1
+  R2: robot1
+  R3: robot1
+  fiscal: robot2
+comenzar
+  AsignarArea(R1, areaComun)
+  AsignarArea(R2, areaComun)
+  AsignarArea(R3, areaComun)
+  AsignarArea(R1, areaDep)
+  AsignarArea(R2, areaDep)
+  AsignarArea(R3, areaDep)
+  AsignarArea(fiscal, areaDep)
+  AsignarArea(fiscal, areaFis)
+  Iniciar(R1, 1,1)
+  Iniciar(R2, 1,2)
+  Iniciar(R3, 1,3)
+  Iniciar(fiscal, 1, 4)
+fin
