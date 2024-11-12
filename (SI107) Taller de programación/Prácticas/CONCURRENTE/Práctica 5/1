@@ -1,0 +1,128 @@
+{Bienvenidos al entorno CMRE.
+Lo siguiente es un código de ejemplo que implementa un
+proceso que recibe un número de avenida como parámetro,
+se posiciona en esa avenida y la recorre.}
+
+programa ejemplo
+procesos
+  proceso tomarPapeles(ES cantPapeles:numero)
+  comenzar
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+      cantPapeles:=cantPapeles+1
+  fin
+  proceso tomarFlores(ES cantFlores:numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      cantFlores:=cantFlores+1
+  fin
+areas
+  ciudad: AreaC (1,1,100,100)
+robots
+  robot robot1
+  variables
+    quienSoy:numero
+    cantFlores:numero
+  comenzar
+    cantFlores:=0
+    RecibirMensaje(quienSoy, fiscal)
+    mientras(PosCa<100)
+      tomarFlores(cantFlores)
+      si(PosCa=97)
+        BloquearEsquina(PosAv, 98)
+        mover
+        tomarFlores(cantFlores)
+        BloquearEsquina(PosAv, 99)
+        mover
+        LiberarEsquina(PosAv, 98)
+        tomarFlores(cantFlores)
+        mover
+        LiberarEsquina(PosAv, 99)
+        tomarFlores(cantFlores)
+      si(PosCa<100)
+        mover
+    tomarFlores(cantFlores)
+    EnviarMensaje(quienSoy, fiscal)
+    EnviarMensaje(cantFlores, fiscal)
+  fin
+  robot robot2
+  variables
+    quienSoy:numero
+    cantPapeles:numero
+  comenzar
+    cantPapeles:=0
+    RecibirMensaje(quienSoy, fiscal)
+    derecha
+    mientras(PosAv<100)
+      tomarPapeles(cantPapeles)
+      si(PosAv=1)
+        BloquearEsquina(2, PosCa)
+        mover
+        tomarPapeles(cantPapeles)
+        BloquearEsquina(3, PosCa)
+        mover
+        LiberarEsquina(2, PosCa)
+        tomarPapeles(cantPapeles)
+        mover
+        LiberarEsquina(3, PosCa)
+        tomarPapeles(cantPapeles)
+      si(PosAv<100)
+        mover
+    tomarPapeles(cantPapeles)
+    EnviarMensaje(quienSoy, fiscal)
+    EnviarMensaje(cantPapeles, fiscal)
+  fin
+  robot robot3
+  variables
+    quienEs:numero
+    papelesJuntados:numero
+    papeles:numero
+    floresJuntadas:numero
+    flores:numero
+    equipo:numero
+  comenzar
+    papelesJuntados:=0
+    floresJuntadas:=0
+    EnviarMensaje(1, R1)
+    EnviarMensaje(2, R2)
+    EnviarMensaje(3, A1)
+    EnviarMensaje(4, A2)
+    repetir 4
+      RecibirMensaje(quienEs, *)
+      si(quienEs=1)
+        RecibirMensaje(flores, R1)
+        floresJuntadas := floresJuntadas + flores
+      si(quienEs=2)
+        RecibirMensaje(flores, R2)
+        floresJuntadas := floresJuntadas + flores
+      si(quienEs=3)
+        RecibirMensaje(papeles, A1)
+        papelesJuntados := papelesJuntados + papeles
+      si(quienEs=4)
+        RecibirMensaje(papeles, A2)   
+        papelesJuntados := papelesJuntados + papeles     
+    si(papelesJuntados > floresJuntadas)
+      equipo:=2
+    sino
+      equipo:=1
+    Informar(equipo)
+  fin
+variables
+  R1: robot1
+  R2: robot1
+  A1: robot2
+  A2: robot2
+  fiscal: robot3
+comenzar
+  AsignarArea(R1, ciudad)
+  AsignarArea(R2, ciudad)
+  AsignarArea(A1, ciudad)
+  AsignarArea(A2, ciudad)
+  AsignarArea(fiscal, ciudad)
+  Iniciar(R1, 2,1)
+  Iniciar(R2, 3,1)
+  Iniciar(A1, 1,98)
+  Iniciar(A2, 1,99)
+  Iniciar(fiscal, 1,1)
+fin
