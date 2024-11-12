@@ -1,0 +1,86 @@
+{Bienvenidos al entorno CMRE.
+Lo siguiente es un código de ejemplo que implementa un
+proceso que recibe un número de avenida como parámetro,
+se posiciona en esa avenida y la recorre.}
+
+programa ejemplo
+procesos
+  proceso vaciarBolsa
+  comenzar
+    mientras(HayFlorEnLaBolsa)
+      depositarFlor
+  fin
+  proceso juntarFlores(ES cantFlores:numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      cantFlores:=cantFlores+1
+  fin
+areas
+  avenidas: AreaPC (1, 3, 100, 4)
+  depo: AreaC (10,10,10,10)
+  cose: AreaP (1,5,1,5)
+robots
+  robot robot1
+  variables
+    calles:numero
+    flores:numero
+    avAct:numero
+    caAct:numero
+    ok:boolean
+  comenzar
+    derecha
+    mientras(PosAv<100)
+      calles:=0
+      flores:=0
+      mientras(calles<15)&(flores<10)&(PosAv<100)
+        si(HayFlorEnLaEsquina)
+          tomarFlor
+          flores:=flores+1
+        si(PosAv<100)
+          mover
+          calles:=calles+1
+      avAct:=PosAv
+      caAct:=PosCa
+      BloquearEsquina(10,10)
+      Pos(10, 10)
+      vaciarBolsa
+      Pos(avAct, caAct)
+      LiberarEsquina(10, 10)
+      ok:=V
+      EnviarMensaje(ok, C1)
+    ok:=F
+    EnviarMensaje(ok, C1)
+  fin
+  robot robot2
+  variables
+    ok:boolean
+    cantFlores:numero
+  comenzar
+    cantFlores:=0
+    ok:=V
+    mientras(ok=V)
+      RecibirMensaje(ok, *)
+      si(ok=V)
+        BloquearEsquina(10, 10)
+        Pos(10, 10)
+        juntarFlores(cantFlores)
+        Pos(1, 5)
+        LiberarEsquina(10, 10)
+    Informar(cantFlores)
+  fin
+variables
+  R1: robot1
+  R2: robot1
+  C1: robot2
+comenzar
+  AsignarArea(R1, avenidas)
+  AsignarArea(R2, avenidas)
+  AsignarArea(R1, depo)
+  AsignarArea(R2, depo)
+  AsignarArea(C1, depo)
+  AsignarArea(C1, cose)
+  Iniciar(R1, 1,3)
+  Iniciar(R2, 1,4)
+  Iniciar(C1, 1,5)
+fin
