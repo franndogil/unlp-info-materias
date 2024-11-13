@@ -1,0 +1,115 @@
+{Bienvenidos al entorno CMRE.
+Lo siguiente es un código de ejemplo que implementa un
+proceso que recibe un número de avenida como parámetro,
+se posiciona en esa avenida y la recorre.}
+
+programa ejemplo
+procesos
+  proceso recorrerAvenida(E numAv: numero)
+  comenzar
+    Pos(numAv, 1)
+    repetir 99
+      mover
+  fin
+areas
+  areaTra: AreaC (10,10,13,13)
+  areaUno: AreaP (1,1,1,1)
+  areaDos: AreaP (2,2,2,2)
+  areaTres: AreaP (3,3,3,3)
+  areaCuatro: AreaP (4,4,4,4)
+  
+robots
+  robot robot1
+  variables
+    quienSoy:numero
+    avIni:numero
+    caIni:numero
+    avRan:numero
+    caRan:numero
+    ok:boolean
+    cantFlor:numero
+  comenzar
+    ok:=F
+    cantFlor:=0
+    RecibirMensaje(quienSoy, E1)
+    avIni:=PosAv
+    caIni:=PosCa
+    mientras(ok=F)
+      RecibirMensaje(ok, E1)
+      si(ok=F)
+        Random(avRan, 10, 13)
+        Random(caRan, 10, 13)
+        BloquearEsquina(avRan, caRan)
+        Pos(avRan, caRan)
+        si(HayFlorEnLaEsquina)
+          tomarFlor
+          cantFlor:=cantFlor+1
+          ok:=V
+        Pos(avIni, caIni)
+        LiberarEsquina(avRan, caRan)
+        EnviarMensaje(ok, E1)
+    si(cantFlor=1)
+      EnviarMensaje(quienSoy, E1)
+  fin
+  robot robot2
+  variables
+    quienEs:numero
+    avRan:numero
+    avIni:numero
+    caRan:numero
+    caIni:numero
+    ok:boolean
+    cont:numero
+  comenzar
+    tomarFlor
+    EnviarMensaje(1, R1)
+    EnviarMensaje(2, R2)
+    EnviarMensaje(3, R3)
+    avIni:=PosAv
+    caIni:=PosCa
+    Random(avRan, 10, 13)
+    Random(caRan, 10, 13)
+    BloquearEsquina(avRan, caRan)
+    Pos(avRan, caRan)
+    depositarFlor
+    Pos(avIni, caIni)
+    LiberarEsquina(avRan, caRan)
+    ok:=F
+    mientras(ok=F)
+      EnviarMensaje(ok, R1)
+      EnviarMensaje(ok, R2)
+      EnviarMensaje(ok, R3)
+      cont:=0
+      repetir 3
+        RecibirMensaje(ok, *)
+        si(ok=F)
+          cont:=cont+1
+      si(cont=3)
+        ok:=F
+      sino
+        ok:=V
+    EnviarMensaje(ok, R1)
+    EnviarMensaje(ok, R2)
+    EnviarMensaje(ok, R3)
+    RecibirMensaje(quienEs, *)
+    Informar(quienEs)
+  fin
+variables
+  R1: robot1
+  R2: robot1
+  R3: robot1
+  E1: robot2
+comenzar
+  AsignarArea(R1, areaTra)
+  AsignarArea(R2, areaTra)
+  AsignarArea(R3, areaTra)
+  AsignarArea(E1, areaTra)
+  AsignarArea(R1, areaUno)
+  AsignarArea(R2, areaDos)
+  AsignarArea(R3, areaTres)
+  AsignarArea(E1, areaCuatro)
+  Iniciar(R1, 1,1)
+  Iniciar(R2, 2,2)
+  Iniciar(R3, 3,3)
+  Iniciar(E1, 4,4)
+fin
