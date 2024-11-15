@@ -20,7 +20,7 @@ beqz $t8, azul		#LINEA 1
 daddi $t4, $s3, 0
 j salto
 azul: daddi $t4, $s3, 0
-salto: sd $t4, 0($s7)		#LINEA 2
+salto: sw $t4, 0($s7)		#LINEA 2
 xori $t8, $t8, 1
 daddi $t1, $0, 1
 daddi $t1, $0, 5
