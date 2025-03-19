@@ -12,8 +12,8 @@ begin
 	rewrite(arc_logico);
 	read(nro);
 	while(nro<>30000)do begin
-		writle(arc_logico, nro);
-		read(nro):
+		write(arc_logico, nro);
+		read(nro);
 	end;
 	close(arc_logico);
 end.
