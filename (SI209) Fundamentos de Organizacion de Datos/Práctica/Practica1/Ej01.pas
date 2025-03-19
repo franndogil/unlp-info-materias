@@ -8,12 +8,12 @@ var
 begin
 	writeln('Nombre del archivo: ');
 	readln(arc_fisico);
-	assign(arc_logico, arc_fisico);
-	rewrite(arc_logico);
+	assign(arc_logico, arc_fisico);		//asignas el nombre al archivo
+	rewrite(arc_logico);	//creas el archivo
 	read(nro);
 	while(nro<>30000)do begin
-		write(arc_logico, nro);
+		write(arc_logico, nro);		// cargas el archivo
 		read(nro);
 	end;
-	close(arc_logico);
+	close(arc_logico);	//cerras y ponen el EOF
 end.
