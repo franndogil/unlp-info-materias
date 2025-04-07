@@ -1,0 +1,78 @@
+=======================================
+          Diapositivas 23
+=======================================
+
+string marca = "Ford";
+int modelo = 2000;
+string st = string.Format("Es un {0} año {1}", marca, modelo);
+
+
+
+=======================================
+          Diapositivas 36
+=======================================
+
+double r = 2.417;
+Console.WriteLine($"Valor = {r:0.0}");
+Console.WriteLine($"Valor = {r:0.00}");
+
+
+
+=======================================
+          Diapositivas 49
+=======================================
+
+List<int> lista = [ 10, 20, 30, 40 ];
+for (int i = 0; i < lista.Count; i++)
+{
+   Console.WriteLine(lista[i]);
+}
+
+
+
+=======================================
+          Diapositivas 66
+=======================================
+
+double[]? vector = new double[10];
+Procesar(vector, 1, 1);
+
+void Procesar(double[]? v, int i, int c)
+{
+    c = c + 10;
+    v[i] = 1000 / c;
+    Console.WriteLine(v[i]);
+}
+
+
+
+=======================================
+          Diapositivas 70
+=======================================
+
+double[]? vector = new double[10];
+Procesar(null, 1, 1);
+Procesar(vector, 10, 1);
+Procesar(vector, -1, 1);
+Procesar(vector, 1, -10);
+Procesar(vector, 1, 1);
+
+
+
+=======================================
+          Diapositivas 71
+=======================================
+
+void Procesar(double[]? v, int i, int c)
+{
+    try
+    {
+        c = c + 10;
+        v[i] = 1000 / c;
+        Console.WriteLine(v[i]);
+    }
+    catch
+    {
+        Console.WriteLine("No procesado");
+    }
+}
