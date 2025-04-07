@@ -16,7 +16,7 @@ NOTA: El nombre del archivo a crear o utilizar debe ser proporcionado por el usu
 program ej03;
 type
 	empleado = record
-		num_emp:integer;
+		numEmp:integer;
 		apellido:string;
 		nombre:string;
 		edad:integer;
@@ -24,11 +24,12 @@ type
 	end;
 	
 	archivo = file of empleado;
-
+	
+//-------------------------------------------------
 procedure leerEmpleado(var emp:empleado);
 begin
 	writeln('Ingrese el numero de empleado: ');
-	readln(emp.num_emp);
+	readln(emp.numEmp);
 	writeln('Ingrese el apellido: ');
 	readln(emp.apellido);
 	if(emp.apellido<>'fin')then begin
@@ -40,78 +41,117 @@ begin
 		readln(emp.dni);
 	end;
 end;
-
+//------------------------------------------------------
+procedure listarDeterminado(var arcLogico:archivo);
 var
-	arc_logico:archivo;
-	arc_fisico:string[12];
 	emp:empleado;
-	op, op2, i, cant_emp:integer;
-	apeonom:string;
+	apeNomDet:string;
 begin
-	cant_emp:=0;
+	writeln('Ingrese el nombre o el apellido a buscar: ');
+	readln(apeNomDet);
+	reset(arcLogico);
+	read(arcLogico, emp);
+	while(not eof(arcLogico))do begin
+		read(arcLogico, emp);
+		if(emp.apellido = apeNomDet)then begin
+			writeln('Numero: ', emp.numEmp, ' Apellido: ', emp.apellido, ' Nombre: ', emp.nombre, ' Edad: ', emp.edad, ' DNI: ', emp.dni);
+		end;
+		if(emp.nombre = apeNomDet)then begin
+			writeln('Numero: ', emp.numEmp, ' Apellido: ', emp.apellido, ' Nombre: ', emp.nombre, ' Edad: ', emp.edad, ' DNI: ', emp.dni);
+		end;
+	end;
+	close(arcLogico);
+end;
+//------------------------------------------------------
+procedure listarTodos(var arcLogico:archivo);
+var
+	emp:empleado;
+begin
+	reset(arcLogico);
+	while(not eof(arcLogico))do begin
+		read(arcLogico, emp);
+		writeln('Numero: ', emp.numEmp, ' Apellido: ', emp.apellido, ' Nombre: ', emp.nombre, ' Edad: ', emp.edad, ' DNI: ', emp.dni);
+	end;
+	close(arcLogico);
+end;
+//------------------------------------------------------
+procedure listarMayoresSetenta(var arcLogico:archivo);
+var
+	emp:empleado;
+begin
+	reset(arcLogico);
+	while(not eof(arcLogico))do begin
+		read(arcLogico, emp);
+		if(emp.edad > 70)then
+			writeln('Numero: ', emp.numEmp, ' Apellido: ', emp.apellido, ' Nombre: ', emp.nombre, ' Edad: ', emp.edad, ' DNI: ', emp.dni);
+	end;
+	close(arcLogico);
+end;
+//------------------------------------------------------
+procedure menuAccionesDos(var arcLogico:archivo);
+var
+	opciones:integer;
+begin
+	writeln('Ingrese alguna de las siguientes opciones: ');
+	writeln('1. Listar en pantalla los datos de empleados que tengan un nombre o apellido determinado.');
+	writeln('2. Listar en pantalla los empleados de a uno por línea.');
+	writeln('3. Listar en pantalla los empleados mayores de 70 años, próximos a jubilarse.');
+	readln(opciones);
+	
+	case opciones of
+		1: listarDeterminado(arcLogico);
+		2: listarTodos(arcLogico);
+		3: listarMayoresSetenta(arcLogico);
+	end;
+end;
+//------------------------------------------------------
+procedure crearArchivoNuevo(var arcLogico:archivo);
+var
+	arcFisico:string;
+	emp:empleado;
+begin
+	writeln('Ingrese el nombre del archivo a crear: ');
+	readln(arcFisico);
+	assign(arcLogico, arcFisico + '.dat');
+	rewrite(arcLogico);
+	leerEmpleado(emp);
+	while(emp.apellido <> 'fin')do begin
+		write(arcLogico, emp);
+		leerEmpleado(emp);
+	end;
+	Close(arcLogico);
+end;
+//-----------------------------------------------------------
+procedure procesarArchivo(var arcLogico:archivo);
+var
+	arcFisico:string;
+begin
+	writeln('Ingrese el nombre del archivo a procesar: ');
+	readln(arcFisico);
+	assign(arcLogico, arcFisico + '.dat');
+	menuAccionesDos(arcLogico);
+end;
+
+procedure menuAcciones(var arcLogico:archivo);
+var
+	opciones:integer;
+begin
 	repeat
 		writeln('Ingrese una opcion: ');
 		writeln('1. Crear un archivo');
 		writeln('2. Procesar un archivo');
 		writeln('3. Salir');
-		readln(op);
-		
-		if(op=1)then begin
-			writeln('Nombre del archivo: ');
-			readln(arc_fisico);
-			assign(arc_logico, arc_fisico + '.dat');		//asignas el nombre al archivo
-			rewrite(arc_logico);		//creamos el archivo
-			leerEmpleado(emp);	
-			while (emp.apellido <> 'fin')do begin
-				write(arc_logico, emp);
-				leerEmpleado(emp);
-			end;
-			close(arc_logico);
-		end
-		else begin
-			if(op=2)then begin
-				writeln('Ingrese el nombre del archivo a abrir: ');
-				readln(arc_fisico);
-				assign(arc_logico, arc_fisico + '.dat');
-				reset(arc_logico);
-				cant_emp:=fileSize(arc_logico);
-				
-				writeln('Ingrese una opcion: ');
-				writeln('1. Listar en pantalla los datos de empleados con nombre o apellido determinado.');
-				writeln('2. Listar en pantalla a todos los empleados.');
-				writeln('3. Listar en pantalla los empleados mayores a 70 años.');
-				readln(op2);
-				
-				if(op2=1)then begin
-					writeln('Ingrese el nombre o apellido a buscar: ');
-					readln(apeonom);
-					for i:=1 to cant_emp do begin
-						read(arc_logico, emp);
-						if(emp.apellido=apeonom)or(emp.nombre=apeonom)then
-							writeln('Codigo de empleado: ',emp.num_emp,' Apellido: ',emp.apellido, ' Nombre: ',emp.nombre, ' Edad: ', emp.edad, ' DNI: ', emp.dni);
-					end;
-					close(arc_logico);
-				end
-				else begin
-					if(op2=2)then begin
-						for i:=1 to cant_emp do begin
-							read(arc_logico, emp);
-							writeln('Codigo de empleado: ',emp.num_emp,' Apellido: ',emp.apellido, ' Nombre: ',emp.nombre, ' Edad: ', emp.edad, ' DNI: ', emp.dni);
-						end;
-						close(arc_logico);
-					end
-					else begin
-						if(op2=3)then begin
-							for i:=1 to cant_emp do begin
-								read(arc_logico, emp);
-								if(emp.edad>70)then
-									writeln('Codigo de empleado: ',emp.num_emp,' Apellido: ',emp.apellido, ' Nombre: ',emp.nombre, ' Edad: ', emp.edad, ' DNI: ', emp.dni);
-								close(arc_logico);
-							end;
-						end;
-					end;
-				end;
-			end;
+		readln(opciones);
+	
+		case opciones of
+			1: crearArchivoNuevo(arcLogico);
+			2: procesarArchivo(arcLogico);
 		end;
-	until(op = 3);
+	until(opciones=3);
+end;
+
+var
+	arcLogico:archivo;
+begin
+	menuAcciones(arcLogico);
 end.
