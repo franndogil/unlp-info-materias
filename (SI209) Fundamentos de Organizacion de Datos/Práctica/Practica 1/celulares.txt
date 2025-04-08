@@ -1,0 +1,9 @@
+11  1.0000000000000000E+000   Samsung
+15 5  Promedio
+A03
+5  1.0000000000000000E+000   Apple
+3 5  Alta
+iPhone15
+7  3.0000000000000000E+000   Xiaomi
+12 5  Media
+Xiaomi Pro
