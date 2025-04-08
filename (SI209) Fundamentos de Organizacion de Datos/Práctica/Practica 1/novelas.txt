@@ -1,0 +1,8 @@
+1311  4.0000000000000000E+004     Romance
+Romeo y Julieta
+1312  5.0000000000000000E+004     Fantasia
+Harry Potter
+1313  2.5000000000000000E+004     Distopia
+Los juegos del hambre
+1314  6.0000000000000000E+003  terror
+Por mil noches
