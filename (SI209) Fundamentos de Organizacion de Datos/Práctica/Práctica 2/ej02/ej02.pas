@@ -32,12 +32,44 @@ type
 	archivoMaestro = file of producto;
 	archivoDetalle = file of venta;
 //----------------------------------------------------------
-procedure crearMaestro(var aMaestro:archivoMaestro);
+procedure leerProducto(var pro:producto);
 begin
+	writeln('Ingrese el codigo del producto: ');
+	readln(pro.codigo);
+	if(pro.codigo<>0)then begin
+		writeln('Ingrese el nombre del producto: ');
+		readln(pro.nombre);
+		writeln('Ingrese el precio del producto: ');
+		readln(pro.precio);
+		writeln('Ingrese el stock actual del producto: ');
+		readln(pro.stAct);
+		writeln('Ingrese el stock minimo del producto: ');
+		readln(pro.stMin);
+	end;
+end;
+//----------------------------------------------------------
+procedure crearMaestro(var aMaestro:archivoMaestro);
+var
+	nombreArchivo:string;
+	pro:producto;
+begin
+	writeln('Ingrese el nombre del archivo a crear: ');
+	readln(nombreArchivo);
+	assign(aMaestro, nombreArchivo);
+	rewrite(aMaestro);
+	leerProducto(pro);
+	while(pro.codigo<>0)do begin
+		write(aMaestro, pro);
+		leerProducto(pro);
+	end;
+	close(aMaestro);
 end;
 //----------------------------------------------------------
 procedure crearDetalle(var aDetalle:archivoDetalle);
+var
+	nom
 begin
+	
 end;
 //----------------------------------------------------------
 procedure actualizarMaestro(var aMaestro:archivoMaestro; var aDetalle:archivoDetalle);
