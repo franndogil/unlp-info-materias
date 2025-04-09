@@ -10,6 +10,8 @@ NOTA: No se conoce a priori la cantidad de empleados. Además, el archivo debe s
 recorrido una única vez. }
 
 program ej01;
+const
+	valorAlto = -1;
 type
 	empleado = record
 		codigo:integer;
@@ -48,7 +50,15 @@ begin
 	end;
 	close(arcCompleto);
 end;
-	
+//------------------------------------------------------------	
+procedure leer(var arcCompleto:archivo; var emp:empleado);
+begin
+	if (not(eof(arcCompleto))) then
+		read(arcCompleto, emp)
+	else
+		emp.codigo := valorAlto;
+end;
+
 //------------------------------------------------------------					VOY A TENER QUE HACER UN CORTE DE CONTROL CON EL CODIGO DE EMPLEADO
 procedure compactarArchivo(var arcCompleto:archivo; var arcCompacto:archivo);
 var
@@ -64,15 +74,14 @@ begin
 	reset(arcCompleto);
 	assign(arcCompacto, nombreArcCompleto + 'COM');
 	rewrite(arcCompacto);
-	while(not eof(arcCompleto))do begin		//mientras no sea el fin del archivo completo
-		read(arcCompleto, emp);
+	leer(arcCompleto, emp);
+	while (emp.codigo <> valorAlto) do begin		//mientras no sea el fin del archivo completo
 		codEmpAct:=emp.codigo;
 		nomEmpAct:=emp.nombre;
 		montoEmpAct:=0;
-		while(not eof(arcCompleto))and(codEmpAct = emp.codigo)do begin		//CORTE DE CONTROL (mientras no sea el fin del archivo completo y el codigo sea igual al codigo actual leido)
-			read(arcCompleto, emp);
-			if emp.codigo = codEmpAct then 
-				montoEmpAct := montoEmpAct + emp.monto; // acumulamos montos
+		while (codEmpAct = emp.codigo) do begin		//CORTE DE CONTROL (mientras no sea el fin del archivo completo y el codigo sea igual al codigo actual leido)
+			montoEmpAct := montoEmpAct + emp.monto; // acumulamos montos
+			leer(arcCompleto, emp);
 		end;
 
 		empAux.monto:=montoEmpAct;
