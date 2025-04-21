@@ -106,8 +106,9 @@ public class BinaryTree <T> {
 		int actualLevel = 0;
 		
 		while (!queue.isEmpty()) {
+			int tamaCola = queue.size();
 			if (actualLevel >= n && actualLevel <= m) {
-				for (int i = 0; i < queue.size(); i++) {
+				for (int i = 0; i < tamaCola; i++) {
 					BinaryTree<T> node = queue.poll();
 					System.out.println(node.getData() + " ");
 					if (node.hasLeftChild()) queue.add(node.getLeftChild());
