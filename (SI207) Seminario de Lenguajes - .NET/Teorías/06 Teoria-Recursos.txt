@@ -1,0 +1,222 @@
+======================================================
+     Diapositivas 6 - Archivo fuente: TipoAuto.cs  
+======================================================
+
+namespace Teoria6;
+
+enum TipoAuto
+{
+   Familiar,
+   Deportivo,
+   Camioneta
+}
+
+
+
+======================================================
+     Diapositivas 7 - Archivo fuente: Auto.cs  
+======================================================
+
+namespace Teoria6;
+
+class Auto
+{
+   public string Marca = "";
+   public int Modelo;
+   public TipoAuto Tipo;
+   public void Imprimir()
+       => Console.WriteLine($"{Marca} {Modelo}");
+}
+
+
+
+======================================================
+     Diapositivas 8 - Archivo fuente: Colectivo.cs
+======================================================
+
+namespace Teoria6;
+
+class Colectivo
+{
+   public string Marca = "";
+   public int Modelo;
+   public int CantPasajeros;
+   public void Imprimir()
+       => Console.WriteLine($"{Marca} {Modelo}");
+}
+
+
+
+======================================================
+     Diapositivas 9 - Archivo fuente: Program.cs
+======================================================
+
+using Teoria6;
+
+Auto a = new Auto();
+Colectivo c = new Colectivo();
+a.Marca = "Ford";
+a.Modelo = 2000;
+c.Marca = "Mercedes";
+c.Modelo = 2010;
+c.CantPasajeros = 20;
+a.Tipo = TipoAuto.Deportivo;
+a.Imprimir();
+c.Imprimir();
+
+
+
+======================================================
+     Diapositivas 12 - Archivo fuente: Automotor.cs
+======================================================
+
+namespace Teoria6;
+
+class Automotor {
+  public string Marca = "";
+  public int Modelo;
+  public void Imprimir()
+     => Console.WriteLine($"{Marca} {Modelo}");
+}
+
+
+
+======================================================
+     Diapositivas 21 - Archivo fuente: Colectivo.cs
+======================================================
+
+namespace Teoria6;
+
+class Colectivo : Automotor
+{
+    public int CantPasajeros;
+
+    public override void Imprimir()
+     => Console.WriteLine($"{Marca} {Modelo} ({CantPasajeros} pasajeros)");
+}
+
+
+
+======================================================
+     Diapositivas 24 - Archivo fuente: Auto.cs
+======================================================
+
+namespace Teoria6;
+
+class Auto : Automotor 
+{
+    public TipoAuto Tipo;
+    public override void Imprimir()
+    {
+        Console.Write($"Auto {Tipo} ");
+        base.Imprimir();
+    }
+}
+
+
+
+======================================================
+     Diapositivas 27 - Archivo fuente: Automotor.cs
+======================================================
+
+class Automotor 
+{
+   public string Marca = "";
+   public int Modelo;
+   public Automotor(string marca, int modelo)
+   {
+       Marca = marca;
+       Modelo = modelo;
+   }
+   public virtual void Imprimir()
+      => Console.WriteLine($"{Marca} {Modelo}");
+}
+
+
+
+======================================================
+     Diapositivas 33 - Archivo fuente: Auto.cs
+======================================================
+
+
+public Auto(string marca, int modelo, TipoAuto tipo) : base(marca, modelo)
+{
+   this.Tipo = tipo;
+}
+
+
+
+======================================================
+     Diapositivas 34 - Archivo fuente: Colectivo.cs
+======================================================
+
+public Colectivo(string marca, int modelo, int cantPasajeros):base(marca, modelo)
+{
+    this.CantPasajeros = cantPasajeros;
+}
+
+
+
+======================================================
+     Diapositivas 35 - Archivo fuente: Program.cs
+======================================================
+
+using Teoria6;
+            
+Auto a = new Auto("Ford", 2000, TipoAuto.Deportivo);
+Colectivo c = new Colectivo("Mercedes", 2010, 20);
+a.Imprimir();
+c.Imprimir();
+
+
+
+======================================================
+     Diapositivas 49 - Archivo fuente: Autommotor.cs
+======================================================
+
+class Automotor
+{
+    public string Marca { get; }
+    private int _modelo;
+    public int Modelo
+    {
+        get => _modelo;
+        set => _modelo = (value < 2005) ? 2005 : value;
+    }
+    public Automotor(string marca, int modelo)
+    {
+        Marca = marca;
+        Modelo = modelo;
+    }
+    public virtual void Imprimir()
+       => Console.WriteLine($"{Marca} {Modelo}");
+}
+
+
+======================================================
+     Diapositivas 58 - Archivo fuente: Colectivo.cs
+======================================================
+
+. . .
+
+    public override int Modelo
+    {
+        protected set =>
+           base.Modelo = (value < 2015) ? 2015 : value;
+    }
+
+. . .
+
+
+
+======================================================
+     Diapositivas 59 - Archivo fuente: Program.cs
+======================================================
+using Teoria6;
+Auto a = new Auto("Ford", 2000, TipoAuto.Deportivo);
+Colectivo c = new Colectivo("Mercedes", 2010, 20);
+a.Imprimir();
+c.Imprimir();
+Console.WriteLine(a.Marca + " " + a.Modelo);
+Console.WriteLine(c.Marca + " " + c.Modelo);
+

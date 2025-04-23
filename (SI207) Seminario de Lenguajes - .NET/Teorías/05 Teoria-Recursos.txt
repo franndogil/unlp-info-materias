@@ -1,0 +1,131 @@
+======================================================
+     Diapositivas 13 - Archivo fuente: Program.cs  
+======================================================
+
+using Teoria5;
+Cuenta c1 = new Cuenta();
+Cuenta c2 = new Cuenta();
+c1.Monto = 20;
+Cuenta.Total += c1.Monto;
+c2.Monto = 30;
+Cuenta.Total += c2.Monto;
+Cuenta.ImprimirResumen(); 
+
+
+
+======================================================
+     Diapositivas 52 - Archivo fuente: Cuadrado.cs  
+======================================================
+
+namespace Teoria5;
+class Cuadrado
+{
+   private double _lado;
+   public void SetLado(double value) => _lado = value;
+   public double GetLado() => _lado;
+   public double GetArea() => _lado * _lado;
+}
+
+
+
+======================================================
+     Diapositivas 53 - Archivo fuente: Program.cs  
+======================================================
+
+using Teoria5;
+Cuadrado c = new Cuadrado();
+c.SetLado(2.5);
+Console.WriteLine("Lado: {0} área: {1}",
+                          c.GetLado(),
+                          c.GetArea());
+
+
+
+======================================================
+     Diapositivas 61 - Archivo fuente: Cuadrado.cs  
+======================================================
+
+namespace Teoria5;
+class Cuadrado  {
+    private double _lado;
+    public double Lado {
+        get {
+            return _lado;
+        }
+        set {
+            _lado = value;
+        }
+    }
+    public double Area {
+        get {
+            return _lado * _lado;
+        }
+    }
+}
+
+
+
+======================================================
+     Diapositivas 80 - Archivo fuente: Persona.cs  
+======================================================
+
+namespace Teoria5;
+class Persona
+{
+    public int Edad { get; }
+    public string Nombre { get; }
+    public Persona(string nombre, int edad)
+    {
+        Nombre = nombre;
+        Edad = edad;
+    }
+    public void Imprimir() => 
+       Console.WriteLine($"{Nombre} ({Edad})");
+}
+
+
+
+======================================================
+     Diapositivas 81 - Archivo fuente: Familia.cs  
+======================================================
+
+namespace Teoria5;
+class Familia
+{
+    public Persona? Padre { get; set; }
+    public Persona? Madre {get; set; }
+    public Persona? Hijo { get; set; }
+}
+
+
+
+======================================================
+     Diapositivas 82 - Archivo fuente: Program.cs  
+======================================================
+
+using Teoria5;
+Familia f = new Familia();
+f.Padre = new Persona("Juan", 50);
+f.Madre = new Persona("María", 40);
+f.Hijo = new Persona("José", 15);
+f.Madre.Imprimir();
+
+
+
+======================================================
+     Diapositivas 87 - Agregar en la clase Familia  
+======================================================
+    
+    public Persona? this[int i]
+    {
+        get
+        {
+            if (i == 0) return Padre;
+            else if (i == 1) return Madre;
+            else if (i == 2) return Hijo;
+            else return null;
+        }
+    }
+
+
+

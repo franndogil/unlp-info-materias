@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuestionario Interactivo - C# Teoría 5</title>
+    <style>
+        /* Estilos CSS (sin cambios) */
+         body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        #quiz-container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            color: #5a2d7d;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #question-container {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        #question-text {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        #options-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #options-list li {
+            margin-bottom: 12px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+         #options-list li:hover {
+            background-color: #f0e6f7;
+         }
+
+        #options-list input[type="radio"] {
+            margin-right: 10px;
+            cursor: pointer;
+            vertical-align: middle; /* Alinea mejor el radio button con el texto */
+        }
+         #options-list label {
+             cursor: pointer;
+             display: inline;
+             vertical-align: middle; /* Alinea mejor el texto con el radio button */
+         }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px 20px;
+            margin-top: 20px;
+            font-size: 1em;
+            font-weight: bold;
+            color: #fff;
+            background-color: #8a4dbf;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #5a2d7d;
+        }
+         button:disabled {
+             background-color: #cccccc;
+             cursor: not-allowed;
+         }
+
+        #feedback-container {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .feedback-correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .feedback-incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .feedback-explanation {
+            margin-top: 10px;
+            font-weight: normal;
+            font-style: italic;
+            font-size: 0.9em;
+            /* Permite saltos de línea basados en \n en el feedback */
+            white-space: pre-wrap;
+        }
+        .feedback-explanation a {
+            color: #5a2d7d;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+         .feedback-explanation a:hover {
+             color: #8a4dbf;
+         }
+
+
+        #score-container {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #e9dff0;
+            border-radius: 8px;
+        }
+         #score-container p {
+             font-size: 1.2em;
+         }
+         #score {
+            font-weight: bold;
+            color: #5a2d7d;
+         }
+         #total-questions {
+             font-weight: bold;
+         }
+         #restart-btn {
+             width: auto;
+             display: inline-block;
+             padding: 10px 30px;
+         }
+    </style>
+</head>
+<body>
+
+    <div id="quiz-container">
+        <h1>Cuestionario Interactivo - C# Teoría 5</h1>
+
+        <div id="question-container">
+            <p id="question-number"></p>
+            <p id="question-text"></p>
+            <ul id="options-list">
+                <!-- Las opciones se cargarán aquí con JS -->
+            </ul>
+        </div>
+
+        <button id="submit-btn">Verificar Respuesta</button>
+
+        <div id="feedback-container" style="display: none;">
+             <p id="feedback-result"></p>
+             <!-- Usaremos innerHTML para este elemento -->
+            <p id="feedback-explanation" class="feedback-explanation"></p>
+        </div>
+
+        <button id="next-btn" style="display: none;">Siguiente Pregunta</button>
+
+        <div id="score-container" style="display: none;">
+            <h2>Resultado Final</h2>
+            <p>Tu puntuación: <span id="score">0</span> / <span id="total-questions">0</span></p>
+            <button id="restart-btn">Reiniciar Cuestionario</button>
+        </div>
+    </div>
+
+   <script>
+        // Nombre del archivo PDF
+        const pdfFileName = '05 Teoria y Practica 2025.pdf';
+        // Asegúrate de que este archivo PDF esté en la misma carpeta que este archivo HTML
+
+        const quizData = [
+             // ... (Todas tus 15 preguntas van aquí, sin cambios en los datos) ...
+              {
+                question: "Según la teoría, ¿a qué pertenecen los miembros estáticos en C#?",
+                options: [
+                    "A una instancia específica (objeto) de la clase.",
+                    "Únicamente a las clases declaradas como static.",
+                    "A la propia clase o tipo, no a una instancia particular.",
+                    "Al runtime de .NET exclusivamente."
+                ],
+                correctAnswer: 2, // Índice c)
+                feedback: "Opción Correcta: c)\nExplicación: La teoría define claramente (página 3) que los miembros estáticos pertenecen a la clase misma, no a los objetos individuales creados a partir de ella. Se accede a ellos usando el nombre de la clase."
+            },
+            {
+                question: "¿Cuál es la sintaxis correcta para invocar un método estático llamado CalcularTotal definido en una clase Factura?",
+                options: [
+                    "Factura f = new Factura(); f.CalcularTotal();",
+                    "Factura.CalcularTotal();",
+                    "this.CalcularTotal(); (desde un método de instancia)",
+                    "static Factura.CalcularTotal();"
+                ],
+                correctAnswer: 1, // Índice b)
+                feedback: "Opción Correcta: b)\nExplicación: Como se indica en la página 6, la sintaxis para acceder a miembros estáticos es <NombreClase>.<Miembro>. No se requiere ni se permite una instancia (objeto) para llamar a un método estático (ver páginas 9-10)."
+            },
+             {
+                question: "¿Qué característica principal describe mejor a un campo estático (static int Contador;) en una clase?",
+                options: [
+                    "Cada instancia de la clase tiene su propia copia independiente del campo.",
+                    "Es una única variable asociada a la clase, compartida por todas sus instancias.",
+                    "Solo puede ser accedido utilizando una referencia a un objeto (instancia) de la clase.",
+                    "Su valor no puede ser modificado después de la inicialización."
+                ],
+                correctAnswer: 1, // Índice b)
+                feedback: "Opción Correcta: b)\nExplicación: La página 11 de la teoría especifica que un campo estático es una \"única variable compartida por todas las instancias\". Pertenece a la clase en sí. La opción 'a' describe un campo de instancia. La opción 'c' es incorrecta; los campos estáticos se acceden a través del nombre de la clase (NombreClase.Contador), no necesariamente a través de una instancia (ver página 20). La opción 'd' describe más bien a un campo readonly o const, no a un static general."
+            },
+            {
+                question: "Desde un método estático, ¿a qué tipo de miembros de la misma clase NO se puede acceder directamente (sin crear una instancia)?",
+                options: [
+                     "Otros métodos estáticos.",
+                     "Campos estáticos.",
+                     "Campos de instancia (no estáticos).",
+                     "Constantes (const)."
+                ],
+                correctAnswer: 2, // Índice c)
+                feedback: "Opción Correcta: c)\nExplicación: Las páginas 16-18 demuestran que un método estático opera a nivel de clase y no tiene acceso a una instancia específica (this), por lo que no puede acceder directamente a campos o métodos que dependen de una instancia. Sí puede acceder a otros miembros estáticos y constantes."
+            },
+            {
+                question: "¿Cuándo se invoca un constructor estático (static ClaseA() )?",
+                options: [
+                     "Cada vez que se crea una nueva instancia de la clase.",
+                     "Explícitamente por el programador cuando sea necesario.",
+                     "Una única vez por el runtime de .NET, antes de la primera referencia a la clase.",
+                     "Solo si la clase es declarada como static class."
+                ],
+                correctAnswer: 2, // Índice c)
+                feedback: "Opción Correcta: c)\nExplicación: Las páginas 28-30 explican que el constructor estático es invocado automáticamente por el runtime una sola vez, garantizando que se ejecute antes de que se use la clase por primera vez (ya sea creando una instancia o accediendo a un miembro estático)."
+            },
+            {
+                 question: "¿Cuál de las siguientes afirmaciones es VERDADERA acerca de las clases estáticas (static class)?",
+                 options: [
+                     "Pueden contener tanto miembros estáticos como miembros de instancia.",
+                     "Se pueden crear instancias de ellas usando new.",
+                     "Solo pueden contener miembros estáticos y no pueden ser instanciadas.",
+                     "Requieren obligatoriamente un constructor estático."
+                 ],
+                 correctAnswer: 2, // Índice c)
+                 feedback: "Opción Correcta: c)\nExplicación: La página 33 establece que las clases estáticas solo pueden tener miembros estáticos y no es posible crear objetos (instancias) de ellas. Son útiles para agrupar utilidades (utility classes)."
+            },
+            {
+                 question: "¿Qué es FALSO acerca de los campos constantes (const)?",
+                 options: [
+                     "Deben inicializarse en el momento de su declaración.",
+                     "Su valor se determina en tiempo de ejecución.",
+                     "Son implícitamente estáticos.",
+                     "Solo pueden ser de tipos integrados (numéricos, char, bool, string) o null."
+                 ],
+                 correctAnswer: 1, // Índice b)
+                 feedback: "Opción Correcta: b) (Esta afirmación es falsa).\nExplicación: Las constantes (const) se conocen y evalúan en tiempo de compilación (página 37, 40). Son los campos readonly los que se asignan en tiempo de ejecución. Las demás opciones son verdaderas para const."
+            },
+            {
+                question: "Un campo de instancia declarado como readonly (readonly int _valor;), ¿dónde puede recibir una asignación de valor?",
+                options: [
+                    "Únicamente en su declaración.",
+                    "En su declaración o en cualquier método de la clase.",
+                    "En su declaración o dentro de cualquier constructor de instancia de la clase.",
+                    "Solo dentro de un constructor estático."
+                ],
+                correctAnswer: 2, // Índice c)
+                feedback: "Opción Correcta: c)\nExplicación: La página 44 indica que los campos readonly (de instancia o estáticos) solo pueden asignarse en su declaración o dentro de un constructor (de instancia para campos de instancia, estático para campos estáticos). La página 46 muestra un ejemplo donde se asigna en la declaración y también dentro de constructores."
+            },
+             {
+                question: "Considerando const y readonly, ¿cuál es una diferencia fundamental mencionada en la teoría?",
+                options: [
+                    "const solo puede usarse para tipos numéricos, readonly para cualquier tipo.",
+                    "readonly debe ser static, const puede ser de instancia.",
+                    "const se evalúa en tiempo de compilación, readonly en tiempo de ejecución.",
+                    "const permite modificar el valor en constructores, readonly no."
+                ],
+                correctAnswer: 2, // Índice c)
+                feedback: "Opción Correcta: c)\nExplicación: Esta es la diferencia clave resaltada. const (página 37, 40) es una constante de compilación, mientras que readonly (página 44) permite asignar un valor en tiempo de ejecución (pero solo una vez, en la declaración o constructor). Las otras opciones contienen información incorrecta según la teoría."
+            },
+            {
+                question: "En una propiedad de C# (public double Lado { get; set; }), ¿qué representa el bloque get?",
+                options: [
+                     "El código que se ejecuta cuando se asigna un valor a la propiedad.",
+                     "El código que define el tipo de dato de la propiedad.",
+                     "El código que se ejecuta cuando se lee el valor de la propiedad.",
+                     "El campo privado oculto asociado a la propiedad."
+                 ],
+                 correctAnswer: 2, // Índice c)
+                 feedback: "Opción Correcta: c)\nExplicación: La página 57 define los descriptores de acceso: el bloque get se ejecuta cuando se lee la propiedad (para obtener su valor) y el bloque set cuando se escribe (para asignar un valor)."
+            },
+            {
+                question: "¿Cuál es la sintaxis para declarar una propiedad pública auto-implementada de lectura/escritura llamada Nombre de tipo string?",
+                options: [
+                    "public string Nombre;",
+                    "public string Nombre { get { return _nombre; } set { _nombre = value; } }",
+                    "public string Nombre { get; set; }",
+                    "private string _nombre; public string get_Nombre()..."
+                ],
+                correctAnswer: 2, // Índice c)
+                feedback: "Opción Correcta: c)\nExplicación: Las páginas 72-75 introducen las propiedades auto-implementadas. La sintaxis public string Nombre { get; set; } le indica al compilador que genere automáticamente el campo privado de respaldo y los descriptores de acceso básicos. La opción 'a' es un campo público, 'b' es una propiedad completamente implementada y 'd' no es sintaxis válida de C#."
+            },
+            {
+                question: "¿Qué palabra clave se utiliza dentro de la definición de una clase para declarar un indizador?",
+                options: [ "index", "indexer", "this", "operator[]" ],
+                correctAnswer: 2, // Índice c)
+                feedback: "Opción Correcta: c)\nExplicación: La sintaxis presentada en la página 86 muestra que el nombre del indizador es siempre la palabra clave this, seguida de los parámetros de índice entre corchetes (public Tipo this[TipoIndice indice] { ... })."
+            },
+             {
+                 question: "Según la teoría, ¿pueden los indizadores ser declarados como static?",
+                 options: [
+                     "Sí, tanto estáticos como de instancia.",
+                     "Sí, pero solo si la clase también es estática.",
+                     "No, los indizadores solo pueden ser miembros de instancia.",
+                     "Sí, pueden ser estáticos sólo en clases que no sean estáticas."
+                 ],
+                 correctAnswer: 2, // Índice c)
+                 feedback: "Opción Correcta: c)\nExplicación: La página 85 afirma explícitamente: \"Los indizadores son sólo de instancia, no pueden definirse indizadores estáticos\"."
+             },
+            {
+                 question: "¿Qué permite la sintaxis de \"Inicializadores de objeto\" como new Persona() { Nombre = \"Ana\", Edad = 25 };?",
+                 options: [
+                     "Invocar un constructor específico que recibe esos parámetros.",
+                     "Asignar valores a campos o propiedades públicas del objeto justo después de su creación.",
+                     "Crear objetos sin llamar a ningún constructor.",
+                     "Definir valores por defecto para la clase Persona."
+                 ],
+                 correctAnswer: 1, // Índice b)
+                 feedback: "Opción Correcta: b)\nExplicación: Las páginas 100-101 explican que los inicializadores de objeto permiten asignar valores a miembros accesibles (campos, propiedades, incluso indizadores) después de la invocación del constructor, en el momento de la creación del objeto."
+             },
+             {
+                 question: "Para implementar el \"Encadenamiento de métodos\" (Fluent Interface), ¿qué debe devolver un método como Depositar en la clase CuentaCorriente?",
+                 options: [
+                     "void",
+                     "El nuevo saldo de la cuenta.",
+                     "bool indicando si la operación fue exitosa.",
+                     "La propia instancia de la clase (this)."
+                 ],
+                 correctAnswer: 3, // Índice d)
+                 feedback: "Opción Correcta: d)\nExplicación: Las páginas 104-106 muestran que para permitir encadenar llamadas (cc.Depositar(100).Depositar(50);), el método debe devolver la referencia a la propia instancia (return this;). Esto permite que la siguiente llamada al método se realice sobre el mismo objeto."
+             }
+        ];
+
+        // Elementos del DOM (sin cambios)
+        const quizContainer = document.getElementById('quiz-container');
+        const questionContainer = document.getElementById('question-container');
+        const questionNumberEl = document.getElementById('question-number');
+        const questionTextEl = document.getElementById('question-text');
+        const optionsListEl = document.getElementById('options-list');
+        const submitBtn = document.getElementById('submit-btn');
+        const feedbackContainer = document.getElementById('feedback-container');
+        const feedbackResultEl = document.getElementById('feedback-result');
+        const feedbackExplanationEl = document.getElementById('feedback-explanation');
+        const nextBtn = document.getElementById('next-btn');
+        const scoreContainer = document.getElementById('score-container');
+        const scoreEl = document.getElementById('score');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const restartBtn = document.getElementById('restart-btn');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            feedbackContainer.style.display = 'none';
+            nextBtn.style.display = 'none';
+            submitBtn.style.display = 'block';
+            submitBtn.disabled = false;
+            nextBtn.textContent = 'Siguiente Pregunta'; // <<<--- Asegurar texto por defecto
+
+            const currentQuestion = quizData[currentQuestionIndex];
+
+            questionNumberEl.textContent = `Pregunta ${currentQuestionIndex + 1} de ${quizData.length}`;
+            questionTextEl.textContent = currentQuestion.question;
+            optionsListEl.innerHTML = '';
+
+            currentQuestion.options.forEach((option, index) => {
+                const li = document.createElement('li');
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = 'option';
+                input.value = index;
+                input.id = `option${index}`;
+
+                const label = document.createElement('label');
+                const letterPrefix = String.fromCharCode(97 + index) + ') ';
+                label.textContent = letterPrefix + option;
+                label.htmlFor = `option${index}`;
+
+                li.appendChild(input);
+                li.appendChild(label);
+                optionsListEl.appendChild(li);
+            });
+        }
+
+        function checkAnswer() {
+            const selectedOptionInput = optionsListEl.querySelector('input[name="option"]:checked');
+
+            if (!selectedOptionInput) {
+                alert('Por favor, selecciona una respuesta.');
+                return;
+            }
+
+            const selectedAnswerIndex = parseInt(selectedOptionInput.value);
+            const currentQuestion = quizData[currentQuestionIndex];
+
+            // Procesar feedback para enlaces PDF
+            let feedbackText = currentQuestion.feedback;
+            const pageRegex = /(p[áa]gina[s]?\s*)(\d+)/gi;
+            let match;
+            if (typeof feedbackText.replaceAll === 'function') {
+                 feedbackText = feedbackText.replaceAll(pageRegex, (fullMatch, prefix, pageNum) => {
+                     const pdfUrl = `${pdfFileName}#page=${pageNum}`;
+                     return `${prefix}<a href="${pdfUrl}" target="_blank" title="Abrir PDF en página ${pageNum}">${pageNum}</a>`;
+                 });
+            } else {
+                 while ((match = pageRegex.exec(feedbackText)) !== null) {
+                    const fullMatch = match[0];
+                    const prefix = match[1];
+                    const pageNum = match[2];
+                    const pdfUrl = `${pdfFileName}#page=${pageNum}`;
+                    const pageLink = `${prefix}<a href="${pdfUrl}" target="_blank" title="Abrir PDF en página ${pageNum}">${pageNum}</a>`;
+                    feedbackText = feedbackText.replace(fullMatch, pageLink);
+                    pageRegex.lastIndex = 0;
+                 }
+            }
+
+            // Mostrar feedback
+            feedbackContainer.style.display = 'block';
+            feedbackExplanationEl.innerHTML = feedbackText;
+            feedbackContainer.classList.remove('feedback-correct', 'feedback-incorrect');
+
+            // Evaluar respuesta y actualizar UI
+            if (selectedAnswerIndex === currentQuestion.correctAnswer) {
+                score++;
+                feedbackResultEl.textContent = '¡Correcto!';
+                feedbackContainer.classList.add('feedback-correct');
+            } else {
+                 feedbackResultEl.textContent = 'Incorrecto.';
+                feedbackContainer.classList.add('feedback-incorrect');
+                 const correctLi = optionsListEl.children[currentQuestion.correctAnswer];
+                 if(correctLi) {
+                     correctLi.style.backgroundColor = '#d4edda';
+                     correctLi.style.fontWeight = 'bold';
+                 }
+            }
+
+            // Deshabilitar interacción post-respuesta
+            submitBtn.disabled = true;
+            submitBtn.style.display = 'none'; // Ocultar botón verificar
+            const radioButtons = optionsListEl.querySelectorAll('input[type="radio"]');
+            radioButtons.forEach(rb => rb.disabled = true);
+            const listItems = optionsListEl.querySelectorAll('li');
+            listItems.forEach(li => li.style.cursor = 'default');
+
+            // Mostrar el botón "Siguiente" o "Ver Resultados"
+            nextBtn.style.display = 'block'; // <<<--- Siempre mostrar el botón
+            if (currentQuestionIndex >= quizData.length - 1) { // <<<--- Es la última pregunta
+                nextBtn.textContent = 'Ver Resultados Finales';
+            }
+        }
+
+        function nextQuestion() {
+             // <<<--- Comprobar si estamos en la última pregunta ANTES de incrementar
+             if (currentQuestionIndex >= quizData.length - 1) {
+                 showResults(); // Si ya era la última, mostrar resultados
+                 return; // Salir de la función
+             }
+
+            // Si no es la última, incrementar índice y cargar siguiente
+             currentQuestionIndex++;
+             // Restablecer estilos antes de cargar la nueva pregunta
+             Array.from(optionsListEl.children).forEach(li => {
+                li.style.backgroundColor = '';
+                li.style.fontWeight = '';
+                li.style.cursor = 'pointer';
+            });
+             loadQuestion();
+        }
+
+         function showResults() {
+            questionContainer.style.display = 'none';
+            submitBtn.style.display = 'none';
+            nextBtn.style.display = 'none';
+            feedbackContainer.style.display = 'none';
+            scoreContainer.style.display = 'block';
+            scoreEl.textContent = score;
+            totalQuestionsEl.textContent = quizData.length;
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            scoreContainer.style.display = 'none';
+            questionContainer.style.display = 'block';
+             Array.from(optionsListEl.children).forEach(li => {
+                 li.style.backgroundColor = '';
+                 li.style.fontWeight = '';
+                 li.style.cursor = 'pointer';
+             });
+            loadQuestion(); // Esto ya restablece el texto del botón nextBtn
+        }
+
+        // Event Listeners (sin cambios)
+        submitBtn.addEventListener('click', checkAnswer);
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', restartQuiz);
+
+        // Carga inicial (sin cambios)
+        loadQuestion();
+
+    </script>
+
+</body>
+</html>
