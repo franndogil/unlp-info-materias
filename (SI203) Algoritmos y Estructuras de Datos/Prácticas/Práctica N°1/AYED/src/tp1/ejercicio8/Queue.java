@@ -6,7 +6,7 @@ public class Queue <T> extends Secuence {
 	protected List <T> data;
 	
 	public Queue() {
-		List <T> data = new ArrayList();
+		this.data = new ArrayList();
 	}
 	
 	public void enqueue(T dato) {
