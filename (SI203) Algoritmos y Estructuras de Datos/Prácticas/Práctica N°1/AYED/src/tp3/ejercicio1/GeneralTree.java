@@ -164,7 +164,6 @@ public class GeneralTree<T>{
 	
 	private boolean buscadorB(GeneralTree<T> tree, T b){
 		boolean st2 = false;
-		
 		Queue<GeneralTree<T>> cola = new Queue<>();
 		GeneralTree<T> aux;	
 		cola.enqueue(tree);		//encolamos el arbol
@@ -181,7 +180,6 @@ public class GeneralTree<T>{
 				}
 			}
 		}
-		
 		return st2;
 	}
 }
