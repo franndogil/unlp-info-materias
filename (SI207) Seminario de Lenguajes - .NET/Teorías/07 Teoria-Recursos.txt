@@ -1,0 +1,318 @@
+======================================================
+     Diapositivas 5 - Archivo fuente: Persona.cs 
+======================================================
+
+namespace Teoria7;
+
+class Persona
+{
+   protected string Nombre = "";
+}
+
+
+======================================================
+     Diapositivas 5 - Archivo fuente: Empleado.cs 
+======================================================
+
+namespace Teoria7;
+
+class Empleado : Persona
+{
+   public Empleado(string nombre)
+      => Nombre = nombre;
+   public void Imprimir()
+      => Console.WriteLine($"Soy el empleado {Nombre}");
+}
+
+
+
+======================================================
+     Diapositivas 7 - Archivo fuente: Automotor.cs 
+======================================================
+
+namespace Teoria7;
+
+class Automotor
+{
+   protected string Marca = "";
+}
+
+
+
+======================================================
+     Diapositivas 7 - Archivo fuente: Moto.cs 
+======================================================
+
+namespace Teoria7;
+
+class Moto : Automotor
+{
+   public Moto(string marca)
+      => Marca = marca;
+   public void Imprimir()
+      => Console.WriteLine($"Soy una moto {Marca}");
+}
+
+
+======================================================
+     Diapositivas 8 - Archivo fuente: Program.cs 
+======================================================
+
+using Teoria7;
+
+object[] vector = [
+       new Moto("Zanella"),
+       new Empleado("Juan"),
+       new Moto("Gilera")
+   ];
+
+foreach (object o in vector)
+{
+   //completar
+}
+
+
+======================================================
+     Diapositivas 61 - Archivo fuente: Logger.cs 
+======================================================
+
+namespace CalculoSimple;
+public class Logger
+{
+   public void Log(string mensaje)
+   {
+       Console.WriteLine(mensaje);
+   }
+}
+
+
+======================================================
+     Diapositivas 62 - Archivo fuente: Calculador.cs 
+======================================================
+
+namespace CalculoSimple;
+class Calculador
+{
+   Logger _logger = new Logger();
+   public void Calcular(int n)
+   {
+       int resul = (n + 5) * (n + 7);
+       _logger.Log($"Fin de Calculo - (resul={resul})");
+   }
+}
+
+
+======================================================
+     Diapositivas 63 - Archivo fuente: Program.cs 
+======================================================
+
+using CalculoSimple;
+Calculador calc = new Calculador();
+calc.Calcular(3);
+
+
+======================================================
+     Diapositivas 93 - Comandos del shell 
+======================================================
+
+dotnet new sln -o Almacen
+cd Almacen
+dotnet new classlib -o Almacen.Aplicacion
+dotnet new classlib -o Almacen.Repositorios
+dotnet new console -o Almacen.Consola
+
+
+======================================================
+     Diapositivas 94 - Comandos del shell 
+======================================================
+
+dotnet sln add Almacen.Aplicacion
+dotnet sln add Almacen.Repositorios
+dotnet sln add Almacen.Consola
+dotnet add Almacen.Consola reference Almacen.Aplicacion
+dotnet add Almacen.Consola reference Almacen.Repositorios
+dotnet add Almacen.Repositorios reference Almacen.Aplicacion
+
+
+======================================================
+     Diapositivas 96 - Archivo fuente: Producto.cs 
+======================================================
+
+namespace Almacen.Aplicacion;
+
+public class Producto
+{
+  public int Id { get; set; }
+  public string Nombre { get; set; } = "";
+  public double Precio { get; set; }
+  public override string ToString()
+  {
+      return $"{Nombre} ${Precio} (Id:{Id})";
+  }
+}
+
+
+
+=================================================================
+     Diapositivas 97 - Archivo fuente: IRepositorioProducto.cs 
+=================================================================
+
+namespace Almacen.Aplicacion;
+
+public interface IRepositorioProducto
+{
+    void AgregarProducto(Producto producto);
+    List<Producto> ListarProductos();
+}
+
+
+=================================================================
+     Diapositivas 98 - Archivo fuente: AgregarProductoUseCase.cs 
+=================================================================
+
+namespace Almacen.Aplicacion; 
+
+public class AgregarProductoUseCase(IRepositorioProducto repo)
+{
+   public void Ejecutar(Producto producto)
+   {
+       repo.AgregarProducto(producto);
+   }
+}
+
+
+
+=================================================================
+     Diapositivas 99 - Archivo fuente: ListarProductosUseCase.cs 
+=================================================================
+
+namespace Almacen.Aplicacion;
+
+public class ListarProductosUseCase(IRepositorioProducto repo)
+{
+   public List<Producto> Ejecutar()
+   {
+       return repo.ListarProductos();
+   }
+}
+
+
+
+=================================================================
+     Diapositivas 100 - Archivo fuente: RepositorioProductoTXT.cs 
+=================================================================
+
+namespace Almacen.Repositorios;
+using Almacen.Aplicacion;
+public class RepositorioProductoTXT : IRepositorioProducto
+{
+   readonly string _nombreArch = "productos.txt";
+   public void AgregarProducto(Producto producto)
+   {
+      using var sw = new StreamWriter(_nombreArch, true);
+      sw.WriteLine(producto.Id);
+      sw.WriteLine(producto.Nombre);
+      sw.WriteLine(producto.Precio);
+   }
+   public List<Producto> ListarProductos()
+   {
+      var resultado = new List<Producto>();
+      using var sr = new StreamReader(_nombreArch);
+      while (!sr.EndOfStream)
+      {
+         var producto = new Producto();
+         producto.Id = int.Parse(sr.ReadLine() ?? "");
+         producto.Nombre = sr.ReadLine() ?? "";
+         producto.Precio = int.Parse(sr.ReadLine() ?? "");
+         resultado.Add(producto);
+      }
+      return resultado;
+   }
+}
+
+
+=================================================================
+     Diapositivas 102 - Archivo fuente: Program.cs 
+=================================================================
+
+using Almacen.Aplicacion;
+using Almacen.Repositorios;
+
+//configuro las dependencias
+IRepositorioProducto repo = new RepositorioProductoTXT();
+
+//creo los casos de uso
+var agregarProducto = new AgregarProductoUseCase(repo);
+var listarProducto = new ListarProductosUseCase(repo);
+
+//ejecuto los casos de uso
+agregarProducto.Ejecutar(new Producto() { Id = 1,Nombre="Yerba",Precio=1000});
+agregarProducto.Ejecutar(new Producto() { Id = 2,Nombre="Azúcar",Precio=500});
+var lista = listarProducto.Ejecutar();
+
+foreach(Producto p in lista)
+{
+   Console.WriteLine(p);
+}
+
+
+=================================================================
+     Diapositivas 108 - Archivo fuente: ProductoValidador.cs 
+=================================================================
+
+namespace Almacen.Aplicacion;
+public class ProductoValidador
+{
+   public bool Validar(Producto producto, out string mensajeError)
+   {
+      mensajeError = "";
+      if (string.IsNullOrWhiteSpace(producto.Nombre))
+      {
+         mensajeError = "Nombre del producto inválido.\n";
+      }
+      if (producto.Precio <= 0)
+      {
+         mensajeError += "El Precio debe ser un valor mayor que cero.\n";
+      }
+      return (mensajeError == "");
+   }
+}
+
+
+=================================================================
+     Diapositivas 109 - Archivo fuente: AgregarProductoUseCase.cs
+=================================================================
+namespace Almacen.Aplicacion;
+public class AgregarProductoUseCase(IRepositorioProducto repo,
+                                    ProductoValidador validador)
+{
+   public void Ejecutar(Producto producto)
+   {
+      if (!validador.Validar(producto, out string mensajeError))
+      {
+         throw new Exception(mensajeError);
+      }
+      repo.AgregarProducto(producto);
+   }
+}
+
+
+=================================================================
+     Diapositivas 110 - Archivo fuente: Program.cs 
+=================================================================
+
+using Almacen.Aplicacion;
+using Almacen.Repositorios;
+
+//creo el caso de uso
+var agregarProducto = new AgregarProductoUseCase(new RepositorioProductoTXT(),
+                                                 new ProductoValidador());
+try
+{
+   agregarProducto.Ejecutar(new Producto());
+}
+catch (Exception ex)
+{
+   Console.WriteLine(ex.Message);
+}
+
