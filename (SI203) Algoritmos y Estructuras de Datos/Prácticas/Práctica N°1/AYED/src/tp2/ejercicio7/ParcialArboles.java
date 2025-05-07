@@ -3,49 +3,82 @@ package tp2.ejercicio7;
 import tp2.ejercicio1.*;
 
 public class ParcialArboles {
-	private BinaryTree <Integer> tree;
+	private BinaryTree <Integer> ab;
 	
-	public boolean isLeftTree (int num) {
-		return isLeftTreeRecursiva(tree, num);
+	public ParcialArboles(BinaryTree<Integer> ab) {
+		this.ab = ab;
 	}
 	
-	private boolean isLeftTreeRecursiva(BinaryTree<Integer> tree, int num){
-		if(tree.isLeaf()){ 		//si no tiene hijos, es hoja, retorna false
-			return false;		
-		}
-		
-		boolean state = false;		//siempre es falso hasta que se demuestre lo contrario
-		int chi = 0;	//contador de 
-		int chd = 0;
-		
-		if(tree.getData()==num){		//si el numero es igual empiezo
-			if(tree.hasLeftChild()) {
-				chi = contadorDeHijosUnicos(tree.getLeftChild());
-			}
-			if(tree.hasRightChild()) {
-				chd = contadorDeHijosUnicos(tree.getRightChild());
-			}
-			
-			if(chi > chd) state = true;
-			
-		}
-		else {	//si el numero es diferente, sigo buscando en los hijos
-			if(tree.hasLeftChild()) state = isLeftTreeRecursiva(tree.getLeftChild(), num);
-			if(tree.hasRightChild()) state = isLeftTreeRecursiva(tree.getRightChild(), num);
-		}
-		
-		return state;
+	public boolean isLeftTree(int num) {
+	    BinaryTree<Integer> abRet = Buscar(ab, num);
+
+	    if (abRet != null) {
+	        return cumple(abRet);
+	    }
+	    
+	    return false;
 	}
-															//entra el 23
-	private int contadorDeHijosUnicos(BinaryTree<Integer> tree) {		//recursiva para contar hijos unicos dentro de un camino
-		int suma = 0;
-		if(tree.hasLeftChild()&&!tree.hasRightChild()){
-			suma += 1 + contadorDeHijosUnicos(tree.getLeftChild());
-		}
-		if(!tree.hasLeftChild()&&tree.hasRightChild()){
-			suma += 1 + contadorDeHijosUnicos(tree.getRightChild());
-		}
-		return suma;
+
+	
+	private BinaryTree<Integer> Buscar(BinaryTree<Integer> ab, int num) {
+	    if (ab == null) return null;
+	    
+	    if (ab.getData() == num) {
+	        return ab;
+	    }
+
+	    BinaryTree<Integer> encontrado = null;
+	    if (ab.hasLeftChild()) {
+	        encontrado = Buscar(ab.getLeftChild(), num);
+	    }
+	    if (encontrado == null && ab.hasRightChild()) {
+	        encontrado = Buscar(ab.getRightChild(), num);
+	    }
+
+	    return encontrado;
 	}
+
+	
+	private boolean cumple(BinaryTree<Integer> ab) {
+		int hi = 0;
+		int hd = 0;
+		boolean cond = false;
+		if(ab.hasLeftChild()&&!ab.hasRightChild()) {
+			hi = contadorHijosUnicos(ab.getLeftChild());
+			hd = -1;
+		}
+		else if(!ab.hasLeftChild()&&ab.hasRightChild()) {
+			hi = -1;
+			hd = contadorHijosUnicos(ab.getRightChild());
+		} else {
+			hi = contadorHijosUnicos(ab.getLeftChild());
+			hd = contadorHijosUnicos(ab.getRightChild());
+		}
+		
+		System.out.print(hi);
+		System.out.print(hd);
+		
+		if(hi > hd) cond = true;
+		
+		return cond;
+	}
+	
+	private int contadorHijosUnicos(BinaryTree<Integer> ab) {
+		if(ab.isLeaf()) return 0;
+		
+		int cont = 0;
+		if(ab.hasLeftChild()&&!ab.hasRightChild()) {
+			cont += 1 + contadorHijosUnicos(ab.getLeftChild());
+		}
+		else if(!ab.hasLeftChild()&&ab.hasRightChild()) {
+			cont += 1 + contadorHijosUnicos(ab.getRightChild());
+		}
+		else {
+			cont += contadorHijosUnicos(ab.getLeftChild());
+	        cont += contadorHijosUnicos(ab.getRightChild());
+		}
+		return cont;
+	}
+	
 }
 
