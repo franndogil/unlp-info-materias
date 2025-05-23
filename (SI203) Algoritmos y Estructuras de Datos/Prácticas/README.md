@@ -1,1 +1,1 @@
-# LAS PRACTICAS REALIZADAS SE ENCUENTRAN DENTRO DE LA CARPETA PRACTICA 1
+# Las prácticas realizadas se encuentran en la carpeta Práctica N°1/AYED/src
