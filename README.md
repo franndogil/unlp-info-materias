@@ -3,7 +3,7 @@
 - 📘 **[(OC) Organización de Computadoras](https://github.com/franndogil/unlp-info-materias/tree/main/(SI104)%20Organizaci%C3%B3n%20de%20Computadoras%20(OC))**
 ## Segundo cuatrimestre
 - 📘 **[(AC) Arquitectura de Computadoras](https://github.com/franndogil/unlp-info-materias/tree/main/(SI105)%20Aquitectura%20de%20Computadoras%20(AC))**
-- 📘 **[Taller de Programación](https://github.com/franndogil/unlp-info-materias)**
+- 📘 **[Taller de Programación](https://github.com/franndogil/unlp-info-materias/tree/main/(SI107)%20Taller%20de%20programaci%C3%B3n)**
 ## Tercer cuatrimetre
 - 📘 **[(AYED) Algoritmos y Estructuras de Datos](https://github.com/franndogil/unlp-info-materias)**
 - 📘 **[(FOD) Fundamentos de Organización de Datos](https://github.com/franndogil/unlp-info-materias)**
