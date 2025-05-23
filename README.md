@@ -1,5 +1,5 @@
 ## Primer cuatrimestre
-- 📘 **[(CADP) Conceptos de Algoritmos, Datos y Programas](https://github.com/franndogil/unlp-info-materias)**
+- 📘 **[(CADP) Conceptos de Algoritmos, Datos y Programas](https://github.com/franndogil/unlp-info-materias/tree/main/(SI106)%20Conceptos%20de%20Algoritmos%2C%20Datos%20y%20Programas%20(CADP))**
 - 📘 **[(OC) Organización de Computadoras](https://github.com/franndogil/unlp-info-materias)**
 ## Segundo cuatrimestre
 - 📘 **[(AC) Arquitectura de Computadoras](https://github.com/franndogil/unlp-info-materias)**
