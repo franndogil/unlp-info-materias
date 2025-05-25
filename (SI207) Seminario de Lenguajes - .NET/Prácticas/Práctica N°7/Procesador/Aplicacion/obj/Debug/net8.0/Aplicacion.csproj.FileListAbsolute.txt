@@ -1,0 +1,11 @@
+C:\Users\Fran\proyectosDotnet\Procesador\Aplicacion\bin\Debug\net8.0\Aplicacion.deps.json
+C:\Users\Fran\proyectosDotnet\Procesador\Aplicacion\bin\Debug\net8.0\Aplicacion.dll
+C:\Users\Fran\proyectosDotnet\Procesador\Aplicacion\bin\Debug\net8.0\Aplicacion.pdb
+C:\Users\Fran\proyectosDotnet\Procesador\Aplicacion\obj\Debug\net8.0\Aplicacion.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Fran\proyectosDotnet\Procesador\Aplicacion\obj\Debug\net8.0\Aplicacion.AssemblyInfoInputs.cache
+C:\Users\Fran\proyectosDotnet\Procesador\Aplicacion\obj\Debug\net8.0\Aplicacion.AssemblyInfo.cs
+C:\Users\Fran\proyectosDotnet\Procesador\Aplicacion\obj\Debug\net8.0\Aplicacion.csproj.CoreCompileInputs.cache
+C:\Users\Fran\proyectosDotnet\Procesador\Aplicacion\obj\Debug\net8.0\Aplicacion.dll
+C:\Users\Fran\proyectosDotnet\Procesador\Aplicacion\obj\Debug\net8.0\refint\Aplicacion.dll
+C:\Users\Fran\proyectosDotnet\Procesador\Aplicacion\obj\Debug\net8.0\Aplicacion.pdb
+C:\Users\Fran\proyectosDotnet\Procesador\Aplicacion\obj\Debug\net8.0\ref\Aplicacion.dll
