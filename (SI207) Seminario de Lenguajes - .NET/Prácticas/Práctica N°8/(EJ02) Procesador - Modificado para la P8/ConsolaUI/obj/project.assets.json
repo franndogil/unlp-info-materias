@@ -1,0 +1,94 @@
+{
+  "version": 3,
+  "targets": {
+    "net8.0": {
+      "Aplicacion/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/Aplicacion.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Aplicacion.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Aplicacion/1.0.0": {
+      "type": "project",
+      "path": "../Aplicacion/Aplicacion.csproj",
+      "msbuildProject": "../Aplicacion/Aplicacion.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net8.0": [
+      "Aplicacion >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\Fran\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "F:\\Franco\\Estudio\\UNLP\\Materias\\(SI207) Seminario de Lenguajes - .NET\\Prácticas\\Práctica N°8\\(EJ02) Procesador - Modificado para la P8\\ConsolaUI\\ConsolaUI.csproj",
+      "projectName": "ConsolaUI",
+      "projectPath": "F:\\Franco\\Estudio\\UNLP\\Materias\\(SI207) Seminario de Lenguajes - .NET\\Prácticas\\Práctica N°8\\(EJ02) Procesador - Modificado para la P8\\ConsolaUI\\ConsolaUI.csproj",
+      "packagesPath": "C:\\Users\\Fran\\.nuget\\packages\\",
+      "outputPath": "F:\\Franco\\Estudio\\UNLP\\Materias\\(SI207) Seminario de Lenguajes - .NET\\Prácticas\\Práctica N°8\\(EJ02) Procesador - Modificado para la P8\\ConsolaUI\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\Fran\\AppData\\Roaming\\NuGet\\NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "net8.0"
+      ],
+      "sources": {
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "projectReferences": {
+            "F:\\Franco\\Estudio\\UNLP\\Materias\\(SI207) Seminario de Lenguajes - .NET\\Prácticas\\Práctica N°8\\(EJ02) Procesador - Modificado para la P8\\Aplicacion\\Aplicacion.csproj": {
+              "projectPath": "F:\\Franco\\Estudio\\UNLP\\Materias\\(SI207) Seminario de Lenguajes - .NET\\Prácticas\\Práctica N°8\\(EJ02) Procesador - Modificado para la P8\\Aplicacion\\Aplicacion.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      }
+    },
+    "frameworks": {
+      "net8.0": {
+        "targetAlias": "net8.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.407/PortableRuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

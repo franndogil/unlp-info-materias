@@ -1,0 +1,12 @@
+F:\Franco\Estudio\UNLP\Materias\(SI207) Seminario de Lenguajes - .NET\Prácticas\Práctica N°8\(EJ02) Procesador - Modificado para la P8\Aplicacion\bin\Debug\net8.0\Aplicacion.deps.json
+F:\Franco\Estudio\UNLP\Materias\(SI207) Seminario de Lenguajes - .NET\Prácticas\Práctica N°8\(EJ02) Procesador - Modificado para la P8\Aplicacion\bin\Debug\net8.0\Aplicacion.dll
+F:\Franco\Estudio\UNLP\Materias\(SI207) Seminario de Lenguajes - .NET\Prácticas\Práctica N°8\(EJ02) Procesador - Modificado para la P8\Aplicacion\bin\Debug\net8.0\Aplicacion.pdb
+F:\Franco\Estudio\UNLP\Materias\(SI207) Seminario de Lenguajes - .NET\Prácticas\Práctica N°8\(EJ02) Procesador - Modificado para la P8\Aplicacion\obj\Debug\net8.0\Aplicacion.GeneratedMSBuildEditorConfig.editorconfig
+F:\Franco\Estudio\UNLP\Materias\(SI207) Seminario de Lenguajes - .NET\Prácticas\Práctica N°8\(EJ02) Procesador - Modificado para la P8\Aplicacion\obj\Debug\net8.0\Aplicacion.AssemblyInfoInputs.cache
+F:\Franco\Estudio\UNLP\Materias\(SI207) Seminario de Lenguajes - .NET\Prácticas\Práctica N°8\(EJ02) Procesador - Modificado para la P8\Aplicacion\obj\Debug\net8.0\Aplicacion.AssemblyInfo.cs
+F:\Franco\Estudio\UNLP\Materias\(SI207) Seminario de Lenguajes - .NET\Prácticas\Práctica N°8\(EJ02) Procesador - Modificado para la P8\Aplicacion\obj\Debug\net8.0\Aplicacion.csproj.CoreCompileInputs.cache
+F:\Franco\Estudio\UNLP\Materias\(SI207) Seminario de Lenguajes - .NET\Prácticas\Práctica N°8\(EJ02) Procesador - Modificado para la P8\Aplicacion\obj\Debug\net8.0\Aplicacion.sourcelink.json
+F:\Franco\Estudio\UNLP\Materias\(SI207) Seminario de Lenguajes - .NET\Prácticas\Práctica N°8\(EJ02) Procesador - Modificado para la P8\Aplicacion\obj\Debug\net8.0\Aplicacion.dll
+F:\Franco\Estudio\UNLP\Materias\(SI207) Seminario de Lenguajes - .NET\Prácticas\Práctica N°8\(EJ02) Procesador - Modificado para la P8\Aplicacion\obj\Debug\net8.0\refint\Aplicacion.dll
+F:\Franco\Estudio\UNLP\Materias\(SI207) Seminario de Lenguajes - .NET\Prácticas\Práctica N°8\(EJ02) Procesador - Modificado para la P8\Aplicacion\obj\Debug\net8.0\Aplicacion.pdb
+F:\Franco\Estudio\UNLP\Materias\(SI207) Seminario de Lenguajes - .NET\Prácticas\Práctica N°8\(EJ02) Procesador - Modificado para la P8\Aplicacion\obj\Debug\net8.0\ref\Aplicacion.dll
