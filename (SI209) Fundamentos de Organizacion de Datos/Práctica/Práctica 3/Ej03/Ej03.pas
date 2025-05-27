@@ -82,7 +82,7 @@ begin
 	reset(arcLogico);
 	read(arcLogico, pri);
 	leerNovela(nov);
-	if(pri.codigo=0)then begin		//guardamos la novela al final de archivo ya que no habian espacios libres
+	if(pri.codigo = 0)then begin		//guardamos la novela al final de archivo ya que no habian espacios libres
 		seek(arcLogico, fileSize(arcLogico));
 		if(nov.codigo<>0)then
 			write(arcLogico, nov);
