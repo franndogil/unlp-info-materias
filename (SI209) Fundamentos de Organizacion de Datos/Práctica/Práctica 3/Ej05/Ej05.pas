@@ -5,6 +5,7 @@ nombre: String[45];
 codigo: integer; 
 end; 
 tArchFlores = file of reg_flor; 
+
 Las bajas se realizan apilando registros borrados y las altas reutilizando registros 
 borrados. 
 El registro 0 como cabecera de la pila de registros borrados: 
@@ -18,7 +19,8 @@ b. Liste el contenido del archivo omitiendo las flores eliminadas. Modifique lo 
 considere necesario para obtener el listado. }
 
 program ej05;
-
+const
+	valorAlto='ZZZ';
 type 
 	reg_flor = record 
 		nombre: String[45]; 
@@ -71,8 +73,32 @@ begin
     close(a);
 end;
 //-----------------------------------------------------------------------------------------------------
-procedure eliminarFlor(var a:tArchFlores);
+procedure eliminarFlor(var a:tArchFlores; flor:reg_flor);
+var
+	aux, pri:reg_flor;
+	posEl:integer;
+	ok:boolean;
 begin
+	ok:=true;
+	reset(a);
+	read(a, pri); // leo la cabecera
+	while (not eof(a)) and (ok) do begin
+		posEl := filePos(a); // guardo la posición actual
+		read(a, aux); // leo la flor
+		if (aux.codigo = flor.codigo) and (aux.nombre = flor.nombre) then begin
+			aux.codigo := pri.codigo; // apilo el anterior borrado
+			aux.nombre := valorAlto;
+			seek(a, posEl); // me posiciono en el registro a eliminar
+			write(a, aux); // escribo el eliminado
+			
+			// actualizo la cabecera
+			seek(a, 0);
+			pri.codigo := -posEl;
+			write(a, pri);
+			ok := false;
+		end;
+	end;
+	close(a);
 end;
 //-----------------------------------------------------------------------------------------------------
 procedure crearArchivo(var a: tArchFlores);
@@ -110,6 +136,7 @@ var
     nombreArchivo: string;
     nombreFlor: string;
     codigoFlor: integer;
+    flor: reg_flor;
 begin
     repeat
         menu();
@@ -136,7 +163,11 @@ begin
 					write('Ingrese el nombre del archivo: ');
 					readln(nombreArchivo);
 					assign(a, nombreArchivo);
-					eliminarFlor(a);
+					write('Ingrese el nombre de la flor: ');
+					readln(flor.nombre);
+					write('Ingrese el codigo de la flor: ');
+					readln(flor.codigo);
+					eliminarFlor(a, flor);
 				 end;
         end;
     until(opciones = '5');
