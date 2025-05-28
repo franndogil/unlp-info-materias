@@ -32,7 +32,7 @@ type
 	
 	maestro = file of prenda;
 	detalle = file of baja;
-
+//---------------------------------------------------------------------------------------
 procedure actualizarMaestro(var mae: maestro; var det: detalle);
 var
   regBaja: baja;
@@ -56,6 +56,84 @@ begin
   end;
   close(mae); close(det);
 end;
-
+//---------------------------------------------------------------------------------------
+procedure compactarMaestro(var mae:maestro; var cop:maestro);
+var
+	regMae:prenda;
 begin
+	reset(mae);
+	assign(cop, 'copia');
+	rewrite(cop);
+	while(not eof(mae))do begin
+		read(mae, regMae);			//leo cada registro del maestro
+		if(regMae.stock>=0)then begin	//si el stock es mayor o igual a cero, lo salvo
+			write(cop, regMae);
+		end;
+	end;
+	close(cop);
+	close(mae);
+	erase(mae);				//si no borro el maestro viejo tira runtime 5
+	rename(cop, 'maestro');
+end;
+//---------------------------------------------------------------------------------------
+procedure crearMaestro(var mae: maestro);
+var
+  reg: prenda;
+  i: integer;
+begin
+  rewrite(mae);
+  for i := 1 to 5 do begin
+    reg.codP := i;
+    reg.desc := 'Prenda ' + Chr(64+i);
+    reg.colores[1] := 'Rojo';
+    reg.tipo := 'Tipo' + Chr(64+i);
+    reg.stock := 10 * i;
+    reg.precio := 100 * i;
+    write(mae, reg);
+  end;
+  close(mae);
+end;
+//---------------------------------------------------------------------------------------
+procedure crearDetalle(var det: detalle);
+var
+  reg: baja;
+begin
+  rewrite(det);
+  reg.codP := 2; write(det, reg);
+  reg.codP := 4; write(det, reg);
+  close(det);
+end;
+
+procedure mostrarMaestro(var mae: maestro);
+var
+  reg: prenda;
+begin
+  reset(mae);
+  writeln('Contenido del maestro:');
+  while not eof(mae) do begin
+    read(mae, reg);
+    writeln('Cod:', reg.codP, ' Desc:', reg.desc, ' Stock:', reg.stock, ' Precio:', reg.precio:0:2);
+  end;
+  close(mae);
+end;
+//---------------------------------------------------------------------------------------
+var
+  mae, cop: maestro;
+  det: detalle;
+begin
+  assign(mae, 'maestro');
+  assign(det, 'detalle');
+  crearMaestro(mae);
+  crearDetalle(det);
+
+  writeln('--- Maestro original ---');
+  mostrarMaestro(mae);
+
+  actualizarMaestro(mae, det);
+  writeln('--- Maestro tras baja lógica ---');
+  mostrarMaestro(mae);
+
+  compactarMaestro(mae, cop);
+  writeln('--- Maestro tras compactación ---');
+  mostrarMaestro(mae);
 end.
