@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuestionario Interactivo - C# Teoría 9</title>
+    <style>
+        /* Estilos CSS (igual que la versión anterior) */
+         body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        #quiz-container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            color: #5a2d7d;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #question-container {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        #question-text {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        #options-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #options-list li {
+            margin-bottom: 12px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+         #options-list li:hover {
+            background-color: #f0e6f7;
+         }
+
+        #options-list input[type="radio"] {
+            margin-right: 10px;
+            cursor: pointer;
+            vertical-align: middle;
+        }
+         #options-list label {
+             cursor: pointer;
+             display: inline;
+             vertical-align: middle;
+         }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px 20px;
+            margin-top: 20px;
+            font-size: 1em;
+            font-weight: bold;
+            color: #fff;
+            background-color: #8a4dbf;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #5a2d7d;
+        }
+         button:disabled {
+             background-color: #cccccc;
+             cursor: not-allowed;
+         }
+
+        #feedback-container {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .feedback-correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .feedback-incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .feedback-explanation {
+            margin-top: 10px;
+            font-weight: normal;
+            font-style: italic;
+            font-size: 0.9em;
+            white-space: pre-wrap;
+        }
+        .feedback-explanation a {
+            color: #5a2d7d;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+         .feedback-explanation a:hover {
+             color: #8a4dbf;
+         }
+
+
+        #score-container {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #e9dff0;
+            border-radius: 8px;
+        }
+         #score-container p {
+             font-size: 1.2em;
+         }
+         #score {
+            font-weight: bold;
+            color: #5a2d7d;
+         }
+         #total-questions {
+             font-weight: bold;
+         }
+         #restart-btn {
+             width: auto;
+             display: inline-block;
+             padding: 10px 30px;
+         }
+    </style>
+</head>
+<body>
+
+    <div id="quiz-container">
+        <h1>Cuestionario Interactivo - C# Teoría 9</h1>
+
+        <div id="question-container">
+            <p id="question-number"></p>
+            <p id="question-text"></p>
+            <ul id="options-list">
+                </ul>
+        </div>
+
+        <button id="submit-btn">Verificar Respuesta</button>
+
+        <div id="feedback-container" style="display: none;">
+             <p id="feedback-result"></p>
+             <p id="feedback-explanation" class="feedback-explanation"></p>
+        </div>
+
+        <button id="next-btn" style="display: none;">Siguiente Pregunta</button> <div id="score-container" style="display: none;">
+            <h2>Resultado Final</h2>
+            <p>Tu puntuación: <span id="score">0</span> / <span id="total-questions">0</span></p>
+            <button id="restart-btn">Reiniciar Cuestionario</button>
+        </div>
+    </div>
+
+    <script>
+
+        // <<<--- Nombre del archivo PDF para esta teoría (ajusta si es necesario)
+        const pdfFileName = '09 Teoria y Practica 2025.pdf'; // Asumiendo un nombre similar para la Teoría 9
+        // <<<--- Asegúrate de que este archivo PDF esté en la misma carpeta que este archivo HTML
+
+        // <<<--- Datos del cuestionario para Teoría 9
+        const quizData = [
+            {
+                question: "¿Al intentar crear un método Swap genérico usando ref object, ¿por qué falla la compilación al pasarle ref int o ref string?",
+                options: [
+                    "Porque object no puede almacenar tipos de valor como int.",
+                    "Porque ref solo funciona con tipos dynamic.",
+                    "Porque C# no permite conversiones implícitas con ref para mantener la seguridad de tipos.",
+                    "Porque el método Swap debe ser static para usar ref."
+                ],
+                correctAnswer: 2, // c)
+                feedback: "Respuesta Correcta: c)\nFeedback: Las páginas 9 y 10 explican que C# prohíbe estas conversiones con ref para garantizar la seguridad de tipos, evitando que una variable int pueda terminar referenciando, por ejemplo, un objeto Persona (como se ilustra en la página 11)."
+            },
+            {
+                question: "¿Qué ventaja principal ofrecen los métodos genéricos sobre las soluciones que usan object o dynamic para operaciones como Swap?",
+                options: [
+                    "Permiten el uso de parámetros ref sin restricciones.",
+                    "Eliminan la necesidad de conversiones de tipo y mantienen la eficiencia y seguridad de tipos en tiempo de compilación.",
+                    "Son más fáciles de depurar en tiempo de ejecución.",
+                    "Automáticamente manejan excepciones de conversión de tipo."
+                ],
+                correctAnswer: 1, // b)
+                feedback: "Respuesta Correcta: b)\nFeedback: Las páginas 18 y 21 destacan que los métodos genéricos permiten definir operaciones reutilizables sin perder la eficiencia ni la seguridad de tipos que ofrece la verificación estática."
+            },
+            {
+                question: "En la declaración de un método genérico como void Metodo<T>(T parametro), ¿qué representa T?",
+                options: [
+                    "Un tipo concreto como int o string.",
+                    "Un parámetro de tipo, que actúa como un marcador de posición para un tipo real que se especificará al llamar al método.",
+                    "Una variable de instancia de la clase.",
+                    "Un delegado genérico."
+                ],
+                correctAnswer: 1, // b)
+                feedback: "Respuesta Correcta: b)\nFeedback: La página 19 introduce la declaración de métodos genéricos, donde T (o T1, T2, etc.) son \"parámetros de tipo\" que se reemplazarán por tipos reales en la invocación."
+            },
+            {
+                question: "¿Cuándo puede el compilador inferir los argumentos de tipo en una llamada a un método genérico, permitiendo omitirlos en la invocación (ej: Swap(ref a, ref b) en lugar de Swap<int>(ref a, ref b))?",
+                options: [
+                    "Nunca, siempre se deben especificar los argumentos de tipo.",
+                    "Solo si el método genérico no tiene restricciones where.",
+                    "Cuando los tipos de los parámetros pasados al método permiten al compilador deducir los tipos genéricos.",
+                    "Únicamente si el método devuelve void."
+                ],
+                correctAnswer: 2, // c)
+                feedback: "Respuesta Correcta: c)\nFeedback: La página 22 explica que si se pasan parámetros en la invocación, el compilador a veces puede inferir los parámetros de tipo a partir de ellos, como en Swap(ref a, ref b)."
+            },
+            {
+                question: "¿Para qué se utiliza una cláusula where en la declaración de un método o tipo genérico? (ej: T Mayor<T>(T a, T b) where T : IComparable)",
+                options: [
+                    "Para filtrar los valores que puede recibir el método.",
+                    "Para especificar el espacio de nombres donde se encuentra el tipo genérico.",
+                    "Para imponer restricciones sobre los tipos que pueden usarse como argumentos para los parámetros de tipo.",
+                    "Para indicar que el método solo puede ser llamado desde ciertas clases."
+                ],
+                correctAnswer: 2, // c)
+                feedback: "Respuesta Correcta: c)\nFeedback: Las páginas 31, 35 y 36 explican que las cláusulas where se usan para aplicar restricciones a los parámetros de tipo, asegurando que el tipo proporcionado cumpla ciertos requisitos (como implementar una interfaz o tener un constructor sin parámetros)."
+            },
+            {
+                question: "¿Cuál de las siguientes NO es una categoría de tipos genéricos mencionada en la teoría?",
+                options: [
+                    "Clases",
+                    "Interfaces",
+                    "Enumeraciones (enum)",
+                    "Delegados"
+                ],
+                correctAnswer: 2, // c)
+                feedback: "Respuesta Correcta: c)\nFeedback: La página 39 lista las cuatro categorías de tipos genéricos además de los métodos: Clases, Estructuras, Interfaces y Delegados. Las enumeraciones no son tipos genéricos."
+            },
+            {
+                question: "¿Qué significa la restricción where T : new() aplicada a un parámetro de tipo T?",
+                options: [
+                    "Que T debe ser un tipo de referencia.",
+                    "Que T debe ser un tipo de valor.",
+                    "Que T debe tener un constructor público sin parámetros.",
+                    "Que T no puede ser null."
+                ],
+                correctAnswer: 2, // c)
+                feedback: "Respuesta Correcta: c)\nFeedback: La página 37, en el ejemplo, muestra where T3 : IEnumerable, new(), explicando que new() significa que T3 debe poseer un constructor público sin parámetros."
+            },
+            {
+                question: "¿Cuál es la diferencia fundamental entre un \"tipo genérico\" (ej: List<T>) y un \"tipo construido\" (ej: List<int>)?",
+                options: [
+                    "El tipo genérico es una instancia, mientras que el tipo construido es una plantilla.",
+                    "El tipo genérico es una plantilla, y el tipo construido es el tipo real creado cuando se proporcionan argumentos de tipo.",
+                    "Los tipos genéricos solo pueden usarse en métodos, los construidos en clases.",
+                    "No hay diferencia fundamental, son términos intercambiables."
+                ],
+                correctAnswer: 1, // b)
+                feedback: "Respuesta Correcta: b)\nFeedback: Las páginas 39 y 46 explican que un tipo genérico (como Par<T1, T2>) es una plantilla, y cuando se proporcionan los argumentos de tipo (como Par<string, double>), el compilador JIT crea el tipo real o \"tipo construido\"."
+            },
+            {
+                question: "¿Puede una clase no genérica implementar una interfaz construida a partir de una interfaz genérica? (ej: class Duplica : IDuplicador<int>)",
+                options: [
+                    "No, solo las clases genéricas pueden implementar interfaces genéricas.",
+                    "No, una clase debe implementar la interfaz genérica con su parámetro de tipo (ej: IDuplicador<T>).",
+                    "Sí, una clase no genérica puede implementar una o más interfaces construidas a partir de interfaces genéricas.",
+                    "Sí, pero solo si la interfaz genérica tiene un único parámetro de tipo."
+                ],
+                correctAnswer: 2, // c)
+                feedback: "Respuesta Correcta: c)\nFeedback: La página 54 muestra el ejemplo de la clase no genérica Duplica implementando IDuplicador<int> e IDuplicador<string>, demostrando que es posible."
+            },
+            {
+                question: "Al definir una clase genérica Par<T1, T2>, ¿cómo se declara su constructor?",
+                options: [
+                    "public Par<T1, T2>(T1 a, T2 b)",
+                    "public Par(T1 a, T2 b)",
+                    "public Constructor<T1, T2>(T1 a, T2 b)",
+                    "public new Par(T1 a, T2 b)"
+                ],
+                correctAnswer: 1, // b)
+                feedback: "Respuesta Correcta: b)\nFeedback: La página 44, al transformar la clase Par en genérica, aclara que \"el constructor lleva el nombre de la clase sin la lista de parámetros de tipo, es decir Par(...) no Par<T1,T2>(...)\"."
+            },
+            {
+                question: "¿Cuál de las siguientes es una colección genérica comúnmente utilizada en .NET, mencionada como la versión genérica de ArrayList?",
+                options: [
+                    "Dictionary<TKey, TValue>",
+                    "Stack<T>",
+                    "List<T>",
+                    "HashSet<T>"
+                ],
+                correctAnswer: 2, // c)
+                feedback: "Respuesta Correcta: c)\nFeedback: La página 49 lista varias colecciones genéricas, indicando que List<T> es \"la versión genérica de ArrayList\"."
+            },
+            {
+                question: "¿Cuál es la principal ventaja de usar IEnumerable<T> sobre IEnumerable al iterar una colección?",
+                options: [
+                    "IEnumerable<T> permite modificar la colección durante la iteración.",
+                    "IEnumerable<T> es más rápido porque no usa yield.",
+                    "IEnumerable<T> proporciona seguridad de tipos, y su IEnumerator<T> devuelve T en la propiedad Current, evitando castings.",
+                    "IEnumerable<T> solo funciona para arrays, no para listas."
+                ],
+                correctAnswer: 2, // c)
+                feedback: "Respuesta Correcta: c)\nFeedback: Las páginas 59 y 60 resaltan que las versiones genéricas evitan conversiones y que IEnumerator<T>.Current devuelve directamente el tipo T, mejorando la seguridad y eliminando la necesidad de casting."
+            },
+            {
+                 question: "Si una clase Duplica implementa dos interfaces construidas a partir de la misma interfaz genérica, como IDuplicador<int> e IDuplicador<string>, ¿cómo debe implementar los métodos Duplicar?",
+                 options: [
+                     "Debe usar implementación explícita para al menos uno de ellos para evitar ambigüedad.",
+                     "Puede implementar un único método Duplicar(object valor) que maneje ambos casos.",
+                     "Debe tener dos métodos Duplicar sobrecargados, uno que tome int y otro string.",
+                     "El compilador resolverá automáticamente cuál llamar."
+                 ],
+                 correctAnswer: 2, // c)
+                 feedback: "Respuesta Correcta: c)\nFeedback: La página 54 muestra el ejemplo de la clase Duplica que implementa IDuplicador<int> e IDuplicador<string>. La clase implementa dos métodos Duplicar distintos, uno para cada tipo: public int Duplicar(int valor) y public string Duplicar(string valor). Aunque no se menciona explícitamente la sobrecarga, es el mecanismo que permite tener métodos con el mismo nombre pero diferentes parámetros."
+            },
+            {
+                 question: "¿Es válido que una clase genérica ClaseGen<T1, T2> intente implementar IDuplicador<T1> e IDuplicador<int> simultáneamente?",
+                 options: [
+                     "Sí, siempre que T1 no sea int.",
+                     "Sí, no hay ninguna restricción al respecto.",
+                     "No, porque si T1 se construye como int, habría dos implementaciones de IDuplicador<int>, lo cual no está permitido.",
+                     "No, una clase genérica solo puede implementar una interfaz genérica a la vez."
+                 ],
+                 correctAnswer: 2, // c)
+                 feedback: "Respuesta Correcta: c)\nFeedback: La página 57 presenta este escenario como no permitido, explicando que si T1 se instancia como int, la clase construida ClaseGen<int, char> terminaría con dos interfaces IDuplicador<int>, lo cual es un conflicto."
+            },
+            {
+                 question: "¿Qué ventaja principal ofrecen las versiones genéricas de interfaces como IEnumerable<T> sobre sus contrapartes no genéricas como IEnumerable?",
+                 options: [
+                     "Mejoran la seguridad de tipos y evitan conversiones innecesarias (como boxing/unboxing).",
+                     "Permiten la herencia múltiple de interfaces.",
+                     "Son más fáciles de implementar porque requieren menos métodos.",
+                     "Solo funcionan con tipos de referencia."
+                 ],
+                 correctAnswer: 0, // a)
+                 feedback: "Respuesta Correcta: a)\nFeedback: La página 59 menciona que las versiones genéricas son preferibles pues \"evitan conversiones de tipos como boxing y unboxing\". La página 60 también muestra que con IEnumerator<int>, r.Current es de tipo int, eliminando la necesidad de casting."
+            },
+            {
+                 question: "¿Qué permite hacer un método de extensión definido para una interfaz genérica como IEnumerable<T>?",
+                 options: [
+                     "Modificar la definición original de la interfaz IEnumerable<T>.",
+                     "Agregar nuevos métodos que pueden ser invocados en cualquier objeto cuyo tipo implemente IEnumerable<T>.",
+                     "Convertir cualquier IEnumerable<T> en un List<T>.",
+                     "Restringir los tipos que pueden implementar IEnumerable<T>."
+                 ],
+                 correctAnswer: 1, // b)
+                 feedback: "Respuesta Correcta: b)\nFeedback: Las páginas 62 y 63 explican que extender métodos para una interfaz genérica permite que dichos métodos estén disponibles para todos los tipos que implementan esa interfaz (como vector.EnUnaLinea() y lista.EnUnaLinea())."
+            },
+            {
+                 question: "¿Qué es un delegado genérico en C#?",
+                 options: [
+                     "Un delegado que solo puede referenciar métodos estáticos.",
+                     "Un delegado que utiliza parámetros de tipo en su declaración, permitiendo referenciar métodos con diferentes tipos concretos pero una estructura de firma similar.",
+                     "Una interfaz con un único método que es genérico.",
+                     "Un método de extensión que se aplica a todos los tipos object."
+                 ],
+                 correctAnswer: 1, // b)
+                 feedback: "Respuesta Correcta: b)\nFeedback: La página 67 define los delegados genéricos como aquellos que \"utilizando parámetros de tipo en lugar de los tipos reales\" en su declaración."
+            },
+            {
+                 question: "El método List<T>.ForEach(Action<T> action) ejecuta una acción para cada elemento de la lista. ¿Qué tipo de método espera recibir como parámetro action?",
+                 options: [
+                     "Un método que recibe un elemento de tipo T y devuelve bool.",
+                     "Un método que recibe un elemento de tipo T y devuelve void.",
+                     "Un método que no recibe parámetros y devuelve void.",
+                     "Un método que recibe un elemento de tipo T y devuelve un elemento de tipo T."
+                 ],
+                 correctAnswer: 1, // b)
+                 feedback: "Respuesta Correcta: b)\nFeedback: La página 72 muestra el uso de ForEach y la página 69 define Action<T> como un delegado para métodos con un parámetro de tipo T y retorno void."
+            },
+            {
+                 question: "¿Para qué tipo de métodos se utiliza el delegado genérico predefinido Action<T> (y sus variantes como Action<T1, T2>) en .NET?",
+                 options: [
+                     "Para métodos que devuelven un valor de tipo T.",
+                     "Para métodos que devuelven void (no devuelven valor).",
+                     "Para métodos que siempre devuelven bool.",
+                     "Para métodos que son asíncronos."
+                 ],
+                 correctAnswer: 1, // b)
+                 feedback: "Respuesta Correcta: b)\nFeedback: La página 69 explica que Action<T> se ofrece para \"métodos con tipo de retorno void\"."
+            },
+            {
+                 question: "El delegado genérico Func<T, TResult> representa un método que...",
+                 options: [
+                     "No tiene parámetros y devuelve un valor de tipo TResult.",
+                     "Recibe un parámetro de tipo T y devuelve un valor de tipo TResult.",
+                     "Recibe un parámetro de tipo TResult y devuelve un valor de tipo T.",
+                     "Recibe un parámetro de tipo T y no devuelve ningún valor (void)."
+                 ],
+                 correctAnswer: 1, // b)
+                 feedback: "Respuesta Correcta: b)\nFeedback: La página 70 describe Func<T1,TResult> (donde T1 sería T en la pregunta) como el delegado para métodos con 1 parámetro (T1) y un tipo de retorno TResult."
+            },
+            {
+                 question: "El método List<T>.Find(Predicate<T> match) busca un elemento en la lista. ¿Qué devuelve si no encuentra ningún elemento que cumpla con el predicado?",
+                 options: [
+                     "Lanza una excepción KeyNotFoundException.",
+                     "Devuelve null.",
+                     "Devuelve el último elemento de la lista.",
+                     "Devuelve el valor predeterminado para el tipo T (ej: 0 para int, null para tipos de referencia)."
+                 ],
+                 correctAnswer: 3, // d)
+                 feedback: "Respuesta Correcta: d)\nFeedback: La página 75 describe Find y especifica que si no se encuentra ningún elemento, \"devuelve el valor predeterminado para el tipo T\"."
+            }
+        ];
+
+
+        // --- Resto del código JavaScript (sin cambios respecto al de Teoría 8) ---
+        // Elementos del DOM
+        const quizContainer = document.getElementById('quiz-container');
+        const questionContainer = document.getElementById('question-container');
+        const questionNumberEl = document.getElementById('question-number');
+        const questionTextEl = document.getElementById('question-text');
+        const optionsListEl = document.getElementById('options-list');
+        const submitBtn = document.getElementById('submit-btn');
+        const feedbackContainer = document.getElementById('feedback-container');
+        const feedbackResultEl = document.getElementById('feedback-result');
+        const feedbackExplanationEl = document.getElementById('feedback-explanation');
+        const nextBtn = document.getElementById('next-btn');
+        const scoreContainer = document.getElementById('score-container');
+        const scoreEl = document.getElementById('score');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const restartBtn = document.getElementById('restart-btn');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+
+        function loadQuestion() {
+            feedbackContainer.style.display = 'none';
+            nextBtn.style.display = 'none';
+            submitBtn.style.display = 'block';
+            submitBtn.disabled = false;
+            nextBtn.textContent = 'Siguiente Pregunta'; // Restablecer texto del botón
+
+            const currentQuestion = quizData[currentQuestionIndex];
+
+            questionNumberEl.textContent = `Pregunta ${currentQuestionIndex + 1} de ${quizData.length}`;
+            questionTextEl.textContent = currentQuestion.question;
+            optionsListEl.innerHTML = '';
+
+            currentQuestion.options.forEach((option, index) => {
+                const li = document.createElement('li');
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = 'option';
+                input.value = index;
+                input.id = `option${index}`;
+
+                const label = document.createElement('label');
+                const letterPrefix = String.fromCharCode(97 + index) + ') '; // a), b), c)...
+                label.textContent = letterPrefix + option;
+                label.htmlFor = `option${index}`;
+
+                li.appendChild(input);
+                li.appendChild(label);
+                optionsListEl.appendChild(li);
+            });
+        }
+
+        function escapeHTML(str) {
+         const tempElement = document.createElement('div');
+         tempElement.textContent = str;
+         return tempElement.innerHTML;
+       }
+
+        function checkAnswer() {
+            const selectedOptionInput = optionsListEl.querySelector('input[name="option"]:checked');
+
+            if (!selectedOptionInput) {
+                alert('Por favor, selecciona una respuesta.');
+                return;
+            }
+
+            const selectedAnswerIndex = parseInt(selectedOptionInput.value);
+            const currentQuestion = quizData[currentQuestionIndex];
+
+            // Procesar feedback para enlaces PDF y escapar HTML en el resto del texto
+            const originalFeedbackText = currentQuestion.feedback;
+            const pageRegex = /(p[áa]gina[s]?\s*)(\d+([-\s,ay]+\d+)*)/gi;
+
+            let processedFeedbackHTML = '';
+            let lastIndex = 0;
+            let match;
+
+            // Itera sobre las coincidencias de "página X"
+            while ((match = pageRegex.exec(originalFeedbackText)) !== null) {
+                // 1. Escapa y añade el texto ANTES de la coincidencia de "página X"
+                processedFeedbackHTML += escapeHTML(originalFeedbackText.substring(lastIndex, match.index));
+
+                // 2. Construye y añade el enlace HTML para "página X"
+                //    El texto del enlace (match[0]) también se escapa por seguridad,
+                //    aunque normalmente no contendrá HTML.
+                const linkDisplayText = match[0]; // Ej: "páginas 9 y 10"
+                const firstPageNum = match[2].match(/\d+/)[0]; // Extrae el primer número de página de la parte numérica (match[2])
+                const pdfUrl = `${pdfFileName}#page=${firstPageNum}`;
+
+                processedFeedbackHTML += `<a href="${pdfUrl}" target="_blank" title="Abrir PDF en página ${firstPageNum}">${escapeHTML(linkDisplayText)}</a>`;
+
+                lastIndex = pageRegex.lastIndex;
+            }
+            // 3. Escapa y añade el texto restante DESPUÉS de la última coincidencia (o todo el texto si no hubo coincidencias)
+            processedFeedbackHTML += escapeHTML(originalFeedbackText.substring(lastIndex));
+
+            // Mostrar feedback
+            feedbackContainer.style.display = 'block';
+            feedbackExplanationEl.innerHTML = processedFeedbackHTML; // Usar el HTML procesado y escapado
+            feedbackContainer.classList.remove('feedback-correct', 'feedback-incorrect');
+
+            // Evaluar respuesta y actualizar UI
+            if (selectedAnswerIndex === currentQuestion.correctAnswer) {
+                score++;
+                feedbackResultEl.textContent = '¡Correcto!';
+                feedbackContainer.classList.add('feedback-correct');
+            } else {
+                 feedbackResultEl.textContent = 'Incorrecto.';
+                feedbackContainer.classList.add('feedback-incorrect');
+                 const correctLi = optionsListEl.children[currentQuestion.correctAnswer];
+                 if(correctLi) {
+                     correctLi.style.backgroundColor = '#d4edda'; // Verde claro para la correcta
+                     correctLi.style.fontWeight = 'bold';
+                 }
+            }
+
+            // Deshabilitar interacción post-respuesta
+            submitBtn.disabled = true;
+            submitBtn.style.display = 'none';
+            const radioButtons = optionsListEl.querySelectorAll('input[type="radio"]');
+            radioButtons.forEach(rb => rb.disabled = true);
+            const listItems = optionsListEl.querySelectorAll('li');
+            listItems.forEach(li => {
+                li.style.cursor = 'default';
+                li.onmouseover = null;
+                li.onmouseout = null;
+            });
+
+            // Mostrar el botón "Siguiente" o "Ver Resultados"
+            nextBtn.style.display = 'block';
+            if (currentQuestionIndex >= quizData.length - 1) {
+                nextBtn.textContent = 'Ver Resultados Finales';
+            }
+        }
+
+
+
+        function nextQuestion() {
+            // Comprobar si estamos en la última pregunta ANTES de incrementar
+             if (currentQuestionIndex >= quizData.length - 1) {
+                 showResults();
+                 return;
+             }
+
+            // Si no es la última, incrementar índice y cargar siguiente
+             currentQuestionIndex++;
+             Array.from(optionsListEl.children).forEach(li => {
+                li.style.backgroundColor = '';
+                li.style.fontWeight = '';
+                li.style.cursor = 'pointer';
+                // Reactivar hover
+                li.onmouseover = function() { this.style.backgroundColor = '#f0e6f7'; };
+                li.onmouseout = function() {
+                    const radio = this.querySelector('input[type="radio"]');
+                    if (!radio || !radio.checked) { // No quitar si está seleccionada (aunque ya no debería poderse)
+                       // this.style.backgroundColor = ''; // No se vuelve blanco si no es la seleccionada.
+                    }
+                 };
+             });
+             loadQuestion();
+        }
+
+         function showResults() {
+            questionContainer.style.display = 'none';
+            submitBtn.style.display = 'none';
+            nextBtn.style.display = 'none';
+            feedbackContainer.style.display = 'none';
+            scoreContainer.style.display = 'block';
+            scoreEl.textContent = score;
+            totalQuestionsEl.textContent = quizData.length;
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            scoreContainer.style.display = 'none';
+            questionContainer.style.display = 'block';
+             Array.from(optionsListEl.children).forEach(li => {
+                 li.style.backgroundColor = '';
+                 li.style.fontWeight = '';
+                 li.style.cursor = 'pointer';
+                 // Reactivar hover
+                 li.onmouseover = function() { this.style.backgroundColor = '#f0e6f7'; };
+                 li.onmouseout = function() { this.style.backgroundColor = ''; };
+             });
+            loadQuestion();
+        }
+
+        // Event Listeners
+        submitBtn.addEventListener('click', checkAnswer);
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', restartQuiz);
+
+        // Carga inicial
+        loadQuestion();
+
+    </script>
+
+</body>
+</html>

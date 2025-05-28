@@ -1,0 +1,53 @@
+======================================================
+     Diapositivas 4 - Archivo fuente: Program.cs
+======================================================
+
+int a = 17;
+int b = 23;
+Swap(ref a, ref b);
+Console.WriteLine($"a={a} y b={b}");
+
+
+======================================================
+     Diapositivas 25	 - Archivo fuente: Program.cs
+======================================================
+//Solucionar errores de compilación
+
+int i = Mayor(100, 55);
+Console.WriteLine(i);
+string st = Mayor("hola", "mundo");
+Console.WriteLine(st);
+Console.WriteLine(Mayor('A','B'));
+
+IComparable Mayor(IComparable a, IComparable b)
+{
+   if (a.CompareTo(b) > 0)
+   {
+      return a;
+   }
+   return b;
+}
+
+
+	
+======================================================
+     Diapositivas 29 - Archivo fuente: Program.cs
+======================================================
+
+int i = Mayor<int>(100, 55);
+Console.WriteLine(i);
+string st = Mayor<string>("hola", "mundo");
+Console.WriteLine(st);
+Console.WriteLine(Mayor<char>('A', 'B'));
+
+T Mayor<T>(T a, T b)
+{
+   if (a.CompareTo(b) > 0)
+   {
+       return a;
+   }
+   return b;
+}
+
+
+

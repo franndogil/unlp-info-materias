@@ -1,0 +1,338 @@
+************************************************************
+           Diapositiva 5
+************************************************************
+
+----------ILogger.cs----------
+namespace DiContainer;
+public interface ILogger
+{
+   void Log(string mensaje);
+}
+
+----------LoggerConsola.cs----------
+namespace DiContainer;
+public class LoggerConsola : ILogger
+{
+   public void Log(string mensaje)
+   {
+      Console.WriteLine($"{DateTime.Now:hh:mm:ss:fff}  {mensaje}");
+   }
+}
+
+
+
+************************************************************
+           Diapositiva 5
+************************************************************
+
+----------IServicioX.cs----------
+namespace DiContainer;
+public interface IServicioX
+{
+   void Ejecutar();
+}
+----------ServicioX.cs----------
+namespace DiContainer;
+public class ServicioX (ILogger logger): IServicioX
+{
+  public void Ejecutar()
+  {
+     logger.Log("ServicioX comenzando su ejecución");
+     for (int i = 1; i <= 100_000_000; i++) ; //consumo tiempo simulando ejecución
+     logger.Log("ServicioX ejecución finalizada");
+  }
+}
+
+
+
+************************************************************
+           Diapositiva 8
+************************************************************
+
+-----------ProveedorServicios.cs-----------
+namespace DiContainer;
+
+class ProveedorServicios
+{
+   public ILogger GetLogger()
+       => new LoggerConsola();
+   public IServicioX GetServicioX()
+       => new ServicioX(this.GetLogger());
+}
+
+
+
+
+************************************************************
+           Diapositiva 10 
+************************************************************
+
+-----------Program.cs-----------
+
+using DiContainer;
+
+var proveedor = new ProveedorServicios();
+var servicioX = proveedor.GetServicioX();
+servicioX.Ejecutar();
+
+var logger = proveedor.GetLogger();
+logger.Log("Fin del programa");
+
+
+
+
+************************************************************
+           Diapositiva 15
+************************************************************
+
+-----------Program.cs-----------
+
+using DiContainer;
+using Microsoft.Extensions.DependencyInjection;
+
+var servicios = new ServiceCollection();
+servicios.AddTransient<ILogger, LoggerConsola>();
+servicios.AddTransient<IServicioX, ServicioX>();
+var proveedor = servicios.BuildServiceProvider();
+
+var servicioX = proveedor.GetService<IServicioX>();
+servicioX?.Ejecutar();
+
+var logger = proveedor.GetService<ILogger>();
+logger?.Log("Fin del programa");
+
+
+
+
+************************************************************
+           Diapositiva 52
+************************************************************
+
+<body>
+   <h1> Listado de clientes </h1>
+   <ul>
+       <li title="El primero">Juan</li>
+       <li>María</li>
+       <li>Laura</li>
+   </ul>
+   <ol>
+       <li>Juan</li>
+       <li>María</li>
+       <li>Laura</li>
+   </ol>
+</body>
+
+
+
+************************************************************
+           Diapositiva 54
+************************************************************
+. . .
+<head>
+   . . .
+   <style>
+       #encabezado {
+           background-color: green;
+           font-size: xx-large;
+       }
+       #blanco {
+           color: white;
+       }
+   </style>
+</head>
+<body>
+   <div id="encabezado">
+       <p>primer párrafo</p>
+       <p>segundo párrafo</p>
+       <span id="blanco">este texto es blanco</span> pero este no
+   </div>
+   <p>esto está fuera del encabezado</p>
+</body>
+
+</html>
+
+************************************************************
+           Diapositiva 57
+************************************************************
+<body>
+   <h1> Listado de clientes </h1>
+   <table>
+       <tr>
+           <th>Nombre</th>
+           <th>Apellido</th>
+           <th>Edad</th>
+       </tr>
+       <tr>
+           <td>Juan</td>
+           <td>García</td>
+           <td>33</td>
+       </tr>
+       <tr>
+           <td>María</td>
+           <td>Fernandez</td>
+           <td>22</td>
+       </tr>
+   </table>
+</body>
+
+
+************************************************************
+           Diapositiva 58
+************************************************************
+
+   <style>
+       table, th, td {
+           border: 1px solid white;
+           border-collapse: collapse;
+           padding: 10px;
+       }
+       th, td {
+           background-color: lightblue;
+       }
+   </style>
+
+
+
+************************************************************
+           Diapositiva 68
+************************************************************
+
+@page "/hola"
+
+<h1>Hola @nombre.ToUpper()</h1>
+<p>El doble de 5 es @(5*2) y la Sumatoria
+   de 1 a 10 es @Sumatoria(10) </p>
+
+@code {
+   string nombre = "Juan";
+   int Sumatoria(int n) =>
+          Enumerable.Range(1, n).Sum();
+}
+
+
+************************************************************
+           Diapositiva 71
+************************************************************
+
+---- Home.razor -------
+@page "/"
+<Hola/>
+
+---- Hola.razor -------
+@page "/hola"
+@rendermode InteractiveServer
+<button @onclick="Cambiar">Mostrar / Ocultar</button>
+@if (EsVisible)
+{
+   <h1>Hola @nombre.ToUpper()</h1>
+}
+@code {
+   string nombre = "Juan";
+   bool EsVisible = true;
+   void Cambiar() {
+       EsVisible = !EsVisible;
+   }
+}
+
+
+
+************************************************************
+           Diapositiva 73
+************************************************************
+namespace HolaBlazor.Entidades;
+class Persona
+{
+    public string Nombre { get; set; } = "";
+    public string Apellido { get; set; } = "";
+    public int? Edad { get;  set; } //podría faltar el dato de la edad
+    
+    // vamos a hardcodear una lista de personas
+    // que usaremos en los siguientes ejemplos
+    // para ello definimos el siguiente método estático
+    public static List<Persona> GetLista()
+    {
+        return new List<Persona>() {
+           new Persona() {Nombre="Pablo",Apellido="Perez", Edad=34},
+           new Persona() {Nombre="Laura",Apellido="García", Edad=30},
+           new Persona() {Nombre="José",Apellido="Lopez", Edad=45},
+           new Persona() {Nombre="Ana",Apellido="Colombo", Edad=21},
+           new Persona() {Nombre="María",Apellido="Suarez", Edad=15},
+       };
+    }
+}
+
+
+************************************************************
+           Diapositiva 74
+************************************************************
+@page "/hola"
+@rendermode InteractiveServer
+@using HolaBlazor.Entidades
+
+<h1>Listado de personas</h1>
+<ul>
+@foreach (var p in lista)
+{
+   <li>@p.Apellido, @p.Nombre (@p.Edad)</li>
+}
+</ul>
+
+@code {
+   List<Persona> lista = Persona.GetLista();
+}
+
+
+************************************************************
+          Diapositiva 77
+************************************************************
+
+@page "/hola"
+@rendermode InteractiveServer
+
+<h1>Listado de personas</h1>
+<ul>
+   @foreach (var p in lista)
+   {
+       <li>@p.Apellido, @p.Nombre (@p.Edad)</li>
+   }
+</ul>
+<button @onclick="Agregar">Agregar a Carlos</button>
+
+@code {
+   List<Persona> lista = Persona.GetLista();
+   void Agregar() => lista.Add(new Persona() {
+               Nombre = "Carlos",
+               Apellido = "Maldini",
+               Edad = 66
+           });
+}
+
+
+************************************************************
+           Diapositiva 79
+************************************************************
+
+@page "/hola"
+@rendermode InteractiveServer
+
+<h1>Listado de personas</h1>
+<ul>
+   @foreach (var p in lista)
+   {
+       <li>@p.Apellido, @p.Nombre (@p.Edad)</li>
+   }
+</ul>
+<input placeholder="Nombre" @bind="p.Nombre" /><br>
+<input placeholder="Apellido" @bind="p.Apellido" /><br>
+<input type="number" placeholder="Edad" @bind="p.Edad" /><br>
+<button @onclick="Agregar">Agregar</button>
+
+@code {
+   List<Persona> lista = Persona.GetLista();
+   Persona p = new Persona();
+   void Agregar()
+   {
+       lista.Add(p);
+       p = new Persona();
+   }
+}

@@ -1,0 +1,366 @@
+****************************************
+     CÓDIGO DIAPOSITIVA 6
+****************************************
+int[] vector = [1, 2, 3, 4, 5];
+IEnumerable<int> secuencia = vector.Select(n => n * 3);
+Mostrar(secuencia);
+
+
+void Mostrar<T>(IEnumerable<T> secuencia)
+{
+   foreach (T elemento in secuencia)
+   {
+       Console.Write(elemento + " ");
+   }
+   Console.WriteLine();
+}
+
+
+
+****************************************
+     CÓDIGO DIAPOSITIVA 29
+****************************************
+class Persona
+{
+   public string Nombre { get; private set; }
+   public int Edad { get; private set; }
+   public string Pais { get; private set; }
+   public Persona(string nombre, int edad, string pais)
+   {
+       Nombre = nombre;
+       Edad = edad;
+       Pais = pais;
+   }
+   public override string ToString()
+   {
+      return $"{Nombre} ({Edad} años) {Pais.Substring(0, 3)}.";
+   }
+
+   // vamos a hardcodear una lista de personas
+   // que usaremos en los siguientes ejemplos
+   // para ello definimos el siguiente método estático
+   public static List<Persona> GetLista()
+   {
+       return new List<Persona>() {
+           new Persona("Pablo",15,"Argentina"),
+           new Persona("Juan", 55,"Argentina"),
+           new Persona("José",9,"Uruguay"),
+           new Persona("María",33,"Uruguay"),
+           new Persona("Lucía",16,"Perú"),
+       };
+   }
+}
+	
+
+****************************************
+     CÓDIGO DIAPOSITIVA 60
+****************************************
+
+dotnet add package Microsoft.EntityFrameworkCore.Sqlite
+
+****************************************
+     CÓDIGO DIAPOSITIVA 62
+****************************************
+
+namespace Escuela;
+
+public class Alumno
+{
+   public int Id { get; private set; }
+   public string Nombre { get; private set; } = "";
+   public string? Email { get; private set; }
+
+   public Alumno(string nombre, string? email = null)
+   {
+       if (string.IsNullOrWhiteSpace(nombre))
+       {
+           throw new ArgumentException("El nombre no puede ser nulo ni estar vacío");
+       }
+
+       if (email != null && !EmailValido(email))
+       {
+           throw new ArgumentException("El formato del email no es válido.");
+       }
+
+       this.Nombre = nombre;
+       this.Email = email;
+       //El Id va a ser establecido por el sistema de persistencia
+   }
+   protected Alumno() { } // Constructor vacío (lo utilizará EntityFramework)
+
+   private static bool EmailValido(string email)
+   {
+       // Una validación de email real puede ser más compleja
+       return email.Contains('@') && email.Contains('.');
+   }
+
+   // Otros métodos de la entidad Alumno que implementan su comportamiento
+   // permitiendo cambiar su estado y mantener su propia consistencia
+   // es decir, las invariantes de la entidad (reglas que siempre deben ser verdaderas).
+}
+
+****************************************
+     CÓDIGO DIAPOSITIVA 71
+****************************************
+
+namespace Escuela;
+
+public class Examen
+{
+   public int Id { get; private set; }
+   public int AlumnoId { get; private set; }
+   public string Materia { get; private set; } = "";
+   public double Nota { get; private set; }
+   public DateTime Fecha { get; private set; }
+   public Examen(int alumnoId, string materia, double nota, DateTime fecha)
+   {
+       // completar aquí las validaciones que aseguren la consistencia de la entidad
+       AlumnoId = alumnoId;
+       Materia = materia;
+       Nota = nota;
+       Fecha = fecha;
+   }
+
+   protected Examen() { } // Constructor para EF Core
+
+   public void CambiarNota(double nota)
+   {
+       if (nota < 0 || nota > 10)
+       {
+           throw new ArgumentOutOfRangeException("Valor para la nota no permitido");
+       }
+       Nota = nota;
+   }
+
+   // Otros métodos que implementan el comportamiento de la entidad
+   // manteniendo sus invariantes
+
+}
+
+
+****************************************
+     CÓDIGO DIAPOSITIVA 72
+****************************************
+using Microsoft.EntityFrameworkCore;
+
+namespace Escuela;
+
+public class EscuelaContext : DbContext
+{
+   
+   public DbSet<Alumno> Alumnos { get; set; }
+   public DbSet<Examen> Examenes { get; set; }
+   
+
+   protected override void OnConfiguring(DbContextOptionsBuilder
+       optionsBuilder)
+   {
+       optionsBuilder.UseSqlite("data source=Escuela.sqlite");
+   }
+}
+
+
+
+****************************************
+     CÓDIGO DIAPOSITIVA 74
+****************************************
+using Escuela;
+
+using (var context = new EscuelaContext())
+{
+   Console.WriteLine("-- Tabla Alumnos --");
+   foreach (var a in context.Alumnos)
+   {
+       Console.WriteLine($"{a.Id} {a.Nombre}");
+   }
+
+   Console.WriteLine("-- Tabla Exámenes --");
+   foreach (var ex in context.Examenes)
+   {
+       Console.WriteLine($"{ex.Id} {ex.Materia} {ex.Nota}");
+   }
+}
+
+
+****************************************
+     CÓDIGO DIAPOSITIVA 77
+****************************************
+
+namespace Escuela;
+
+public class EscuelaSqlite
+{
+   public static void Inicializar()
+   {
+       using var context = new EscuelaContext();
+       if (context.Database.EnsureCreated())
+       {
+           Console.WriteLine("Se creó base de datos");
+       }
+   }
+}
+
+
+
+****************************************
+     CÓDIGO DIAPOSITIVA 85
+****************************************
+
+namespace Escuela;
+
+public class EscuelaSqlite
+{
+   public static void Inicializar()
+   {
+       using var context = new EscuelaContext();
+       if (context.Database.EnsureCreated())
+       {
+           Console.WriteLine("Se creó base de datos");
+
+           context.Alumnos.Add(new Alumno("Juan", "juan@gmail.com"));
+           context.Alumnos.Add(new Alumno("Ana"));
+           context.Alumnos.Add(new Alumno("Laura"));
+
+           context.Examenes.Add(new Examen(2, "Inglés", 9, new DateTime(2022, 4, 4)));
+           context.Examenes.Add(new Examen(1, "Inglés", 5, new DateTime(2019, 3, 1)));
+           context.Examenes.Add(new Examen(1, "Álgebra", 10, new DateTime(2021, 5, 24)));
+
+           context.SaveChanges();
+       }
+   }
+}
+
+
+****************************************
+     CÓDIGO DIAPOSITIVA 90
+****************************************
+
+using Escuela;
+
+EscuelaSqlite.Inicializar(); //solo tiene efecto si
+                            // la base de datos no existe
+
+using var context = new EscuelaContext();
+var query = context.Alumnos.Join(context.Examenes,
+           a => a.Id,
+           e => e.AlumnoId,
+           (a, e) => new
+           {
+               Alumno = a.Nombre,
+               Materia = e.Materia,
+               Nota = e.Nota
+           });
+foreach (var obj in query)
+{
+  Console.WriteLine(obj);
+}
+
+
+****************************************
+     CÓDIGO DIAPOSITIVA 93
+****************************************
+
+using Escuela;
+
+EscuelaSqlite.Inicializar(); //solo tiene efecto si
+                            // la base de datos no existe
+
+using var context = new EscuelaContext();
+
+//Agregamos un nuevo alumno
+var alumno = new Alumno("Pablo"); // el Id será establecido por SQLite
+context.Add(alumno); // se agregará realmente con el db.SaveChanges()
+
+context.SaveChanges(); // actualiza la base de datos.
+                      // SQlite establece el valor de alumno.Id
+
+// Agregamos un examen para el nuevo alumno
+var examen = new Examen(alumno.Id, "Historia", 9.5, DateTime.Today);
+context.Add(examen);
+
+context.SaveChanges();
+
+
+****************************************
+     CÓDIGO DIAPOSITIVA 95
+****************************************
+
+using Escuela;
+
+EscuelaSqlite.Inicializar(); //solo tiene efecto si
+                            // la base de datos no existe
+
+using var context = new EscuelaContext();
+
+//borramos de la tabla Alumnos el registro con Id=3
+var alumnoBorrar = context.Alumnos.Where(a => a.Id == 3).SingleOrDefault();
+if (alumnoBorrar != null)
+{
+context.Remove(alumnoBorrar); //se borra realmente con el context.SaveChanges()
+}
+
+//La nota en Inglés del alumno id=1 es un 5. La cambiamos a 7.5
+var examenModificar = context.Examenes.Where(
+                       e => e.AlumnoId == 1 && e.Materia == "Inglés").SingleOrDefault();
+if (examenModificar != null)
+{
+  examenModificar.CambiarNota(7.5); //se modifica el registro en memoria
+}
+context.SaveChanges(); //actualiza la base de datos.
+
+
+
+
+****************************************
+     CÓDIGO DIAPOSITIVA 99
+****************************************
+
+using Microsoft.EntityFrameworkCore;
+using Escuela;
+
+EscuelaSqlite.Inicializar(); //solo tiene efecto si
+                            // la base de datos no existe
+
+using var context = new EscuelaContext();
+
+foreach (Alumno a in context.Alumnos.Include(a => a.Examenes))
+{
+   Console.WriteLine(a.Nombre);
+   a.Examenes?.ToList()
+       .ForEach(ex => Console.WriteLine($" - {ex.Materia} {ex.Nota}"));
+}
+
+
+****************************************
+     CÓDIGO DIAPOSITIVA 102
+****************************************
+
+using Microsoft.EntityFrameworkCore;
+using Escuela;
+
+EscuelaSqlite.Inicializar(); //solo tiene efecto si
+                            // la base de datos no existe
+
+using var context = new EscuelaContext();
+
+Alumno nuevo = new Alumno("Andrés");
+nuevo.Examenes = new List<Examen>() { //dejamos en 0 el AlumnoId porque va a ser ignorado
+       new Examen(0,"Lengua",7,DateTime.Parse("5/5/2022")),
+       new Examen(0,"Matemática",6,DateTime.Parse("6/5/2022"))
+   };
+context.Add(nuevo);
+context.SaveChanges();
+
+foreach (Alumno a in context.Alumnos.Include(a => a.Examenes))
+{
+   Console.WriteLine(a.Nombre);
+   a.Examenes?.ToList()
+       .ForEach(ex => Console.WriteLine($" - {ex.Materia} {ex.Nota}"));
+}
+
+
+
+
+
+
+
