@@ -48,9 +48,47 @@ public class Mapa {
 		return listaRetorno;
 	}
 	//---------------------------------------------------------------------------------------------------------------------------------------
+	public List<String> caminoMasCorto(String ciudad1, String ciudad2){
+		List<String> listaRetorno = new LinkedList<String>();
+		
+		if(this.mapaCiudades!= null && !this.mapaCiudades.isEmpty()) {
+			Vertex<String> origen = this.mapaCiudades.search(ciudad1);
+			Vertex<String> destino = this.mapaCiudades.search(ciudad2);
+			
+			if(origen != null && destino != null) {
+				boolean[] marcas = new boolean [this.mapaCiudades.getSize()];
+				caminoMasCortoRecursivo(origen, destino, new LinkedList<String>(), listaRetorno, marcas, 0, Integer.MAX_VALUE);
+			}
+		}
+		return listaRetorno;
+	}
+	//---------------------------------------------------------------------------------------------------------------------------------------
+	private int caminoMasCortoRecursivo(Vertex<String> origen, Vertex<String> destino, List<String> caminoAct, List<String> caminoCorto, boolean[] marcas, int total, int min) {
+		if(origen == destino && total < min) {
+			caminoCorto.removeAll(caminoCorto);
+			caminoCorto.addAll(caminoAct);
+			min =  total;
+		}
+		else {
+			List<Edge<String>> listAdy = this.mapaCiudades.getEdges(origen);
+			Iterator<Edge<String>> it = listAdy.iterator();
+			while(it.hasNext() && total < min) {
+				Edge<String> v = it.next();				
+                int j = v.getTarget().getPosition();
+                int aux = total + v.getWeight();
+                if(!marcas[j] && aux < min) {
+                    min = caminoMasCortoRecursivo(v.getTarget(), destino, caminoCorto, caminoAct, marcas, aux, min);
+                }	
+			}
+		}
+		marcas[origen.getPosition()] = false;
+        caminoAct.remove(caminoAct.size()-1);
+        return min;
+	}
+	//---------------------------------------------------------------------------------------------------------------------------------------
 	private void exceptuarCiudades(List<String> ciudades, boolean[] marcas) {
 		for(String c : ciudades) {
-			Vertex<String> actual = this.mapaCiudades.search(c);
+			Vertex<String> actual = this.mapaCiudades.search(c);	
 			//si la ciudad a exceptuar existe, la tildo como false para no tenerla en cuenta
 			if(actual!=null) {
 				marcas[actual.getPosition()] = false;
