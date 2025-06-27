@@ -10,7 +10,7 @@ public class Mapa {
 	public Mapa(Graph<String> mapaCiudades) {
 		this.mapaCiudades = mapaCiudades;
 	}
-	
+	//---------------------------------------------------------------------------------------------------------------------------------------
 	public List<String> devolverCamino(String ciudad1, String ciudad2){
 		List<String> listaRetorno = new LinkedList<String>();
 		
@@ -28,7 +28,36 @@ public class Mapa {
 		
 		return listaRetorno;
 	}
-	
+	//---------------------------------------------------------------------------------------------------------------------------------------
+	public List<String> devolverCaminoExceptuando(String ciudad1, String ciudad2, List<String> ciudades){
+		List<String> listaRetorno = new LinkedList<String>();
+		
+		//verifico que mapaCiudades no sea null o no sea vacio
+		if(this.mapaCiudades!=null && !this.mapaCiudades.isEmpty()) {
+			Vertex<String> origen = this.mapaCiudades.search(ciudad1);
+			Vertex<String> destino = this.mapaCiudades.search(ciudad2);
+			
+			if(origen != null && destino != null) {
+				boolean[] marcas = new boolean [this.mapaCiudades.getSize()];
+				
+				exceptuarCiudades(ciudades, marcas);
+				devolverCaminoRecursivo(origen, destino, listaRetorno, marcas);
+			}
+		}
+		
+		return listaRetorno;
+	}
+	//---------------------------------------------------------------------------------------------------------------------------------------
+	private void exceptuarCiudades(List<String> ciudades, boolean[] marcas) {
+		for(String c : ciudades) {
+			Vertex<String> actual = this.mapaCiudades.search(c);
+			//si la ciudad a exceptuar existe, la tildo como false para no tenerla en cuenta
+			if(actual!=null) {
+				marcas[actual.getPosition()] = false;
+			}
+		}
+	}
+	//---------------------------------------------------------------------------------------------------------------------------------------
 	private boolean devolverCaminoRecursivo(Vertex<String>origen, Vertex<String>destino, List<String> camino, boolean[] marcas) {
 		boolean encontre = false;
 		marcas[origen.getPosition()] = true;
@@ -55,4 +84,6 @@ public class Mapa {
 		marcas[origen.getPosition()] = false;
         return encontre;
 	}
+	//---------------------------------------------------------------------------------------------------------------------------------------
+
 }
