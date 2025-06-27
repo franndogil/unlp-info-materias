@@ -81,7 +81,7 @@ public class Mapa {
 			Vertex<String> actual = this.mapaCiudades.search(c);	
 			//si la ciudad a exceptuar existe, la tildo como false para no tenerla en cuenta
 			if(actual!=null) {
-				marcas[actual.getPosition()] = false;
+				marcas[actual.getPosition()] = true;
 			}
 		}
 	}
@@ -103,7 +103,7 @@ public class Mapa {
 		
 		private int caminoMasCortoRecursivo(Vertex<String> origen, Vertex<String> destino, List<String> caminoAct, List<String> caminoCorto, boolean[] marcas, int total, int min) {
 			if(origen == destino && total < min) {
-				caminoCorto.removeAll(caminoCorto);
+				caminoCorto.clear();
 				caminoCorto.addAll(caminoAct);
 				min =  total;
 			}
@@ -188,7 +188,7 @@ public class Mapa {
 			marcas[origen.getPosition()] = true;
 			caminoAct.add(origen.getData());
 			if(origen == destino  && recargas < recargasMin) {
-				caminoMin.removeAll(caminoMin);
+				caminoMin.clear();
 				caminoMin.addAll(caminoAct);
 				recargasMin = recargas;
 			}
