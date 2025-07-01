@@ -212,4 +212,18 @@ public class Mapa {
 			return recargasMin;
 		}
 		
+		//--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+		/* Ejercicio 7) 1. Implemente nuevamente el ejercicio 3.3 haciendo uso del algoritmo de Dijkstra*/
+		
+		//public List<String> caminoMasCortoDijkstra(String ciudad1, String ciudad2){
+			
+		//}
+		
+		/* 2. Implemente nuevamente el ejercicio 3.3 haciendo uso del algoritmo de Floyd*/
+		
+		//public List<String> caminoMasCortoFloyd(String ciudad1, String ciudad2){
+			
+		//}
+		
+		
 }
