@@ -1,4 +1,4 @@
-package parciales.grafos.primerafecha2024;
+package parciales.grafos.primerafecha2024.parcial2;
 
 public class Recinto {
 	private String nombre;

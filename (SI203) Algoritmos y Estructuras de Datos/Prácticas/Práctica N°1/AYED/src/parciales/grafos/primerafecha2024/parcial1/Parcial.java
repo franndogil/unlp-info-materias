@@ -1,4 +1,4 @@
-package parciales.grafos.primerafecha2024;
+package parciales.grafos.primerafecha2024.parcial1;
 import tp5.ejercicio1.*;
 import java.util.*;
 
