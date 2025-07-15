@@ -9,11 +9,11 @@
 - 📘 **[(FOD) Fundamentos de Organización de Datos](https://github.com/franndogil/unlp-info-materias/tree/main/(SI209)%20Fundamentos%20de%20Organizacion%20de%20Datos)**
 - 📘 **[Seminario de Lenguajes - .Net](https://github.com/franndogil/unlp-info-materias/tree/main/(SI207)%20Seminario%20de%20Lenguajes%20-%20.NET)**
 ## Cuarto semestre
-- 📘 **[(ISO) Introducción a los Sistemas Operativos](https://github.com/franndogil/unlp-info-materias/tree/main/(SI203)%20Algoritmos%20y%20Estructuras%20de%20Datos)**
-- 📘 **[(OO1) Orientación a Objetos 1](https://github.com/franndogil/unlp-info-materias/tree/main/(SI203)%20Algoritmos%20y%20Estructuras%20de%20Datos)**
-- 📘 **[(DBD) Diseño de Bases de Datos](https://github.com/franndogil/unlp-info-materias/tree/main/(SI203)%20Algoritmos%20y%20Estructuras%20de%20Datos)**
-- 📘 **[(IS1) Ingeniería de Software 1](https://github.com/franndogil/unlp-info-materias/tree/main/(SI203)%20Algoritmos%20y%20Estructuras%20de%20Datos)**
-- 📘 **[(ENG) Taller de lecto-comprensión y Traducción en Inglés](https://github.com/franndogil/unlp-info-materias/tree/main/(SI203)%20Algoritmos%20y%20Estructuras%20de%20Datos)**
+- 📘 **[(ISO) Introducción a los Sistemas Operativos](https://github.com/franndogil/unlp-info-materias/tree/main/(SI204)%20Introducci%C3%B3n%20a%20los%20Sistemas%20Operativos)**
+- 📘 **[(OO1) Orientación a Objetos 1](https://github.com/franndogil/unlp-info-materias/tree/main/(SI206)%20Orientaci%C3%B3n%20a%20Objetos%201)**
+- 📘 **[(DBD) Diseño de Bases de Datos](https://github.com/franndogil/unlp-info-materias/tree/main/(SI210)%20Dise%C3%B1o%20de%20Bases%20de%20Datos)**
+- 📘 **[(IS1) Ingeniería de Software 1](https://github.com/franndogil/unlp-info-materias/tree/main/(SI202)%20Ingenier%C3%ADa%20de%20Software%201)**
+- 📘 **[(ENG) Taller de lecto-comprensión y Traducción en Inglés](https://github.com/franndogil/unlp-info-materias/tree/main/(SI208)%20Taller%20de%20lecto-comprensi%C3%B3n%20y%20Traducci%C3%B3n%20en%20Ingl%C3%A9s)**
 
 ### IMPORTANTE
 **Los recursos compartidos en este espacio son de carácter informativo y representan perspectivas individuales, sin implicar validación oficial por parte de las cátedras de las materias.**
