@@ -2,7 +2,7 @@ package ar.edu.unlp.info.oo1.ejercicio5;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-public class PlazoFijo extends Inversion{
+public class PlazoFijo implements Inversion{
 	private LocalDate date;
 	private double montoDepositado;
 	private double interes;

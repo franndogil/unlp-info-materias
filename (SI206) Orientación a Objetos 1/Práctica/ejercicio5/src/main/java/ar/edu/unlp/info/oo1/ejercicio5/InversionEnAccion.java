@@ -1,6 +1,6 @@
 package ar.edu.unlp.info.oo1.ejercicio5;
 
-public class InversionEnAccion extends Inversion {
+public class InversionEnAccion implements Inversion {
 	private String nombre;
 	private int cantidad;
 	private Accion accion;
