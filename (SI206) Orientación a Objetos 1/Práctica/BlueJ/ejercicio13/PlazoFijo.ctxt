@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=PlazoFijo
+comment1.params=date\ montoDepositado\ interes
+comment1.target=PlazoFijo(java.time.LocalDate,\ double,\ double)
+comment2.params=
+comment2.target=double\ getValorActual()
+numComments=3

@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=InversionEnAccion
+comment1.params=nombre\ cantidad\ accion
+comment1.target=InversionEnAccion(java.lang.String,\ int,\ Accion)
+comment2.params=
+comment2.target=double\ getValorActual()
+numComments=3

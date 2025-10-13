@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.target=Inversor
+comment1.params=nombre
+comment1.target=Inversor(java.lang.String)
+comment2.params=inversion
+comment2.target=void\ agregarInversion(Inversion)
+comment3.params=inversion
+comment3.target=void\ retirarInversion(Inversion)
+comment4.params=
+comment4.target=double\ getValorActual()
+numComments=5
