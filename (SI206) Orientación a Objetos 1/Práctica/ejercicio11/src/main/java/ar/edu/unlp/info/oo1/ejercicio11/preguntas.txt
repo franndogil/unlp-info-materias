@@ -1,0 +1,39 @@
+a) ¿Por qué cree que este ejercicio se llama "Cuenta con ganchos"?  
+
+El ejercicio se llama “Cuenta con ganchos” porque la clase Cuenta define el comportamiento general de las operaciones
+(como extraer o transferir), pero deja “ganchos” (métodos que las subclases deben implementar, como puedeExtraer) para
+que cada tipo de cuenta adapte las reglas según sus propias condiciones.
+
+b) En las implementaciones de los métodos extraer() y transferirACuenta()  que 
+se ven en el diagrama, ¿quién es this? ¿Puede decir de qué clase es this?
+
+En los métodos extraer() y transferirACuenta(), this representa la cuenta que invoca el método,
+ y por lo tanto es una instancia de una subclase concreta de Cuenta (como CajaDeAhorro o CuentaCorriente).
+ 
+c) ¿Por qué decidimos que los métodos puedeExtraer() y extraerSinControlar 
+tengan visibilidad "protegido"? 
+
+Los métodos puedeExtraer() y extraerSinControlar() son protegidos porque forman parte del comportamiento interno 
+de la clase Cuenta y solo deben ser utilizados o redefinidos por las subclases. De esta forma, se evita que otros 
+objetos externos los invoquen directamente, manteniendo el encapsulamiento, pero permitiendo que las clases hijas 
+personalicen la lógica de extracción.
+
+d) ¿Se puede transferir de una caja de ahorro a una cuenta corriente y viceversa? ¿por 
+qué? ¡Pruébelo! 
+
+Sí, se puede transferir entre una CajaDeAhorro y una CuentaCorriente porque ambas heredan de la clase Cuenta, que 
+define el método transferirACuenta(Cuenta destino). El comportamiento particular depende de la cuenta origen (por 
+ejemplo, costo del 2% o límite de descubierto), pero el mecanismo de transferencia funciona entre cualquier tipo 
+de cuenta que derive de Cuenta.
+
+e) ¿Cómo se declara en Java un método abstracto? ¿Es obligatorio implementarlo? 
+¿Qué dice el compilador de Java si una subclase no implementa un método 
+abstracto que hereda? 
+
+un metodo abstracto se declara de la siguiente manera:
+
+	"public abstract void unEjemplo();"
+	
+Si es declarado es obligatorio implementarlo, si una subclase no lo implementa, el compilador de Java dice:
+
+	"The type Clase must implement the inherited abstract method Cuenta.unEjemplo()"
