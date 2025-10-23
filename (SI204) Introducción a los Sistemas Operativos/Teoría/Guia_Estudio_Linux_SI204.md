@@ -94,19 +94,3 @@
 7. **Montar una partición:**
    - `sudo mount /dev/sdb1 /mnt/usb`
    - `ls /mnt/usb`
-
-## 11. **Recursos para Práctica**
-- Usa [OverTheWire: Bandit](https://overthewire.org/wargames/bandit/) para practicar comandos en Linux.
-- Manual del comando (`man <comando>`) y [cheat.sh](https://cheat.sh/) para consultas rápidas.
-
----
-
-## **Tips para el examen**
-- Practicá los comandos en una máquina virtual o entorno real.
-- Leé y entendé lo que hace cada comando antes de ejecutarlo.
-- Si te piden resolver una situación, pensá paso a paso: ¿qué archivo? ¿qué directorio? ¿qué comando?
-- No te olvides de los modos de VIM: `i` para editar, `Esc` para comandos, `:wq` para guardar y salir.
-
----
-
-**¡Éxitos! Cuando me pases la práctica 2, la resolvemos juntos paso a paso.**
