@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.target=Usuario
+comment1.params=nombre\ direccion\ dni
+comment1.target=Usuario(java.lang.String,\ java.lang.String,\ int)
+comment2.params=
+comment2.target=java.lang.String\ getNombre()
+comment3.params=
+comment3.target=java.lang.String\ getDireccion()
+comment4.params=
+comment4.target=int\ getDni()
+comment5.params=
+comment5.target=double\ calcularIngresos()
+comment6.params=propiedad
+comment6.target=void\ agregarPropiedad(Propiedad)
+comment7.params=
+comment7.target=int\ cantPropiedades()
+numComments=8

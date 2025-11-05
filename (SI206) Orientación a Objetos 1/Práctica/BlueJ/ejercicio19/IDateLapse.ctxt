@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=IDateLapse
+comment1.params=
+comment1.target=java.time.LocalDate\ getFrom()
+comment2.params=
+comment2.target=java.time.LocalDate\ getTo()
+comment3.params=
+comment3.target=int\ sizeInDays()
+comment4.params=other
+comment4.target=boolean\ includesDate(java.time.LocalDate)
+comment5.params=anotherDateLapse
+comment5.target=boolean\ overlaps(DateLapse)
+numComments=6

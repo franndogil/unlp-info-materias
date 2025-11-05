@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=Propiedad
+comment1.params=direccion\ nombre\ precio
+comment1.target=Propiedad(java.lang.String,\ java.lang.String,\ double)
+comment2.params=reserva
+comment2.target=void\ cancelarReserva(Reserva)
+comment3.params=
+comment3.target=java.util.List\ getReservas()
+comment4.params=
+comment4.target=double\ getPrecio()
+comment5.params=from\ to
+comment5.target=boolean\ isDisponible(java.time.LocalDate,\ java.time.LocalDate)
+numComments=6
