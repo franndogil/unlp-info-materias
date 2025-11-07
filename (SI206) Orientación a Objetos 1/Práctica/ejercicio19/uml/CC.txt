@@ -1,0 +1,17 @@
+Propiedad → Clase
+
+Usuarios → Clase
+
+Reserva → Clase
+
+Nombre → Atributo
+
+Dirección → Atributo
+
+DNI → Atributo
+
+Dirección → Atributo
+
+Nombre descriptivo → Atributo
+
+Precio → Atributo

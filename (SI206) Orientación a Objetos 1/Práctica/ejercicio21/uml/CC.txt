@@ -1,0 +1,21 @@
+1. Servicio
+2. IEnvio → Interface
+3. Envio → clase abstracta
+4. Envió local → clase
+5. Envió interurbano → clase
+6. Envió internacional → clase
+7. Entrega rápida → metodo
+8. fecha → atributo
+9. dirección de origen → atributo
+10. dirección de destino → atributo
+11. peso en gramos → atributo
+12. distancia en km → atributo
+13. Cliente → Clase abstracta
+14. Persona física → Clase
+15. Cliente corporativo → Clase
+16. nombre → atributo
+17. dirección → atributo
+18. DNI → atributo
+19. nombre → atributo
+20. dirección → atributo
+21. cuit → atributo

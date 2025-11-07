@@ -1,0 +1,16 @@
+Usuario → Clase abstracta
+Saldo Cuenta → Atributo
+Nombre → Atributo
+Dirección → Atributo
+Conductor → Clase
+Pasajero → Clase
+Vehículo → Clase
+Descripción → Atributo
+Capacidad → Atributo
+Año de fabricación → Atributo
+Valor de mercado → Atributo
+Viaje → Clase
+Costo Total → Atributo
+Localidad Origen → Atributo
+Localidad Destino → Atributo
+Fecha Salida → Atributo

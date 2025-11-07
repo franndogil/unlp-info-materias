@@ -1,0 +1,23 @@
+Vianda → Clase
+
+Articulo → Clase
+
+Nombre → atributo
+
+precio → atibuto
+
+aptaCeliaco → atributo
+
+Disponibilidad → atributo
+
+Nombre → atributo
+
+Categoria → Atributo
+
+Precio → Atributo
+
+Peso en kg → Atributo
+
+Stock → Atributo
+
+Pedido → Clase Abstracta
