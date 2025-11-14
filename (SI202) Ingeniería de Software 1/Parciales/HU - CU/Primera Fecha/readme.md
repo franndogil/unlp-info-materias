@@ -1,2 +1,3 @@
-# HU -> DESAPROBADO
-# CU - > APROBADO
+# Historias de Usuario -> DESAPROBADO
+# Casos de Uso - > APROBADO
+
