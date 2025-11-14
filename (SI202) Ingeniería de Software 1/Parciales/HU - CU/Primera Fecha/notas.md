@@ -1,0 +1,2 @@
+# HU -> DESAPROBADO
+# CU - > APROBADO
