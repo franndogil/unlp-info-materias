@@ -1,0 +1,23 @@
+
+4.
+Persona = (DNI, Apellido, Nombre, Fecha_Nacimiento, Estado_Civil, Genero) 
+Alumno = (DNI (fk), Legajo, Anio_Ingreso) 
+Profesor = (DNI (fk), Matricula, Nro_Expediente) 
+Titulo = (Cod_Titulo, Nombre, Descripcion) 
+Titulo-Profesor = (Cod_Titulo (fk), DNI (fk), Fecha) 
+Curso = (Cod_Curso, Nombre, Descripcion, Fecha_Creacion, Duracion) 
+Alumno-Curso = (DNI (fk), Cod_Curso (fk), Anio, Desempenio, Calificacion) 
+Profesor-Curso = (DNI (fk), Cod_Curso (fk), Fecha_Desde, Fecha_Hasta?) 
+
+6.
+Técnico = (codTec, nombre, especialidad)
+Repuesto = (codRep, nombre, stock, precio)
+RepuestoReparacion = (nroReparac (fk), codRep (fk), cantidad, precio) 
+Reparación = (nroReparac, codTec (fk), precio_total, fecha) 
+
+7.
+Club = (codigoClub, nombre, anioFundacion, codigoCiudad(FK)) 
+Ciudad = (codigoCiudad, nombre) 
+Estadio = (codigoEstadio, codigoClub(FK), nombre, direccion) 
+Jugador = (DNI, nombre, apellido, edad, codigoCiudad(FK)) 
+ClubJugador = (codigoClub (FK), DNI (FK), desde, hasta)
