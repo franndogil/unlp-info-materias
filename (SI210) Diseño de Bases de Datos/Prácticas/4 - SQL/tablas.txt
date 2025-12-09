@@ -21,3 +21,18 @@ Ciudad = (codigoCiudad, nombre)
 Estadio = (codigoEstadio, codigoClub(FK), nombre, direccion) 
 Jugador = (DNI, nombre, apellido, edad, codigoCiudad(FK)) 
 ClubJugador = (codigoClub (FK), DNI (FK), desde, hasta)
+
+8.
+Equipo = (codigoE, nombreE, descripcionE)  
+Integrante = (DNI, nombre, apellido, ciudad, email, telefono, codigoE(fk))  
+Laguna = (nroLaguna, nombreL, ubicación, extension, descripción)  
+TorneoPesca = (codTorneo, fecha, hora, nroLaguna(fk), descripcion) 
+Inscripcion = (codTorneo(fk), codigoE(fk), asistio, gano)
+
+9.
+Proyecto = (codProyecto, nombrP,descripcion, fechaInicioP, fechaFinP?, 
+fechaFinEstimada, DNIResponsable(FK), equipoBackend(FK), equipoFrontend(FK))        // DNIResponsable corresponde a un 
+                                                                                    empleado, equipoBackend y equipoFrontend corresponden a equipos 
+Equipo = (codEquipo, nombreE, descTecnologias, DNILider(FK))                        //DNILider corresponde a un empleado 
+Empleado = (DNI, nombre, apellido, telefono, direccion, fechaIngreso) 
+Empleado_Equipo = (codEquipo(FK), DNI(FK), fechaInicio, fechaFin, descripcionRol)
