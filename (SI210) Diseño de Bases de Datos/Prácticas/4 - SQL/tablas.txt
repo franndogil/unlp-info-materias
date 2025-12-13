@@ -36,3 +36,33 @@ fechaFinEstimada, DNIResponsable(FK), equipoBackend(FK), equipoFrontend(FK))    
 Equipo = (codEquipo, nombreE, descTecnologias, DNILider(FK))                        //DNILider corresponde a un empleado 
 Empleado = (DNI, nombre, apellido, telefono, direccion, fechaIngreso) 
 Empleado_Equipo = (codEquipo(FK), DNI(FK), fechaInicio, fechaFin, descripcionRol)
+
+10.
+Vehiculo = (patente, modelo, marca, peso, km) 
+Camion = (patente(fk), largo, max_toneladas, cant_ruedas, tiene_acoplado) 
+Auto = (patente(fk), es_electrico, tipo_motor) 
+Service = (fecha, patente(fk), km_service, descripcion, monto) 
+Parte = (cod_parte, nombre, precio_parte) 
+Service_Parte = ([fecha, patente](fk), cod_parte(fk), precio)
+
+11.
+Box = (nroBox, m2, ubicación, capacidad, ocupacion) // ocupación es un numérico indicando cantidad 
+de mascotas en el box actualmente, capacidad es una descripción. 
+Mascota = (codMascota, nombre, edad, raza, peso, telefonoContacto) 
+Veterinario = (matricula, CUIT, nombYAp, direccion, telefono) 
+Supervision = (codMascota(fk), nroBox(fk), fechaEntra, fechaSale?, matricula(fk), descripcionEstadia) 
+//fechaSale  tiene valor null si la mascota está actualmente en el box
+
+12.
+Barberia = (codBarberia, razon_social, direccion, telefono) 
+Cliente = (nroCliente, DNI, nombYAp, direccionC, fechaNacimiento, celular) 
+Barbero = (codEmpleado, DNIB, nombYApB, direccionB, telefonoContacto, mail) 
+Atencion = (codEmpleado(fk), fecha, hora, codBarberia(fk), nroCliente(fk),
+descTratamiento, valor) 
+
+13.
+Club = (IdClub, nombreClub, ciudad) 
+Complejo = (IdComplejo, nombreComplejo, IdClub(fk)) 
+Cancha = (IdCancha, nombreCancha, IdComplejo(fk)) 
+Entrenador = (IdEntrenador, nombreEntrenador, fechaNacimiento, direccion) 
+Entrenamiento = (IdEntrenamiento, fecha, IdEntrenador(fk), IdCancha(fk)) 
