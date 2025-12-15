@@ -1,3 +1,9 @@
+1.
+Cliente = (idCliente, nombre, apellido, DNI, telefono, direccion)
+Factura = (nroTicket, total, fecha, hora, idCliente (fk))
+Detalle = (nroTicket (fk), idProducto (fk), cantidad, preciounitario)
+Producto = (idProducto, nombreP, descripcion, precio, stock)
+
 2.
 Localidad = (codigoPostal, nombreL, descripcion, nroHabitantes) 
 Arbol = (nroArbol, especie, anios, calle, nro, codigoPostal(fk)) 
