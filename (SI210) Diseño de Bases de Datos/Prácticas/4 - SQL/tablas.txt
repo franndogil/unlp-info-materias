@@ -1,3 +1,14 @@
+2.
+Localidad = (codigoPostal, nombreL, descripcion, nroHabitantes) 
+Arbol = (nroArbol, especie, anios, calle, nro, codigoPostal(fk)) 
+Podador = (DNI, nombre, apellido, telefono, fnac, codigoPostalVive(fk)) 
+Poda = (codPoda, fecha, DNI(fk), nroArbol(fk))
+
+3.
+Banda = (codigoB, nombreBanda, genero_musical, anio_creacion)  
+Integrante = (DNI, nombre, apellido, dirección, email, fecha_nacimiento, codigoB(fk))  
+Escenario = (nroEscenario, nombre_escenario, ubicación, cubierto, m2, descripción)  
+Recital = (fecha, hora, nroEscenario (fk), codigoB (fk))
 
 4.
 Persona = (DNI, Apellido, Nombre, Fecha_Nacimiento, Estado_Civil, Genero) 
