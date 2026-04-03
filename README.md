@@ -14,6 +14,8 @@
 - 📘 **[(DBD) Diseño de Bases de Datos](https://github.com/franndogil/unlp-info-materias/tree/main/(SI210)%20Dise%C3%B1o%20de%20Bases%20de%20Datos)**
 - 📘 **[(IS1) Ingeniería de Software 1](https://github.com/franndogil/unlp-info-materias/tree/main/(SI202)%20Ingenier%C3%ADa%20de%20Software%201)**
 - 📘 **[(ENG) Taller de lecto-comprensión y Traducción en Inglés](https://github.com/franndogil/unlp-info-materias/tree/main/(SI208)%20Taller%20de%20lecto-comprensi%C3%B3n%20y%20Traducci%C3%B3n%20en%20Ingl%C3%A9s)**
+## Quinto semestre
+- 📘 **[(IS2) Ingeniería de Software 2](https://github.com/franndogil/unlp-info-materias/tree/main/(SI302)%20Ingenier%C3%ADa%20de%20Software%202)**
 
 ### IMPORTANTE
 **Los recursos compartidos en este espacio son de carácter informativo y representan perspectivas individuales, sin implicar validación oficial por parte de las cátedras de las materias.**
