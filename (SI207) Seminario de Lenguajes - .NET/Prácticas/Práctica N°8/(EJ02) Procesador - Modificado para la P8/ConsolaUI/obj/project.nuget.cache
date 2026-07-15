@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "K0Sj/Dp9NeM=",
+  "dgSpecHash": "JsPSRUISg14=",
   "success": true,
   "projectFilePath": "F:\\Franco\\Estudio\\UNLP\\Materias\\(SI207) Seminario de Lenguajes - .NET\\Prácticas\\Práctica N°8\\(EJ02) Procesador - Modificado para la P8\\ConsolaUI\\ConsolaUI.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Fran\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.27\\microsoft.netcore.app.ref.8.0.27.nupkg.sha512",
+    "C:\\Users\\Fran\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.27\\microsoft.windowsdesktop.app.ref.8.0.27.nupkg.sha512",
+    "C:\\Users\\Fran\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.27\\microsoft.aspnetcore.app.ref.8.0.27.nupkg.sha512",
+    "C:\\Users\\Fran\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\8.0.27\\microsoft.netcore.app.host.win-x64.8.0.27.nupkg.sha512"
+  ],
   "logs": []
 }

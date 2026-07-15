@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "u3gsaXwQIak=",
+  "dgSpecHash": "CD14UaceSUs=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Fran\\proyectosDotnet\\Procesador\\Aplicacion\\Aplicacion.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "F:\\Franco\\Estudio\\UNLP\\Materias\\(SI207) Seminario de Lenguajes - .NET\\Prácticas\\Práctica N°7\\Procesador\\Aplicacion\\Aplicacion.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Fran\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.27\\microsoft.netcore.app.ref.8.0.27.nupkg.sha512",
+    "C:\\Users\\Fran\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.27\\microsoft.windowsdesktop.app.ref.8.0.27.nupkg.sha512",
+    "C:\\Users\\Fran\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.27\\microsoft.aspnetcore.app.ref.8.0.27.nupkg.sha512"
+  ],
   "logs": []
 }

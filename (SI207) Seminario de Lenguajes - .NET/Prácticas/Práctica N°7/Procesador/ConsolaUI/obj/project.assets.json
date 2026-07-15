@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "targets": {
     "net8.0": {
       "Aplicacion/1.0.0": {
@@ -32,11 +32,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Fran\\proyectosDotnet\\Procesador\\ConsolaUI\\ConsolaUI.csproj",
+      "projectUniqueName": "F:\\Franco\\Estudio\\UNLP\\Materias\\(SI207) Seminario de Lenguajes - .NET\\Prácticas\\Práctica N°7\\Procesador\\ConsolaUI\\ConsolaUI.csproj",
       "projectName": "ConsolaUI",
-      "projectPath": "C:\\Users\\Fran\\proyectosDotnet\\Procesador\\ConsolaUI\\ConsolaUI.csproj",
+      "projectPath": "F:\\Franco\\Estudio\\UNLP\\Materias\\(SI207) Seminario de Lenguajes - .NET\\Prácticas\\Práctica N°7\\Procesador\\ConsolaUI\\ConsolaUI.csproj",
       "packagesPath": "C:\\Users\\Fran\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Fran\\proyectosDotnet\\Procesador\\ConsolaUI\\obj\\",
+      "outputPath": "F:\\Franco\\Estudio\\UNLP\\Materias\\(SI207) Seminario de Lenguajes - .NET\\Prácticas\\Práctica N°7\\Procesador\\ConsolaUI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Fran\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -49,10 +49,11 @@
       },
       "frameworks": {
         "net8.0": {
+          "framework": "net8.0",
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\Fran\\proyectosDotnet\\Procesador\\Aplicacion\\Aplicacion.csproj": {
-              "projectPath": "C:\\Users\\Fran\\proyectosDotnet\\Procesador\\Aplicacion\\Aplicacion.csproj"
+            "F:\\Franco\\Estudio\\UNLP\\Materias\\(SI207) Seminario de Lenguajes - .NET\\Prácticas\\Práctica N°7\\Procesador\\Aplicacion\\Aplicacion.csproj": {
+              "projectPath": "F:\\Franco\\Estudio\\UNLP\\Materias\\(SI207) Seminario de Lenguajes - .NET\\Prácticas\\Práctica N°7\\Procesador\\Aplicacion\\Aplicacion.csproj"
             }
           }
         }
@@ -66,10 +67,12 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "10.0.300"
     },
     "frameworks": {
       "net8.0": {
+        "framework": "net8.0",
         "targetAlias": "net8.0",
         "imports": [
           "net461",
@@ -82,12 +85,30 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[8.0.27, 8.0.27]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[8.0.27, 8.0.27]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[8.0.27, 8.0.27]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Ref",
+            "version": "[8.0.27, 8.0.27]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.407/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
